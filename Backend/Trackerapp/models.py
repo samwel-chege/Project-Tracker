@@ -1,4 +1,5 @@
 from django.db import models
+from django.test import TestCase
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from cloudinary.models import CloudinaryField
 
@@ -65,7 +66,7 @@ class Cohort(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=70)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name= 'student')
-    cohort = models.ForeignKey(Cohort, choices=['Cohort-1', 'Cohort-2', 'Cohort-3','Cohort-4'])
+    cohort = models.ForeignKey(Cohort, on_delete=models.SET_NULL, null=True, blank=True)
 
     @classmethod
     def get_students(cls):
@@ -77,3 +78,5 @@ class Student(models.Model):
     
     def __str__(self):
         return f'{self.name}'
+
+
