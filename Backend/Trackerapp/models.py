@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from cloudinary.models import CloudinaryField
+
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -38,9 +40,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     updated_at = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
 
     def __str__(self):
         return self.email
+
+
+
+class Student(models.Model):
+    name = models.CharField(max_length=70)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name= 'student')
+    profile_picture = CloudinaryField('image')
