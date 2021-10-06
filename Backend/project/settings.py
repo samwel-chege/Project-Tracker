@@ -28,6 +28,9 @@ DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS =['*']
 
+AUTH_USER_MODEL='Trackerapp.CustomUser'
+
+
 
 
 # Application definition
