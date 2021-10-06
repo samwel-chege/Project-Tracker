@@ -7,6 +7,9 @@ name = "pypi"
 django = "*"
 cloudinary = "*"
 django-registration = "*"
+django-crispy-forms = "*"
+crispy-bootstrap5 = "*"
+django-bootstrap4 = "*"
 
 [dev-packages]
 
