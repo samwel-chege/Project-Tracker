@@ -10,4 +10,7 @@ urlpatterns = [
     path('profile/<username>/', views.profile, name='profile'),
     path('cohort/<name>/', views.cohort, name='cohort'),
     path('project/<title>/', views.project, name='project'),
+    path('language/<name>/', views.language, name='language'),
+    path('profiles/', views.all_profiles, name='all_profiles'),
+    path('projects/', views.all_projects, name='all_projects'),
 ]

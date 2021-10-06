@@ -10,8 +10,6 @@ import datetime as dt
 class Cohort(models.Model):
     
     name=models.CharField(max_length=20, null=True)
-    code=models.CharField(max_length=10, null=True)
-
     details = models.CharField(max_length=500, null=True, blank=True, default="A Moringa cohort.")
 
     @classmethod
@@ -30,6 +28,7 @@ class Cohort(models.Model):
 class Language(models.Model):
     
     name=models.CharField(max_length=10, null=True)
+    description = models.CharField(max_length=100, null=True, default="A programming language/framework.")
 
     @classmethod
     def get_languages(cls):

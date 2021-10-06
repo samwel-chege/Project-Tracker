@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container" style="margin-top:8%">
+    <h1 class="mb-4 mt-4 text-center"><b>{{ project.title }}</b>
+    <span> <i class="fas fa-heart"></i></span></h1>
+    <br>
+    <br>
+
+    <div class="card">
+        
+        {% if project.project_image %}
+            
+        <div class="view overlay">
+            <img class="card-img-top" width="100%"
+                src="{{ project.project_image.url }}" alt="">
+        </div>
+        <br>
+        <hr>
+        <br>
+
+        {% endif %}
+        
+        <div class="card-body">
+            <br>
+            <p>{{ project.description }}</p>
+            <br>
+            <br>
+            <p class="card-text ">
+                Project Leader: <b>{{ project.owner.username}}</b> <span style="float:right"><b> Created on: </b>{{project.date|date}}</span>
+            </p>
+            <br>
+            <br>
+            <p>Cohort: <b>{{ project.cohort }}</b></p>
+            <br>
+            <br>
+            <p>Language: <b>{{ project.language }}</b></p>
+            <br>
+            <hr>
+            <br>
+            <br>
+            <h5 class="card-title text-center">
+                <a href="{{ project.github_link }}" style="float:center" class="btn btn-sm btn-info mr-4"> Github Repository </a>
+            </h5>
+            <br>
+        </div>
+        <br>
+        <hr>
+        <br>
+
+        <div class="card-body">
+            <h4 style="text-align:center"><b>Project Members</b></h4>
+            <br>           
+            <ul class="card-text ">
+                {% for member in project.member.all %}
+
+                <li>{{ project.member.user.username}}</li>
+                {% endfor %}
+
+            </ul>
+            <br>
+        </div>
+    </div>
+</div>
+{% endblock %}

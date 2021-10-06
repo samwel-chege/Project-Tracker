@@ -28,16 +28,45 @@
 <hr>
 <br>
 
-{% if user.is_authenticated%}
+<div>
+	<div class="container">
+        <h4 class="text-center"> Languages</h4>
+        <br>
+		<ul>
+            {% for language in languages %}
 
-<div class="container text-center">
-    <br>
-    <h4>Account status:&nbsp;&nbsp; <b style = "color:green">Logged in</b></h4>
-    <br>
+			<li>
+                <a href="{% url 'language' language.name %}">{{language.name}}</a>
+                <br>
+            </li>
+            {% endfor %}
+
+		</ul>  
+	</div>
 </div>
+
 <br>
 <hr>
 <br>
+
+<div>
+	<div class="container">
+        <h4 class="text-center"> Active Cohorts</h4>
+        <br>
+		<ul>
+            {% for cohort in cohorts %}
+
+			<li>
+                <a href="{% url 'cohort' cohort.name %}">{{cohort.name}}</a>
+                <br>
+            </li>
+            {% endfor %}
+
+		</ul>  
+	</div>
+</div>
+
+{% if user.is_authenticated%}
 
 {% else %}
 
@@ -49,9 +78,13 @@
         </div>
     </div>
 </div>
+<br>
 
 {% endif %}
 
+
+<br>
+<hr>
 <br>
 <div class="container footer">
     <h6 style="text-align:center">
@@ -64,7 +97,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <b>Project Tracker(2021).</b>
+        <b>Project Tracker (2021).</b>
     </h6>
 </div>
 

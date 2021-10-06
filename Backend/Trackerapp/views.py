@@ -28,22 +28,47 @@ def home(request):
     cohorts = Cohort.get_cohorts()
     languages = Language.get_languages()
 
-    return render(request, 'home.html',{"projects":projects, "profiles": profiles, "cohorts":cohorts})
+    return render(request, 'home.html',{"projects":projects, "profiles": profiles, "cohorts":cohorts, "languages": languages})
 
 
 @login_required(login_url='/accounts/login/')
 def profile(request, username):
-    
-    return render(request, 'profile.html')
+    current_user = request.user
+    projects = Project.objects.filter(owner=current_user)
+
+    return render(request, 'profile.html', {"projects":projects,"current_user":current_user})
 
 
 @login_required(login_url='/accounts/login/')
 def cohort(request, name):
+    cohort = Cohort.objects.get(name=name)
     
-    return render(request, 'cohort.html')
+    return render(request, 'cohort.html', {'cohort':cohort})
 
 
 @login_required(login_url='/accounts/login/')
 def project(request, title):
+    project = Project.objects.get(title=title)
     
-    return render(request, 'project.html')
+    return render(request, 'project.html', {'project':project})
+
+
+@login_required(login_url='/accounts/login/')
+def language(request, name):
+    language = Language.objects.get(name=name)
+    
+    return render(request, 'language.html', {'language':langauge})
+
+
+def all_profiles(request):
+    current_user = request.user
+    profiles = Profile.get_profiles()
+
+    return render(request, 'all_profiles.html',{"profiles": profiles})
+
+
+def all_projects(request):
+    current_user = request.user
+    projects = Project.all_projects()
+
+    return render(request, 'all_projects.html',{"projects": projects})
