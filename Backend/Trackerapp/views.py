@@ -29,3 +29,15 @@ def home(request):
 def profile(request, username):
     
     return render(request, 'profile.html')
+
+
+@login_required(login_url='/accounts/login/')
+def cohort(request, name):
+    
+    return render(request, 'cohort.html')
+
+
+@login_required(login_url='/accounts/login/')
+def project(request, title):
+    
+    return render(request, 'project.html')

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if user %}
+
+<div class="container">
+    <br>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="row">
+            
+            {% if user.profile.profile_pic %}
+            <br>
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                <img src="{{user.profile.profile_pic.url}}" class="img-responsive img-rounded" style="float:left; height:300px; width:300px;">
+            </div>
+
+            {% endif %}
+
+            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6" style="padding:10px;">
+                <h1 style="font-size:50px; text-align:center"><b>{{user.username}}</b></h1>
+                <br>
+                <br>
+                <p><b>Email: </b>{{user.email}}</p>
+                
+                {% if user.profile.cohort %}
+
+                <br>
+                <p><b>Cohort: </b>{{user.profile.cohort}}</p>
+                {% endif %}            
+
+                <br>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+{% else%}
+
+<div class="container">
+    <h3 style="text-align:center">User does not exist.</h3>
+    <br>
+
+</div>
+
+{% endif %}
+
+{% endblock %}
