@@ -5,25 +5,22 @@ from cloudinary.models import CloudinaryField
 
 # Create your models here.
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
-
-        if username is None:
-            raise ValueError('Users must have a username')
+    def create_user(self, email, password=None):
 
         if email is None:
             raise ValueError('Users must have an email')
 
-        user=self.model(username=username, email=self.normalize_email(email))
+        user=self.model(email=self.normalize_email(email))
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self, email, password=None):
 
         if password is None:
             raise ValueError('Password should not be none')
 
-        user=self.create_user(username, email, password)
+        user=self.create_user(email, password)
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
@@ -52,4 +49,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Student(models.Model):
     name = models.CharField(max_length=70)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name= 'student')
-    profile_picture = CloudinaryField('image')
