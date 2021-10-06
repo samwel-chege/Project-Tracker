@@ -45,7 +45,35 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+class Cohort(models.Model):
+    
+    name=models.CharField(max_length=15, null=True)
+    code=models.CharField(max_length=10, null=True)
+    details = models.CharField(max_length=500, null=True, blank=True, default="A Moringa class.")
+
+    @classmethod
+    def get_cohorts(cls):
+        all_cohorts = Cohort.objects.all()
+        return all_cohorts
+    def save_cohort(self):
+        self.save()
+    def __str__(self):
+        return f'{self.name}'
+
+
 
 class Student(models.Model):
     name = models.CharField(max_length=70)
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name= 'student')
+    cohort = models.ForeignKey(Cohort, choices=['Cohort-1', 'Cohort-2', 'Cohort-3','Cohort-4'])
+
+    @classmethod
+    def get_students(cls):
+        all_students = Student.objects.all()
+        return all_students
+
+    def save_student(self):
+        self.save()
+    
+    def __str__(self):
+        return f'{self.name}'
