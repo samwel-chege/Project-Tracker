@@ -9,10 +9,10 @@ import datetime as dt
 
 class Cohort(models.Model):
     
-    name=models.CharField(max_length=15, null=True)
+    name=models.CharField(max_length=20, null=True)
     code=models.CharField(max_length=10, null=True)
 
-    details = models.CharField(max_length=500, null=True, blank=True, default="A Moringa class.")
+    details = models.CharField(max_length=500, null=True, blank=True, default="A Moringa cohort.")
 
     @classmethod
     def get_cohorts(cls):
@@ -20,6 +20,23 @@ class Cohort(models.Model):
         return all_cohorts
 
     def save_cohort(self):
+        self.save()
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+
+class Language(models.Model):
+    
+    name=models.CharField(max_length=10, null=True)
+
+    @classmethod
+    def get_languages(cls):
+        all_languages = Language.objects.all()
+        return all_languages
+
+    def save_language(self):
         self.save()
 
     def __str__(self):
@@ -64,7 +81,8 @@ class Profile(models.Model):
 class Project(models.Model):
     
     owner=models.ForeignKey(User,on_delete=models.CASCADE, related_name="my_project", null=True)
-    cohort=models.ForeignKey(Cohort, null=True, blank=True, on_delete=models.SET_NULL, related_name="project")
+    cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
+    language=models.ForeignKey(Language, null=True, on_delete=models.SET_NULL, related_name="project")
 
     member=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="group_project", blank=True, null=True)
 

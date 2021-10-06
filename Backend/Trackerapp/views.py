@@ -17,12 +17,18 @@ from django.template.loader import render_to_string
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
+from .models import *
+
 # Create your views here.
 
 def home(request):
     current_user = request.user
+    profiles = Profile.get_profiles()
+    projects = Project.all_projects()
+    cohorts = Cohort.get_cohorts()
+    languages = Language.get_languages()
 
-    return render(request, 'home.html')
+    return render(request, 'home.html',{"projects":projects, "profiles": profiles, "cohorts":cohorts})
 
 
 @login_required(login_url='/accounts/login/')

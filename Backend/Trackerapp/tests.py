@@ -16,6 +16,20 @@ class CohortTestClass(TestCase):
         self.assertTrue(len(cohorts) > 0)
 
 
+class LanguageTestClass(TestCase):
+    
+    def setUp(self):
+        self.django = Language.objects.create(name='django')
+
+    def test_instance(self):
+        self.django.save_language()
+        self.assertTrue(isinstance(self.django, Language))
+
+    def test_get_languages(self):
+        languages = Language.get_languages()
+        self.assertTrue(len(languages) > 0)
+
+
 class ProfileTestClass(TestCase):
 
     def setUp(self):
