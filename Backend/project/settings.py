@@ -47,7 +47,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Trackerapp',
     'cloudinary',
+    'bootstrap4',
     'django_registration',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+
 ]
 
 MIDDLEWARE = [
