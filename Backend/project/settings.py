@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Trackerapp',
     'cloudinary',
+    'django_registration',
 ]
 
 MIDDLEWARE = [
