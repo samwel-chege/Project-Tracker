@@ -1,0 +1,23 @@
+.navbar-brand{
+    color: #28C2C6;
+}
+
+.nav-item{
+    background-color: #28C2C6;
+    border-radius: 20%;
+    margin: 10px;
+    
+  
+}
+form{
+    width: 60%;
+    border-radius: 20%;
+    border-style: none;
+    border-color: #28C2C6;
+    color: #28C2C6;
+    margin: 10px;
+    
+}
+#auth{
+  justify-content: end;  
+}
