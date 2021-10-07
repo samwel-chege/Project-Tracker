@@ -27,8 +27,11 @@
             <br>
             <br>
             <p class="card-text ">
-                Project Leader: <b><a href="{% url 'profile' project.owner.id %}">{{ project.owner.username}}</a></b> <span style="float:right"><b> Created on: </b>{{project.date|date}}</span>
+                Project Leader: <b>{{ project.owner.username}}</b> <span style="float:right"><b> Created on: </b>{{project.date|date}}</span>
             </p>
+            <br>
+            <br>
+            <p>Scrum Master: <b>{{ project.scrum.username }}</b></p>
             <br>
             <br>
             <p>Cohort: <b><a href="{% url 'cohort' project.cohort.name %}">{{ project.cohort.name }}</a> </b></p>
@@ -49,13 +52,23 @@
         <br>
 
         <div class="card-body">
-            <h4 style="text-align:center"><b>Project Members</b></h4>
+            <h4 style="text-align:center"><b>Dev Team</b></h4>
             <br>           
             <ul class="card-text ">
-                {% for member in project.member.all %}
+                {% if project.dev1 %}
 
-                <li>{{ project.member.user.username}}</li>
-                {% endfor %}
+                <li>{{ project.dev1.username}}</li>
+                {% endif %}
+
+                {% if project.dev2 %}
+                
+                <li>{{ project.dev2.username}}</li>
+                {% endif %}
+
+                {% if project.dev3 %}
+                
+                <li>{{ project.dev3.username}}</li>
+                {% endif %}
 
             </ul>
             <br>

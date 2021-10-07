@@ -83,7 +83,15 @@ class Project(models.Model):
     cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
     language=models.ForeignKey(Language, null=True, on_delete=models.SET_NULL, related_name="project")
 
-    member=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="group_project", blank=True, null=True)
+    scrum=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="scrum", blank=True, null=True)
+    dev1=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev1", blank=True, null=True)
+    dev2=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev2", blank=True, null=True)
+    dev3=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev3", blank=True, null=True)
+    dev4=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev4", blank=True, null=True)
+    dev5=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev5", blank=True, null=True)
+    dev6=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev6", blank=True, null=True)
+    dev7=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev7", blank=True, null=True)
+    dev8=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev8", blank=True, null=True)
 
     title=models.CharField(max_length=30, null=True)
     project_image=models.ImageField(upload_to='images/projects/', blank=True, default = 0, null=True)
