@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Trackerapp',
     'bootstrap5',
+    
 ]
 
 MIDDLEWARE = [
