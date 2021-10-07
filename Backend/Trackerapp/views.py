@@ -11,6 +11,7 @@ from .serializers import RegisterSerializer
 
 
 
+
 # Create your views here.
 
 # def signup(request):
@@ -40,3 +41,6 @@ class RegisterView(generics.GenericAPIView):
 
         user_data =serializer.data
         return Response(user_data, status=status.HTTP_201_CREATED)
+
+
+
