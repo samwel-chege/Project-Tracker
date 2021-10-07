@@ -5,5 +5,5 @@ from .models import *
 
 admin.site.register(Cohort)
 admin.site.register(Language)
-admin.site.register(Project)
 admin.site.register(Student)
+admin.site.register(Project)
