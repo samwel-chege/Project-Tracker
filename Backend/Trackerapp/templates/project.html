@@ -27,14 +27,14 @@
             <br>
             <br>
             <p class="card-text ">
-                Project Leader: <b>{{ project.owner.username}}</b> <span style="float:right"><b> Created on: </b>{{project.date|date}}</span>
+                Project Leader: <b><a href="{% url 'profile' project.owner.id %}">{{ project.owner.username}}</a></b> <span style="float:right"><b> Created on: </b>{{project.date|date}}</span>
             </p>
             <br>
             <br>
-            <p>Cohort: <b>{{ project.cohort }}</b></p>
+            <p>Cohort: <b><a href="{% url 'cohort' project.cohort.name %}">{{ project.cohort.name }}</a> </b></p>
             <br>
             <br>
-            <p>Language: <b>{{ project.language }}</b></p>
+            <p>Language: <b><a href="{% url 'language' project.language.name %}">{{ project.language.name }}</a></b></p>
             <br>
             <hr>
             <br>

@@ -27,7 +27,7 @@
                 {% if user.profile.cohort %}
 
                 <br>
-                <p><b>Cohort: </b>{{user.profile.cohort}}</p>
+                <p><b>Cohort: </b><a href="{% url 'cohort' user.profile.cohort.name %}">{{user.profile.cohort}}</a></p>
                 {% endif %}            
 
                 <br>

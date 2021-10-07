@@ -48,8 +48,8 @@ class Profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", null=True)
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
-    bio = models.CharField(max_length=500, null=True, blank=True, default="bio")
-    email = models.EmailField(blank=True, default="email", null=True)
+    bio = models.CharField(max_length=500, null=True, blank=True, default="N/A")
+    email = models.EmailField(blank=True, default="N/A", null=True)
 
     cohort=models.ForeignKey(Cohort, null=True, blank=True, on_delete=models.SET_NULL, related_name="student")
 

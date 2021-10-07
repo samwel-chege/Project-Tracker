@@ -32,11 +32,12 @@ def home(request):
 
 
 @login_required(login_url='/accounts/login/')
-def profile(request, username):
-    current_user = request.user
-    projects = Project.objects.filter(owner=current_user)
+def profile(request, id):
+    #current_user = request.user
+    profile = Profile.objects.get(id=id)
+    projects = Project.objects.filter(owner=profile.user)
 
-    return render(request, 'profile.html', {"projects":projects,"current_user":current_user})
+    return render(request, 'profile.html', {"profile":profile, "projects":projects})
 
 
 @login_required(login_url='/accounts/login/')
@@ -57,7 +58,7 @@ def project(request, title):
 def language(request, name):
     language = Language.objects.get(name=name)
     
-    return render(request, 'language.html', {'language':langauge})
+    return render(request, 'language.html', {'language':language})
 
 
 def all_profiles(request):
