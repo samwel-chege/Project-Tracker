@@ -12,12 +12,12 @@
   </thead>
   <tbody>
 
-  {% for profile in profiles %}
+  {% for student in students %}
     <tr>
       <th scope="row">*</th>
-      <td>{{ profile.user.username }}</td>
-      <td>{{ profile.cohort}}</td>
-      <td>{{ profile.email}}</td>
+      <td>{{ student.user.username }}</td>
+      <td>{{ student.cohort}}</td>
+      <td>{{ student.email}}</td>
     </tr>
   {% endfor %}
   

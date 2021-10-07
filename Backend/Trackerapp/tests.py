@@ -30,13 +30,13 @@ class LanguageTestClass(TestCase):
         self.assertTrue(len(languages) > 0)
 
 
-class ProfileTestClass(TestCase):
+class StudentTestClass(TestCase):
 
     def setUp(self):
-        self.profile = Profile(id = 1)
+        self.student = Student(id = 1)
 
     def test_instance(self):
-        self.assertTrue(isinstance(self.profile, Profile)) 
+        self.assertTrue(isinstance(self.student, Student)) 
 
 
 class ProjectTestClass(TestCase):

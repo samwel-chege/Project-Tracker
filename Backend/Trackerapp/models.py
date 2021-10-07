@@ -43,9 +43,9 @@ class Language(models.Model):
 
 
 
-class Profile(models.Model):
+class Student(models.Model):
     
-    user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", null=True)
+    user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="student", null=True)
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
     bio = models.CharField(max_length=500, null=True, blank=True, default="N/A")
@@ -57,23 +57,23 @@ class Profile(models.Model):
         return f'{self.user.username}'
 
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_student_profile(sender, instance, created, **kwargs):
         if created:
-            Profile.objects.create(user=instance)
+            Student.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
+    def save_student_profile(sender, instance, **kwargs):
+        instance.student.save()
 
     @classmethod
-    def get_profiles(cls):
-        all_profiles = Profile.objects.all()
-        return all_profiles
+    def get_students(cls):
+        all_students = Student.objects.all()
+        return all_students
 
     @classmethod
-    def search_profile(cls, search_term):
-        profile_found = Profile.objects.filter(title__icontains=search_term)
-        return profile_found
+    def search_student(cls, search_term):
+        student_found = Student.objects.filter(title__icontains=search_term)
+        return student_found
 
 
 

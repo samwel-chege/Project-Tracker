@@ -13,7 +13,7 @@
             <ul class="card-text ">
                 {% for student in cohort.student.all %}
 
-                <li> <a href = "{% url 'profile' student.user.id %}">{{ student.user.username }}</a></li>
+                <li> <a href = "{% url 'student' student.user.id %}">{{ student.user.username }}</a></li>
                 {% endfor %}
 
             </ul>

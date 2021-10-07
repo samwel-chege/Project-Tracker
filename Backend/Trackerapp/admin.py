@@ -3,7 +3,7 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Profile)
-admin.site.register(Project)
 admin.site.register(Cohort)
 admin.site.register(Language)
+admin.site.register(Project)
+admin.site.register(Student)
