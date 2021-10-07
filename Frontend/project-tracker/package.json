@@ -18,15 +18,23 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+<<<<<<< HEAD
     "bootstrap": "^5.1.2",
     "font-awesome": "^4.7.0",
+=======
+>>>>>>> 568be1c6065830ce2f5288f0218877de014c9f60
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@angular-devkit/build-angular": "~12.2.9",
     "@angular/cli": "~12.2.9",
+=======
+    "@angular-devkit/build-angular": "~12.2.8",
+    "@angular/cli": "~12.2.8",
+>>>>>>> 568be1c6065830ce2f5288f0218877de014c9f60
     "@angular/compiler-cli": "~12.2.0",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
