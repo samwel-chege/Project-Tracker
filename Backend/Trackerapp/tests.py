@@ -1,5 +1,5 @@
 from django.test import TestCase
-
+from .models import *
 from Trackerapp.models import CustomUser,Student
 from django.contrib.auth import get_user_model
 
@@ -43,27 +43,7 @@ class UsersManagersTests(TestCase):
         with self.assertRaises(ValueError):
             User.objects.create_superuser(
                 email='wambua@g.com', password='projecttracker', is_superuser=False)
-
-
-class StudentTestClass(TestCase):
-    def setUp(self):
-        self.student_test = Student(name='Fred', cohort='Cohort-2', )
-
-    def test_instance(self):
-        self.assertTrue(isinstance(self.student_test, Student))
-
-    def test_save_student(self):
-        self.student_test.save()
-        students = Student.objects.all()
-        self.assertTrue(len(students)>0)
     
-    def test_delete_student(self):
-        self.student_test.delete()
-        students = Student.objects.all()
-        self.assertTrue(len(students)<1)
-    
-
-from .models import *
 
 
 class CohortTestClass(TestCase):
