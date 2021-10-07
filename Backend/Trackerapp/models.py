@@ -10,7 +10,7 @@ import datetime as dt
 class Cohort(models.Model):
     
     name=models.CharField(max_length=20, null=True)
-    details = models.CharField(max_length=500, null=True, blank=True, default="A Moringa cohort.")
+    details = models.CharField(max_length=100, null=True, blank=True, default="A Moringa cohort.")
 
     @classmethod
     def get_cohorts(cls):

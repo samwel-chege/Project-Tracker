@@ -1,5 +1,7 @@
-from django.test import TestCase
-from . models import *
+#from django.test import TestCase
+import unittest
+import models
+#from . models import *
 
 
 class CohortTestClass(TestCase):
@@ -33,10 +35,20 @@ class LanguageTestClass(TestCase):
 class StudentTestClass(TestCase):
 
     def setUp(self):
-        self.student = Student(id = 1)
+        self.student = Student(id = 1, name='TestUser')
 
     def test_instance(self):
         self.assertTrue(isinstance(self.student, Student)) 
+
+    def test_save_student_profile(self):
+        self.student.save_student_profile()
+        students = Student.get_students()
+        self.assertTrue(len(students)>0)
+    
+    def test_delete_student(self):
+        self.student.delete()
+        students = Student.get_students()
+        self.assertTrue(len(students)<1)
 
 
 class ProjectTestClass(TestCase):
