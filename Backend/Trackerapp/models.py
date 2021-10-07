@@ -8,6 +8,9 @@ import datetime as dt
 
 
 class Cohort(models.Model):
+    '''
+    Cohort class to define Cohort objects
+    '''
     
     name=models.CharField(max_length=20, null=True)
     details = models.CharField(max_length=100, null=True, blank=True, default="A Moringa cohort.")
@@ -25,17 +28,20 @@ class Cohort(models.Model):
 
 
 
-class Language(models.Model):
+class DevStyle(models.Model):
+    '''
+    DevStyle class to define the project development style objects
+    '''
     
     name=models.CharField(max_length=10, null=True)
-    description = models.CharField(max_length=100, null=True, default="A programming language/framework.")
+    description = models.CharField(max_length=100, null=True, default="A development style.")
 
     @classmethod
-    def get_languages(cls):
-        all_languages = Language.objects.all()
-        return all_languages
+    def get_style(cls):
+        all_styles = DevStyle.objects.all()
+        return all_styles
 
-    def save_language(self):
+    def save_style(self):
         self.save()
 
     def __str__(self):
@@ -44,6 +50,9 @@ class Language(models.Model):
 
 
 class Student(models.Model):
+    '''
+    Cohort class to define Cohort objects
+    '''
     
     user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="student", null=True)
 
@@ -81,7 +90,7 @@ class Project(models.Model):
     
     owner=models.ForeignKey(User,on_delete=models.CASCADE, related_name="my_project", null=True)
     cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
-    language=models.ForeignKey(Language, null=True, on_delete=models.SET_NULL, related_name="project")
+    style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
 
     scrum=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="scrum", blank=True, null=True)
     dev1=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev1", blank=True, null=True)
