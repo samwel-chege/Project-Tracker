@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import *
 
 class RegisterSerializer(serializers.ModelSerializer):
     password=serializers.CharField(max_length=68, min_length=6, write_only=True)
@@ -19,3 +19,27 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return CustomUser.objects.create_user(**validated_data)
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ('user', 'bio', 'profile_pic', 'email', 'cohort')
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')
+
+
+class CohortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cohort
+        fields = ('name', 'details')
+
+
+class StyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DevStyle
+        fields = ('name', 'description')

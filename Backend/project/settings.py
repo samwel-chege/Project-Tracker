@@ -18,6 +18,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-qzk08=()s(#j()bq&f*fbk*7voz+g3sw*9j%7*ej$d%mvg=eff'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
@@ -39,17 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Trackerapp',
-
     'cloudinary',
-    'bootstrap4',
-    'django_registration',
-    'crispy_forms',
-    'crispy_bootstrap5',
     'rest_framework',
-
-
-
-    'bootstrap5',
+    'django_bootstrap5',
 
 ]
 
@@ -90,9 +83,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tracker',
-        'USER': 'sammie',
-        'PASSWORD': 'samm',
+        'NAME': 'trackerdb001',
+        'USER': 'oscar',
+        'PASSWORD': '123456789',
     }
 }
 
