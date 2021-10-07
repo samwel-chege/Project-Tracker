@@ -33,7 +33,7 @@ class DevStyleTestClass(TestCase):
         '''
         self.django = DevStyle.objects.create(name='django')
 
-    def test_instance(self):
+    def test_save_style(self):
         '''
         test case to save a test development style.
         '''

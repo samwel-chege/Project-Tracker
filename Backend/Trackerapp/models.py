@@ -30,14 +30,14 @@ class Cohort(models.Model):
 
 class DevStyle(models.Model):
     '''
-    DevStyle class to define the project development style objects
+    DevStyle class to define the project development style
     '''
     
     name=models.CharField(max_length=10, null=True)
     description = models.CharField(max_length=100, null=True, default="A development style.")
 
     @classmethod
-    def get_style(cls):
+    def get_styles(cls):
         all_styles = DevStyle.objects.all()
         return all_styles
 
@@ -57,7 +57,7 @@ class Student(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="student", null=True)
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
-    bio = models.CharField(max_length=500, null=True, blank=True, default="N/A")
+    bio = models.CharField(max_length=500, null=True, blank=True, default="A student at Moringa School.")
     email = models.EmailField(blank=True, default="N/A", null=True)
 
     cohort=models.ForeignKey(Cohort, null=True, blank=True, on_delete=models.SET_NULL, related_name="student")
