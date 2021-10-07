@@ -29,42 +29,28 @@
 <br>
 
 {% if user.is_authenticated%}
-
-<div>
-	<div class="container">
-        <h4 class="text-center"> Languages</h4>
-        <br>
-		<ul>
-            {% for language in languages %}
-
-			<li>
-                <a href="{% url 'language' language.name %}">{{language.name}}</a>
-                <br>
-            </li>
-            {% endfor %}
-
-		</ul>  
-	</div>
+<div class="container">
+    <div class="container">
+        <div class="container">
+            <nav class="navbar navbar-inverse bg-dark">
+                <div class="container">
+            
+                    {% for language in languages %}
+                    <a class="navbar-brand" href="{% url 'language' language.name %}"><b>{{language.name}}</b>&nbsp;&nbsp;</a>
+                    {% endfor %}
+            
+                    {% for cohort in cohorts %}
+                    <a class="navbar-brand" href="{% url 'cohort' cohort.name %}"><b>{{cohort.name}}</b>&nbsp;&nbsp;</a>
+                    {% endfor %}
+            
+                </div>
+            </nav>
+        </div>
+    </div>
 </div>
 <br>
 <hr>
 <br>
-<div>
-	<div class="container">
-        <h4 class="text-center"> Active Cohorts</h4>
-        <br>
-		<ul>
-            {% for cohort in cohorts %}
-
-			<li>
-                <a href="{% url 'cohort' cohort.name %}">{{cohort.name}}</a>
-                <br>
-            </li>
-            {% endfor %}
-
-		</ul>  
-	</div>
-</div>
 
 {% else %}
 
