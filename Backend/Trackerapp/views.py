@@ -21,16 +21,16 @@ class RegisterView(generics.GenericAPIView):
         serializer.save()
 
         user_data =serializer.data
-        user = CustomUser.objects.get(email=user_data('email'))
+        user = CustomUser.objects.get(email=user_data['email'])
         token = RefreshToken.for_user(user).access_token
 
-        current_site=get_current_site(request)
+        current_site=get_current_site(request).domain
         relativeLink=reverse('email-verify')
-        absoluteurl='http://'+current_site+relativeLink+"?token="+token
+        absoluteurl = 'http://'+current_site+relativeLink+"?token="+str(token)
         email_body='Click on the link below to verify your email'
         data={'email_body':email_body, 'email_subject':'Verify your email \n'+ absoluteurl}
 
-        Util.dend_email(data)
+        Util.send_email(data)
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 class VerifyEmail(generics.GenericAPIView):
