@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_registration',
     'crispy_forms',
     'crispy_bootstrap5',
+    'rest_framework',
 
 
 ]
