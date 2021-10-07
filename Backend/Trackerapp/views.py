@@ -125,3 +125,9 @@ class StyleView(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
             
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+def home(request):
+    current_user = request.user
+
+    return render(request, 'home.html')
