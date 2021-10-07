@@ -19,57 +19,57 @@ from django.contrib.auth import login, authenticate
 
 from .models import *
 
-# Create your views here.
+# # Create your views here.
 
 def home(request):
     current_user = request.user
-    profiles = Profile.get_profiles()
-    projects = Project.all_projects()
-    cohorts = Cohort.get_cohorts()
-    languages = Language.get_languages()
+    # profiles = Profile.get_profiles()
+    # projects = Project.all_projects()
+    # cohorts = Cohort.get_cohorts()
+    # languages = Language.get_languages()
 
-    return render(request, 'home.html',{"projects":projects, "profiles": profiles, "cohorts":cohorts, "languages": languages})
-
-
-@login_required(login_url='/accounts/login/')
-def profile(request, id):
-    #current_user = request.user
-    profile = Profile.objects.get(id=id)
-    projects = Project.objects.filter(owner=profile.user)
-
-    return render(request, 'profile.html', {"profile":profile, "projects":projects})
+    return render(request, 'home.html')
 
 
-@login_required(login_url='/accounts/login/')
-def cohort(request, name):
-    cohort = Cohort.objects.get(name=name)
+# @login_required(login_url='/accounts/login/')
+# def profile(request, id):
+#     #current_user = request.user
+#     profile = Profile.objects.get(id=id)
+#     projects = Project.objects.filter(owner=profile.user)
+
+#     return render(request, 'profile.html', {"profile":profile, "projects":projects})
+
+
+# @login_required(login_url='/accounts/login/')
+# def cohort(request, name):
+#     cohort = Cohort.objects.get(name=name)
     
-    return render(request, 'cohort.html', {'cohort':cohort})
+#     return render(request, 'cohort.html', {'cohort':cohort})
 
 
-@login_required(login_url='/accounts/login/')
-def project(request, title):
-    project = Project.objects.get(title=title)
+# @login_required(login_url='/accounts/login/')
+# def project(request, title):
+#     project = Project.objects.get(title=title)
     
-    return render(request, 'project.html', {'project':project})
+#     return render(request, 'project.html', {'project':project})
 
 
-@login_required(login_url='/accounts/login/')
-def language(request, name):
-    language = Language.objects.get(name=name)
+# @login_required(login_url='/accounts/login/')
+# def language(request, name):
+#     language = Language.objects.get(name=name)
     
-    return render(request, 'language.html', {'language':language})
+#     return render(request, 'language.html', {'language':language})
 
 
-def all_profiles(request):
-    current_user = request.user
-    profiles = Profile.get_profiles()
+# def all_profiles(request):
+#     current_user = request.user
+#     profiles = Profile.get_profiles()
 
-    return render(request, 'all_profiles.html',{"profiles": profiles})
+#     return render(request, 'all_profiles.html',{"profiles": profiles})
 
 
-def all_projects(request):
-    current_user = request.user
-    projects = Project.all_projects()
+# def all_projects(request):
+#     current_user = request.user
+#     projects = Project.all_projects()
 
-    return render(request, 'all_projects.html',{"projects": projects})
+#     return render(request, 'all_projects.html',{"projects": projects})
