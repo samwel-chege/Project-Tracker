@@ -5,6 +5,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from rest_framework import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import Http404
 
 urlpatterns = [
     path('register', RegisterView.as_view(), name='register'),

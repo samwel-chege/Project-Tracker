@@ -13,6 +13,7 @@ from .serializers import *
 from rest_framework import status
 from .permissions import *
 from rest_framework.renderers import TemplateHTMLRenderer
+from django.http import Http404
 
 
 # Create your views here.
