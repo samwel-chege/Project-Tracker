@@ -21,7 +21,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 SECRET_KEY = 'django-insecure-qzk08=()s(#j()bq&f*fbk*7voz+g3sw*9j%7*ej$d%mvg=eff'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+#DEBUG = os.environ.get('DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS =['*']
 
@@ -137,9 +138,9 @@ STATICFILES_DIRS = [
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ]
 }
 
 # Default primary key field type

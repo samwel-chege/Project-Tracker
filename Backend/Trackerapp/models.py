@@ -57,8 +57,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['password','email']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username','password']
 
     objects = UserManager()
 
@@ -82,6 +82,9 @@ class Cohort(models.Model):
     def get_cohorts(cls):
         all_cohorts = Cohort.objects.all()
         return all_cohorts
+    
+    def create(self, validated_data):
+        return Cohort.objects.create(**validated_data)
 
     def save_cohort(self):
         self.save()
@@ -98,6 +101,9 @@ class DevStyle(models.Model):
     
     name=models.CharField(max_length=10, null=True)
     description = models.CharField(max_length=100, null=True, default="A development style.")
+
+    def create(self, validated_data):
+        return DevStyle.objects.create(**validated_data)
 
     @classmethod
     def get_styles(cls):
@@ -136,6 +142,9 @@ class Student(models.Model):
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
     def save_student_profile(sender, instance, **kwargs):
         instance.student.save()
+
+    def create(self, validated_data):
+        return Student.objects.create(**validated_data)
 
     @classmethod
     def get_students(cls):
@@ -177,6 +186,9 @@ class Project(models.Model):
     date=models.DateField(auto_now=True, blank=True, null=True)
 
 
+    def create(self, validated_data):
+        return Project.objects.create(**validated_data)
+
     def delete_project(self):
         self.delete()
 
@@ -193,6 +205,11 @@ class Project(models.Model):
     def get_project_by_id(cls, id):
         project_found = cls.objects.get(pk=id)
         return project_found
+
+    # @classmethod
+    # def get_projects_by_style(cls, style):
+    #     project_found = cls.objects.get(pk=style)
+    #     return project_by_style
 
     def save_project(self):
         self.save()

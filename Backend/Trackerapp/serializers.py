@@ -6,7 +6,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        field = ['email', 'username', 'password']
+        fields = ['email', 'username', 'password']
 
     def validate(self, attrs):
         email = attrs.get('email', '')
@@ -26,11 +26,17 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = ('user', 'bio', 'profile_pic', 'email', 'cohort')
 
+    def create(self, validated_data):
+        return Student(**validated_data)
+
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')
+
+    def create(self, validated_data):
+        return Project(**validated_data)
 
 
 class CohortSerializer(serializers.ModelSerializer):
@@ -38,8 +44,20 @@ class CohortSerializer(serializers.ModelSerializer):
         model = Cohort
         fields = ('name', 'details')
 
+    def create(self, validated_data):
+        return Cohort(**validated_data)
+
 
 class StyleSerializer(serializers.ModelSerializer):
     class Meta:
         model = DevStyle
         fields = ('name', 'description')
+
+    def create(self, validated_data):
+        return DevStyle(**validated_data)
+
+
+class DevStyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')

@@ -11,7 +11,7 @@ from .serializers import RegisterSerializer
 from rest_framework.views import APIView
 from .serializers import *
 from rest_framework import status
-#from .permissions import *
+from .permissions import *
 
 
 # Create your views here.
@@ -35,6 +35,7 @@ class RegisterView(generics.GenericAPIView):
     serializer_class = RegisterSerializer
     queryset = CustomUser.objects.all()
     def post(self, request):
+        permission_classes = (IsAdminOrReadOnly,)
         user = request.data
         serializer =self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
@@ -46,7 +47,7 @@ class RegisterView(generics.GenericAPIView):
 
 
 class StudentView(APIView):
-    
+
     def get(self, request, format=None):
         all_students = Student.objects.all()
         serializers = StudentSerializer(all_students, many=True)
@@ -56,7 +57,6 @@ class StudentView(APIView):
 
     def post(self, request, format=None):
         serializers = StudentSerializer(data=request.data)
-        #permission_classes = (IsAdminOrReadOnly,)
 
         if serializers.is_valid():
             serializers.save()
@@ -76,7 +76,6 @@ class ProjectView(APIView):
 
     def post(self, request, format=None):
         serializers = ProjectSerializer(data=request.data)
-        #permission_classes = (IsAdminOrReadOnly,)
 
         if serializers.is_valid():
             serializers.save()
@@ -97,7 +96,7 @@ class CohortView(APIView):
 
     def post(self, request, format=None):
         serializers = CohortSerializer(data=request.data)
-        #permission_classes = (IsAdminOrReadOnly,)
+        permission_classes = (IsAdminOrReadOnly,)
 
         if serializers.is_valid():
             serializers.save()
@@ -111,13 +110,13 @@ class StyleView(APIView):
     
     def get(self, request, format=None):
         all_styles = DevStyle.objects.all()
-        serializers = StyleSerializer(all_cohorts, many=True)
+        serializers = StyleSerializer(all_styles, many=True)
 
         return Response(serializers.data)
 
     def post(self, request, format=None):
         serializers = StyleSerializer(data=request.data)
-        #permission_classes = (IsAdminOrReadOnly,)
+        permission_classes = (IsAdminOrReadOnly,)
 
         if serializers.is_valid():
             serializers.save()
@@ -127,7 +126,46 @@ class StyleView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-def home(request):
-    current_user = request.user
+class StudentProfile(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
 
-    return render(request, 'home.html')
+        except Student.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        student = self.get_student(pk)
+        serializers = StudentSerializer(student)
+        return Response(serializers.data)
+
+
+class ProjectDevModeView(APIView):
+    def get_style(self, pk):
+        try:
+            return DevStyle.objects.get(pk=pk)
+
+        except DevStyle.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        style = self.get_style(pk)
+        project = style.project
+        serializers = DevStyleSerializer(project, many=True)
+        return Response(serializers.data)
+
+
+class CohortMembersView(APIView):
+    def get_cohort(self, pk):
+        try:
+            return Cohort.objects.get(pk=pk)
+
+        except Cohort.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        cohort = self.get_cohort(pk)
+        student = cohort.student
+        serializers = StudentSerializer(student, many=True)
+        return Response(serializers.data)
