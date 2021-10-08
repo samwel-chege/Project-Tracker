@@ -40,7 +40,7 @@ class UserManager(BaseUserManager):
         if email is None:
             raise ValueError("User must have an email")
 
-        user=self.create_user(username, email, password)
+        user=create_user(self, username, email, password)
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
@@ -57,8 +57,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username','password']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email','password']
 
     objects = UserManager()
 
@@ -125,6 +125,7 @@ class Student(models.Model):
     Student class to define student objects
     '''
     
+    #username=models.CharField(max_length=20, null=True)
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student", null=True)
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
@@ -165,12 +166,12 @@ class Project(models.Model):
     Project class to define project objects
     '''
     
-    owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="my_project", null=True)
+    owner=models.ForeignKey(Student,on_delete=models.CASCADE, related_name="projects_owned", null=True)
     cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
     style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
 
-    scrum=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="scrum", blank=True, null=True)
-    member=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="member", blank=True, null=True)
+    scrum=models.ForeignKey(Student, on_delete=models.SET_NULL, related_name="is_scrum", blank=True, null=True)
+    member=models.ManyToManyField(Student, related_name="member", blank=True)
     #dev1=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev1", blank=True, null=True)
     #dev2=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev2", blank=True, null=True)
     #dev3=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev3", blank=True, null=True)
