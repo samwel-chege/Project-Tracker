@@ -70,30 +70,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 
-class Cohort(models.Model):
-    '''
-    Cohort class to define Cohort objects
-    '''
-    
-    name=models.CharField(max_length=20, null=True)
-    details = models.CharField(max_length=100, null=True, blank=True, default="A Moringa cohort.")
-
-    @classmethod
-    def get_cohorts(cls):
-        all_cohorts = Cohort.objects.all()
-        return all_cohorts
-    
-    def create(self, validated_data):
-        return Cohort.objects.create(**validated_data)
-
-    def save_cohort(self):
-        self.save()
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-
 class DevStyle(models.Model):
     '''
     DevStyle class to define the project development style
@@ -111,6 +87,32 @@ class DevStyle(models.Model):
         return all_styles
 
     def save_style(self):
+        self.save()
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+
+class Cohort(models.Model):
+    '''
+    Cohort class to define Cohort objects
+    '''
+    
+    name=models.CharField(max_length=20, null=True)
+    details = models.CharField(max_length=100, null=True, blank=True, default="A Moringa cohort.")
+
+    style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="cohort")
+
+    @classmethod
+    def get_cohorts(cls):
+        all_cohorts = Cohort.objects.all()
+        return all_cohorts
+    
+    def create(self, validated_data):
+        return Cohort.objects.create(**validated_data)
+
+    def save_cohort(self):
         self.save()
 
     def __str__(self):

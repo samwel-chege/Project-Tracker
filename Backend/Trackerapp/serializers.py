@@ -42,7 +42,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 class CohortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cohort
-        fields = ('name', 'details')
+        fields = ('name', 'details', 'style')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
@@ -56,8 +56,3 @@ class StyleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return DevStyle(**validated_data)
 
-
-class DevStyleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')

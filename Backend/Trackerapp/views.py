@@ -46,7 +46,7 @@ class RegisterView(generics.GenericAPIView):
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 
-class StudentView(APIView):
+class StudentsView(APIView):
 
     def get(self, request, format=None):
         all_students = Student.objects.all()
@@ -66,7 +66,7 @@ class StudentView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ProjectView(APIView):
+class ProjectsView(APIView):
 
     def get(self, request, format=None):
         all_projects = Project.objects.all()
@@ -86,7 +86,7 @@ class ProjectView(APIView):
 
 
 
-class CohortView(APIView):
+class CohortsView(APIView):
     
     def get(self, request, format=None):
         all_cohorts = Cohort.objects.all()
@@ -106,7 +106,7 @@ class CohortView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class StyleView(APIView):
+class StylesView(APIView):
     
     def get(self, request, format=None):
         all_styles = DevStyle.objects.all()
@@ -126,7 +126,7 @@ class StyleView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class StudentProfile(APIView):
+class StudentProfileView(APIView):
     permission_classes = (IsAdminOrReadOnly,)
     def get_student(self, pk):
         try:
@@ -138,21 +138,6 @@ class StudentProfile(APIView):
     def get(self, request, pk, format=None):
         student = self.get_student(pk)
         serializers = StudentSerializer(student)
-        return Response(serializers.data)
-
-
-class ProjectDevModeView(APIView):
-    def get_style(self, pk):
-        try:
-            return DevStyle.objects.get(pk=pk)
-
-        except DevStyle.DoesNotExist:
-            return Http404
-
-    def get(self, request, pk, format=None):
-        style = self.get_style(pk)
-        project = style.project
-        serializers = DevStyleSerializer(project, many=True)
         return Response(serializers.data)
 
 
@@ -168,4 +153,76 @@ class CohortMembersView(APIView):
         cohort = self.get_cohort(pk)
         student = cohort.student
         serializers = StudentSerializer(student, many=True)
+        return Response(serializers.data)
+
+
+class ProjectProfileView(APIView):
+    def get_project(self, pk):
+        try:
+            return Project.objects.get(pk=pk)
+
+        except Project.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        project = self.get_project(pk)
+        serializers = ProjectSerializer(project)
+        return Response(serializers.data)
+
+
+class CohortProfileView(APIView):
+    def get_cohort(self, pk):
+        try:
+            return Cohort.objects.get(pk=pk)
+
+        except Cohort.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        cohort = self.get_cohort(pk)
+        serializers = CohortSerializer(cohort)
+        return Response(serializers.data)
+
+
+class StyleProfileView(APIView):
+    def get_style(self, pk):
+        try:
+            return DevStyle.objects.get(pk=pk)
+
+        except DevStyle.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        style = self.get_style(pk)
+        serializers = StyleSerializer(style)
+        return Response(serializers.data)
+
+
+class ProjectsByDevStyleView(APIView):
+    def get_style(self, pk):
+        try:
+            return DevStyle.objects.get(pk=pk)
+
+        except DevStyle.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        style = self.get_style(pk)
+        project = style.project
+        serializers = ProjectSerializer(project, many=True)
+        return Response(serializers.data)
+
+
+class ProjectsByCohortView(APIView):
+    def get_cohort(self, pk):
+        try:
+            return Cohort.objects.get(pk=pk)
+
+        except Cohort.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        cohort = self.get_cohort(pk)
+        project = cohort.project
+        serializers = ProjectSerializer(project, many=True)
         return Response(serializers.data)
