@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 from .serializers import *
 from rest_framework import status
 from .permissions import *
+from rest_framework.renderers import TemplateHTMLRenderer
 
 
 # Create your views here.
@@ -55,17 +56,6 @@ class StudentsView(APIView):
         return Response(serializers.data)
 
 
-    def post(self, request, format=None):
-        serializers = StudentSerializer(data=request.data)
-
-        if serializers.is_valid():
-            serializers.save()
-
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
-
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class ProjectsView(APIView):
 
     def get(self, request, format=None):
@@ -73,17 +63,6 @@ class ProjectsView(APIView):
         serializers = ProjectSerializer(all_projects, many=True)
 
         return Response(serializers.data)
-
-    def post(self, request, format=None):
-        serializers = ProjectSerializer(data=request.data)
-
-        if serializers.is_valid():
-            serializers.save()
-
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
-            
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 class CohortsView(APIView):
@@ -94,17 +73,6 @@ class CohortsView(APIView):
 
         return Response(serializers.data)
 
-    def post(self, request, format=None):
-        serializers = CohortSerializer(data=request.data)
-        permission_classes = (IsAdminOrReadOnly,)
-
-        if serializers.is_valid():
-            serializers.save()
-
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
-            
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class StylesView(APIView):
     
@@ -113,17 +81,6 @@ class StylesView(APIView):
         serializers = StyleSerializer(all_styles, many=True)
 
         return Response(serializers.data)
-
-    def post(self, request, format=None):
-        serializers = StyleSerializer(data=request.data)
-        permission_classes = (IsAdminOrReadOnly,)
-
-        if serializers.is_valid():
-            serializers.save()
-
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
-            
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class StudentProfileView(APIView):
@@ -226,3 +183,31 @@ class ProjectsByCohortView(APIView):
         project = cohort.project
         serializers = ProjectSerializer(project, many=True)
         return Response(serializers.data)
+
+
+class NewProjectView(APIView):
+    serializer_class = NewProjectSerializer
+
+    def post(self, request, format=None):
+        serializers = NewProjectSerializer(data=request.data)
+
+        if serializers.is_valid():
+            serializers.save()
+
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+            
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class NewStudentView(APIView):
+    serializer_class = NewStudentSerializer
+
+    def post(self, request, format=None):
+        serializers = NewStudentSerializer(data=request.data)
+
+        if serializers.is_valid():
+            serializers.save()
+
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)

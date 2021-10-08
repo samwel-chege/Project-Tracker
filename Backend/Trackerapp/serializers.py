@@ -56,3 +56,20 @@ class StyleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return DevStyle(**validated_data)
 
+
+class NewProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
+class NewStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ('user', 'profile_pic', 'cohort', 'email', 'bio')
+
+    def create(self, validated_data):
+        return Student(**validated_data)
