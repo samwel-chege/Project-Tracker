@@ -1,3 +1,4 @@
+from django.db.models import fields
 from rest_framework import serializers
 from .models import CustomUser
 
@@ -20,3 +21,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return CustomUser.objects.create_user(**validated_data)
+
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(max_length=500)
+
+    class Meta:
+        model = CustomUser
+        fields = ['token']
