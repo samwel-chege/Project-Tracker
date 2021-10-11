@@ -2,7 +2,7 @@ from django.db.models.fields import IPAddressField
 from django.shortcuts import render
 from rest_framework import generics, serializers,status,views
 from .models import CustomUser
-from .serializers import RegisterSerializer, EmailVerificationSerializer, LoginSerializer, ResetPasswordEmailRequestSerializer
+from .serializers import RegisterSerializer, EmailVerificationSerializer, SetNewPasswordSerializer, LoginSerializer, ResetPasswordEmailRequestSerializer
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken, Token
 from .utils import Util
@@ -116,5 +116,12 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
             return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
+class SetNewPasswordAPIView(generics.GenericAPIView):
+    serializer_class = SetNewPasswordSerializer
 
+    def patch(self, request):
+        serializer = self.serializer_class(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+        return Response({'success':True, 'message': 'Password has been set successfully'}, status=status.HTTP_200_OK)
 
