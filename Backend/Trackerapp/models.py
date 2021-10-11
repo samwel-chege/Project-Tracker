@@ -1,15 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from cloudinary.models import CloudinaryField
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from django.db.models import ImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from project import settings
+
 
 import datetime as dt
 import django_filters
-
 
 # Create your models here.
 
@@ -67,7 +69,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.username
 
     def tokens(self):
-        return ''
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh':str(refresh),
+            'access':str(refresh.access_token)
+        }
 
 
 
@@ -124,8 +130,11 @@ class Student(models.Model):
     Student class to define student objects
     '''
     
+
     #username=models.CharField(max_length=20, null=True)
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student", null=True)
+
+    
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
     bio = models.CharField(max_length=500, null=True, blank=True, default="A student at Moringa School.")
@@ -136,12 +145,18 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.user.username}'
 
+
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+
+
     def create_student_profile(sender, instance, created, **kwargs):
         if created:
             Student.objects.create(user=instance)
 
+
     @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+
+ 
     def save_student_profile(sender, instance, **kwargs):
         instance.student.save()
 
@@ -165,6 +180,7 @@ class Project(models.Model):
     Project class to define project objects
     '''
     
+
     owner=models.ForeignKey(Student,on_delete=models.CASCADE, related_name="projects_owned", null=True)
     cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
     style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
@@ -179,6 +195,7 @@ class Project(models.Model):
     #dev6=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev6", blank=True, null=True)
     #dev7=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev7", blank=True, null=True)
     #dev8=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev8", blank=True, null=True)
+
 
     title=models.CharField(max_length=30, null=True)
     project_image=models.ImageField(upload_to='images/projects/', blank=True, default = 0, null=True)
