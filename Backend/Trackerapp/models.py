@@ -6,7 +6,12 @@ from django.contrib.auth.models import User
 from django.db.models import ImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+from project import settings
+
+
 import datetime as dt
+import django_filters
 
 # Create your models here.
 
@@ -15,6 +20,9 @@ class UserManager(BaseUserManager):
 
         if username is None:
             raise ValueError('Users must have a username')
+
+        if password is None:
+            raise ValueError('Password should not be none')
 
         if email is None:
             raise ValueError('Users must have an email')
@@ -26,15 +34,22 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, username, email, password=None):
 
+        if username is None:
+            raise ValueError('Users must have a username')
+
         if password is None:
             raise ValueError('Password should not be none')
 
-        user=self.create_user(username, email, password)
+        if email is None:
+            raise ValueError("User must have an email")
+
+        user=create_user(self, username, email, password)
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
         user.save()
         return user
+
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
@@ -45,13 +60,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email','password']
 
     objects = UserManager()
 
     def __str__(self):
-        return self.email
+        return self.username
 
     def tokens(self):
         refresh = RefreshToken.for_user(self)
@@ -74,6 +89,9 @@ class Cohort(models.Model):
     def get_cohorts(cls):
         all_cohorts = Cohort.objects.all()
         return all_cohorts
+    
+    def create(self, validated_data):
+        return Cohort.objects.create(**validated_data)
 
     def save_cohort(self):
         self.save()
@@ -89,7 +107,10 @@ class DevStyle(models.Model):
     '''
     
     name=models.CharField(max_length=10, null=True)
-    description = models.CharField(max_length=100, null=True, default="A development style.")
+    description = models.CharField(max_length=100, null=True, default="A programming language/style.")
+
+    def create(self, validated_data):
+        return DevStyle.objects.create(**validated_data)
 
     @classmethod
     def get_styles(cls):
@@ -109,7 +130,11 @@ class Student(models.Model):
     Student class to define student objects
     '''
     
-    user=models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="student", null=True)
+
+    #username=models.CharField(max_length=20, null=True)
+    user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student", null=True)
+
+    
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
     bio = models.CharField(max_length=500, null=True, blank=True, default="A student at Moringa School.")
@@ -120,14 +145,23 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.user.username}'
 
-    @receiver(post_save, sender=CustomUser)
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+
+
     def create_student_profile(sender, instance, created, **kwargs):
         if created:
             Student.objects.create(user=instance)
 
-    @receiver(post_save, sender=CustomUser)
+
+    @receiver(post_save, sender=settings.AUTH_USER_MODEL)
+
+ 
     def save_student_profile(sender, instance, **kwargs):
         instance.student.save()
+
+    def create(self, validated_data):
+        return Student.objects.create(**validated_data)
 
     @classmethod
     def get_students(cls):
@@ -146,20 +180,22 @@ class Project(models.Model):
     Project class to define project objects
     '''
     
-    owner=models.ForeignKey(CustomUser,on_delete=models.CASCADE, related_name="my_project", null=True)
+
+    owner=models.ForeignKey(Student,on_delete=models.CASCADE, related_name="projects_owned", null=True)
     cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
     style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
 
-    scrum=models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="scrum", blank=True, null=True)
-    member=models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="member", blank=True, null=True)
-    #dev1=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev1", blank=True, null=True)
-    #dev2=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev2", blank=True, null=True)
-    #dev3=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev3", blank=True, null=True)
-    #dev4=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev4", blank=True, null=True)
-    #dev5=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev5", blank=True, null=True)
-    #dev6=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev6", blank=True, null=True)
-    #dev7=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev7", blank=True, null=True)
-    #dev8=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev8", blank=True, null=True)
+    scrum=models.ForeignKey(Student, on_delete=models.SET_NULL, related_name="is_scrum", blank=True, null=True)
+    member=models.ManyToManyField(Student, related_name="is_dev", blank=True)
+    #dev1=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev1", blank=True, null=True)
+    #dev2=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev2", blank=True, null=True)
+    #dev3=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev3", blank=True, null=True)
+    #dev4=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev4", blank=True, null=True)
+    #dev5=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev5", blank=True, null=True)
+    #dev6=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev6", blank=True, null=True)
+    #dev7=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev7", blank=True, null=True)
+    #dev8=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev8", blank=True, null=True)
+
 
     title=models.CharField(max_length=30, null=True)
     project_image=models.ImageField(upload_to='images/projects/', blank=True, default = 0, null=True)
@@ -168,6 +204,9 @@ class Project(models.Model):
 
     date=models.DateField(auto_now=True, blank=True, null=True)
 
+
+    def create(self, validated_data):
+        return Project.objects.create(**validated_data)
 
     def delete_project(self):
         self.delete()

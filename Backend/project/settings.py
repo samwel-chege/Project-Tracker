@@ -7,6 +7,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+#import django_filters
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,9 +19,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-qzk08=()s(#j()bq&f*fbk*7voz+g3sw*9j%7*ej$d%mvg=eff'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+#DEBUG = os.environ.get('DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS =['*']
 
@@ -39,18 +42,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Trackerapp',
-
     'cloudinary',
+
+    'rest_framework',
+    'django_bootstrap5',
+    'django_filters',
+
     'bootstrap4',
     'django_registration',
     'crispy_forms',
     'crispy_bootstrap5',
     'drf_yasg',
-    'rest_framework',
+    
 
 
 
     
+
 
 ]
 
@@ -91,9 +99,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tracker',
-        'USER': 'sammie',
-        'PASSWORD': 'samm',
+        'NAME': 'trackerdb001',
+        'USER': 'oscar',
+        'PASSWORD': '123456789',
     }
 }
 
@@ -143,6 +151,14 @@ STATICFILES_DIRS = [
 
 # rest_framework
 REST_FRAMEWORK = {
+
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ]
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+
    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -150,6 +166,7 @@ REST_FRAMEWORK = {
    ),
     'NON_FIELD_ERRORS': 'error',
     
+
 }
 
 # Default primary key field type
