@@ -42,7 +42,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 class CohortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cohort
-        fields = ('name', 'details', 'style')
+        fields = ('name', 'details')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
@@ -73,3 +73,12 @@ class NewStudentSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Student(**validated_data)
+
+
+class NewCohortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cohort
+        fields = ('name', 'details')
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)

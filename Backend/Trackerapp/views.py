@@ -212,6 +212,21 @@ class NewStudentView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class NewCohortView(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    serializer_class = NewCohortSerializer
+
+    def post(self, request, format=None):
+        serializers = NewCohortSerializer(data=request.data)
+
+        if serializers.is_valid():
+            serializers.save()
+
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 class StudentSearch(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer

@@ -29,6 +29,7 @@ class CustomUserAdmin(UserAdmin):
 class ProjectAdmin(admin.ModelAdmin):
     model = Project
     filter_horizontal = ('member',)
+    
 
 admin.site.register(CustomUser,CustomUserAdmin,)
 admin.site.register(Cohort)

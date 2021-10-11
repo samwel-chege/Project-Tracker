@@ -60,6 +60,9 @@ urlpatterns = [
     # Cohort Profile by id
     url(r'api/cohorts/(?P<pk>[0-9]+)/$', CohortProfileView.as_view(), name='api_cohort'),
 
+    # Create new Cohort
+    url(r'^api/cohorts/new/$', NewCohortView.as_view(), name='api_new_cohort'),
+
     # All Cohort Members
     url(r'api/cohorts/(?P<pk>[0-9]+)/members/$', CohortMembersView.as_view(), name='api_cohort_members'),
 
