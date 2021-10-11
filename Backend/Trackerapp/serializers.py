@@ -1,6 +1,7 @@
 from django.db.models import fields
 from rest_framework import serializers
-from rest_framework_simplejwt.tokens import Token
+from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.tokens import RefreshToken, Token
 from .models import CustomUser
 from django.contrib import auth
 from rest_framework.exceptions import AuthenticationFailed
@@ -105,3 +106,22 @@ class SetNewPasswordSerializer(serializers.Serializer):
             raise AuthenticationFailed('The password reset link is invalid', 401)
 
         return super().validate(attrs)
+
+
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    default_error_messages = {
+        'invalid_token': ('Token is expired or invalid')
+
+    }
+    def validate(self, attrs):
+        self.token = attrs['refresh']
+        return attrs
+
+    def save(self, **kwargs):
+
+        try:
+            RefreshToken(self.token).blacklist()
+        except TokenError:
+            self.fail('invalid_token')
