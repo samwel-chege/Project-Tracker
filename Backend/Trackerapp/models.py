@@ -11,7 +11,7 @@ import datetime as dt
 # Create your models here.
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, email, password=None, commit=True):
 
         if username is None:
             raise ValueError('Users must have a username')
@@ -21,7 +21,8 @@ class UserManager(BaseUserManager):
 
         user=self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
-        user.save()
+        if commit:
+            user.save(using=self._db)
         return user
 
     def create_superuser(self, username, email, password=None):
