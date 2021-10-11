@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import os
+import datetime
 
 import cloudinary
 import cloudinary.uploader
@@ -152,6 +153,11 @@ REST_FRAMEWORK = {
     
 }
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
