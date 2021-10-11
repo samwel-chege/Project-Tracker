@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from project import settings
 
 import datetime as dt
+import django_filters
 
 
 # Create your models here.
@@ -70,30 +71,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 
-class DevStyle(models.Model):
-    '''
-    DevStyle class to define the project development style
-    '''
-    
-    name=models.CharField(max_length=10, null=True)
-    description = models.CharField(max_length=100, null=True, default="A development style.")
-
-    def create(self, validated_data):
-        return DevStyle.objects.create(**validated_data)
-
-    @classmethod
-    def get_styles(cls):
-        all_styles = DevStyle.objects.all()
-        return all_styles
-
-    def save_style(self):
-        self.save()
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-
 class Cohort(models.Model):
     '''
     Cohort class to define Cohort objects
@@ -101,8 +78,6 @@ class Cohort(models.Model):
     
     name=models.CharField(max_length=20, null=True)
     details = models.CharField(max_length=100, null=True, blank=True, default="A Moringa cohort.")
-
-    style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="cohort")
 
     @classmethod
     def get_cohorts(cls):
@@ -113,6 +88,30 @@ class Cohort(models.Model):
         return Cohort.objects.create(**validated_data)
 
     def save_cohort(self):
+        self.save()
+
+    def __str__(self):
+        return f'{self.name}'
+
+
+
+class DevStyle(models.Model):
+    '''
+    DevStyle class to define the project development style
+    '''
+    
+    name=models.CharField(max_length=10, null=True)
+    description = models.CharField(max_length=100, null=True, default="A programming language/style.")
+
+    def create(self, validated_data):
+        return DevStyle.objects.create(**validated_data)
+
+    @classmethod
+    def get_styles(cls):
+        all_styles = DevStyle.objects.all()
+        return all_styles
+
+    def save_style(self):
         self.save()
 
     def __str__(self):
@@ -171,7 +170,7 @@ class Project(models.Model):
     style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
 
     scrum=models.ForeignKey(Student, on_delete=models.SET_NULL, related_name="is_scrum", blank=True, null=True)
-    member=models.ManyToManyField(Student, related_name="member", blank=True)
+    member=models.ManyToManyField(Student, related_name="is_dev", blank=True)
     #dev1=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev1", blank=True, null=True)
     #dev2=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev2", blank=True, null=True)
     #dev3=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, related_name="dev3", blank=True, null=True)
@@ -208,11 +207,6 @@ class Project(models.Model):
     def get_project_by_id(cls, id):
         project_found = cls.objects.get(pk=id)
         return project_found
-
-    # @classmethod
-    # def get_projects_by_style(cls, style):
-    #     project_found = cls.objects.get(pk=style)
-    #     return project_by_style
 
     def save_project(self):
         self.save()

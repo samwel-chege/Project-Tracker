@@ -2,18 +2,18 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render,redirect, resolve_url
-from rest_framework import generics, serializers, status
+from django.http import Http404
+
+from rest_framework import generics, serializers, status, filters
 from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
+from rest_framework.views import APIView
 
 from .models import *
-from .serializers import RegisterSerializer
-
-from rest_framework.views import APIView
 from .serializers import *
-from rest_framework import status
 from .permissions import *
-from rest_framework.renderers import TemplateHTMLRenderer
-from django.http import Http404
+
+import django_filters
 
 
 # Create your views here.
@@ -48,22 +48,16 @@ class RegisterView(generics.GenericAPIView):
         return Response(user_data, status=status.HTTP_201_CREATED)
 
 
-class StudentsView(APIView):
-
-    def get(self, request, format=None):
-        all_students = Student.objects.all()
-        serializers = StudentSerializer(all_students, many=True)
-
-        return Response(serializers.data)
+class ProjectList(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    filterset_fields = ['cohort', 'style', 'owner']
 
 
-class ProjectsView(APIView):
-
-    def get(self, request, format=None):
-        all_projects = Project.objects.all()
-        serializers = ProjectSerializer(all_projects, many=True)
-
-        return Response(serializers.data)
+class StudentList(generics.ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    filterset_fields = ['cohort',]
 
 
 class CohortsView(APIView):
@@ -212,3 +206,17 @@ class NewStudentView(APIView):
             return Response(serializers.data, status=status.HTTP_201_CREATED)
 
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentSearch(generics.ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['user__username', 'email']
+
+
+class ProjectSearch(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'owner__user__username']
