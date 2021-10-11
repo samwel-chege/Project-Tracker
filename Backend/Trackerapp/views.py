@@ -1,8 +1,10 @@
 from django.db.models.fields import IPAddressField
 from django.shortcuts import render
-from rest_framework import generics, serializers,status,views
+from rest_framework import generics, serializers,status,views, permissions
 from .models import CustomUser
-from .serializers import RegisterSerializer, EmailVerificationSerializer, SetNewPasswordSerializer, LoginSerializer, ResetPasswordEmailRequestSerializer
+from .serializers import (
+    RegisterSerializer, EmailVerificationSerializer, SetNewPasswordSerializer,
+     LoginSerializer, ResetPasswordEmailRequestSerializer, LogoutSerializer)
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken, Token
 from .utils import Util
@@ -125,3 +127,15 @@ class SetNewPasswordAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
         return Response({'success':True, 'message': 'Password has been set successfully'}, status=status.HTTP_200_OK)
 
+
+class LogoutAPIView(generics.GenericAPIView):
+    serializer_class = LogoutSerializer
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
