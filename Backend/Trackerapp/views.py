@@ -12,6 +12,7 @@ import jwt
 from django.conf import settings
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from .renderers import UserRender
  
 
 
@@ -19,6 +20,7 @@ from drf_yasg import openapi
 class RegisterView(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
+    renderer_classes = (UserRender,)
 
     def post(self, request):
         user = request.data
