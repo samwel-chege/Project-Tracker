@@ -61,7 +61,7 @@ class StudentList(generics.ListAPIView):
 
 
 class CohortsView(APIView):
-    
+    permission_classes = (IsAdminOrReadOnly,)
     def get(self, request, format=None):
         all_cohorts = Cohort.objects.all()
         serializers = CohortSerializer(all_cohorts, many=True)
@@ -70,7 +70,7 @@ class CohortsView(APIView):
 
 
 class StylesView(APIView):
-    
+    permission_classes = (IsAdminOrReadOnly,)
     def get(self, request, format=None):
         all_styles = DevStyle.objects.all()
         serializers = StyleSerializer(all_styles, many=True)
@@ -109,6 +109,7 @@ class CohortMembersView(APIView):
 
 
 class ProjectProfileView(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
     def get_project(self, pk):
         try:
             return Project.objects.get(pk=pk)
@@ -123,6 +124,7 @@ class ProjectProfileView(APIView):
 
 
 class CohortProfileView(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
     def get_cohort(self, pk):
         try:
             return Cohort.objects.get(pk=pk)
@@ -137,6 +139,7 @@ class CohortProfileView(APIView):
 
 
 class StyleProfileView(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
     def get_style(self, pk):
         try:
             return DevStyle.objects.get(pk=pk)
@@ -151,6 +154,7 @@ class StyleProfileView(APIView):
 
 
 class ProjectsByDevStyleView(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
     def get_style(self, pk):
         try:
             return DevStyle.objects.get(pk=pk)
