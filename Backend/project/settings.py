@@ -45,11 +45,12 @@ INSTALLED_APPS = [
     'django_registration',
     'crispy_forms',
     'crispy_bootstrap5',
+    'drf_yasg',
     'rest_framework',
 
 
 
-    'bootstrap5',
+    
 
 ]
 
@@ -142,11 +143,13 @@ STATICFILES_DIRS = [
 
 # rest_framework
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+   ),
+    'NON_FIELD_ERRORS': 'error',
+    
 }
 
 # Default primary key field type
@@ -162,6 +165,12 @@ cloudinary.config(
 
 
 )
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

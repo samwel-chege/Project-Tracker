@@ -1,13 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from cloudinary.models import CloudinaryField
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from django.db.models import ImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 import datetime as dt
-
 
 # Create your models here.
 
@@ -55,7 +54,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def tokens(self):
-        return ''
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh':str(refresh),
+            'access':str(refresh.access_token)
+        }
 
 
 
@@ -106,7 +109,7 @@ class Student(models.Model):
     Student class to define student objects
     '''
     
-    user=models.OneToOneField(User, on_delete=models.CASCADE, related_name="student", null=True)
+    user=models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="student", null=True)
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
     bio = models.CharField(max_length=500, null=True, blank=True, default="A student at Moringa School.")
@@ -117,12 +120,12 @@ class Student(models.Model):
     def __str__(self):
         return f'{self.user.username}'
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=CustomUser)
     def create_student_profile(sender, instance, created, **kwargs):
         if created:
             Student.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
+    @receiver(post_save, sender=CustomUser)
     def save_student_profile(sender, instance, **kwargs):
         instance.student.save()
 
@@ -143,12 +146,12 @@ class Project(models.Model):
     Project class to define project objects
     '''
     
-    owner=models.ForeignKey(User,on_delete=models.CASCADE, related_name="my_project", null=True)
+    owner=models.ForeignKey(CustomUser,on_delete=models.CASCADE, related_name="my_project", null=True)
     cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
     style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
 
-    scrum=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="scrum", blank=True, null=True)
-    member=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="member", blank=True, null=True)
+    scrum=models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="scrum", blank=True, null=True)
+    member=models.ForeignKey(CustomUser, on_delete=models.SET_NULL, related_name="member", blank=True, null=True)
     #dev1=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev1", blank=True, null=True)
     #dev2=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev2", blank=True, null=True)
     #dev3=models.ForeignKey(User, on_delete=models.SET_NULL, related_name="dev3", blank=True, null=True)
