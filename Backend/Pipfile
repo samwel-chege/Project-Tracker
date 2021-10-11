@@ -13,6 +13,8 @@ django-bootstrap4 = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
+psycopg2 = "*"
+pillow = "*"
 
 [dev-packages]
 
