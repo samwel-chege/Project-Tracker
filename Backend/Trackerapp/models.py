@@ -6,18 +6,13 @@ from django.contrib.auth.models import User
 from django.db.models import ImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from project import settings
-
-
 import datetime as dt
-import django_filters
-
 # Create your models here.
 
 # Custom usermanager class start
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None, commit=True):
+    def create_user(self, username, email, password):
 
         if username is None:
             raise ValueError('Users must have a username')
@@ -30,20 +25,16 @@ class UserManager(BaseUserManager):
 
         user=self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
-        if commit:
-            user.save(using=self._db)
+        user.save()
         return user
 
-    def create_superuser(self,email, username, password=None):
+    def create_superuser(self,email, username, password):
 
         if username is None:
             raise ValueError('Users must have a username')
 
         if password is None:
             raise ValueError('Password should not be none')
-
-
-        user=self.create_user(email, password)
 
         if email is None:
             raise ValueError("User must have an email")
@@ -62,7 +53,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True, db_index=True)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
