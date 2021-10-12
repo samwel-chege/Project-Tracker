@@ -15,6 +15,8 @@ djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 psycopg2 = "*"
 pillow = "*"
+django-bootstrap5 = "*"
+django-filter = "==21.1"
 
 [dev-packages]
 
