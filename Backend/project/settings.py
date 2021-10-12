@@ -36,6 +36,7 @@ AUTH_USER_MODEL='Trackerapp.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,17 +45,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Trackerapp',
     'cloudinary',
-
+    'django_filters',
     'rest_framework',
     'django_bootstrap5',
-    'django_filters',
 
     'bootstrap4',
     'django_registration',
     'crispy_forms',
     'crispy_bootstrap5',
     'drf_yasg',
-    'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
 
 
@@ -103,7 +102,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tracker',
-        'USER': 'sammie',
+        'USER': 'moringa',
         'PASSWORD': 'samm',
     }
 }
@@ -154,12 +153,6 @@ STATICFILES_DIRS = [
 
 # rest_framework
 REST_FRAMEWORK = {
-
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ]
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
    'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -174,7 +167,7 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
 }
 # Default primary key field type
@@ -204,3 +197,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+)
