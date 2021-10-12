@@ -2,12 +2,15 @@ from django.db.models import fields
 from rest_framework import serializers
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken, Token
-from .models import CustomUser
+from .models import *
+from rest_framework_simplejwt.tokens import Token
+from .models import CustomUser, Student, Project, Cohort, DevStyle
 from django.contrib import auth
 from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, smart_bytes, force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -28,6 +31,70 @@ class RegisterSerializer(serializers.ModelSerializer):
     
     def create(self, validated_data):
         return CustomUser.objects.create_user(**validated_data)
+
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ('user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
+
+    def create(self, validated_data):
+        return Student(**validated_data)
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
+class CohortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cohort
+        fields = ('name', 'details')
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)
+
+
+class StyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DevStyle
+        fields = ('name', 'description')
+
+    def create(self, validated_data):
+        return DevStyle(**validated_data)
+
+
+class NewProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
+class NewStudentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ('user', 'profile_pic', 'cohort', 'email', 'bio')
+
+    def create(self, validated_data):
+        return Student(**validated_data)
+
+
+class NewCohortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cohort
+        fields = ('name', 'details')
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)
 
 class EmailVerificationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=500)
