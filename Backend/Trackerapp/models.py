@@ -25,16 +25,16 @@ class UserManager(BaseUserManager):
             user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self,email, password=None):
 
         if password is None:
             raise ValueError('Password should not be none')
 
-        user=self.create_user(username, email, password)
+        user=self.create_user(email, password)
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
-        user.save()
+        user.save(using=self._db)
         return user
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
