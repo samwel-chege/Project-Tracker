@@ -13,7 +13,6 @@ from rest_framework.views import APIView
 from .models import *
 from .serializers import *
 from .permissions import *
-import django_filters
 from .models import CustomUser
 from .serializers import (
     RegisterSerializer, EmailVerificationSerializer, SetNewPasswordSerializer,
@@ -34,12 +33,20 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .utils import Util
+from django.http import HttpResponsePermanentRedirect
+import os
  
 
 
 
 # Create your views here.
 # Start of Authentication classes apiviews
+
+class CustomRedirect(HttpResponsePermanentRedirect):
+
+    allowed_schemes = [os.environ.get('APP_SCHEME'), 'http', 'https']
+
+
 
 class RegisterView(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
@@ -125,21 +132,33 @@ class PasswordTokenCheckAPI(generics.GenericAPIView):
 
 
     def get(self, request, uidb64, token):
-        
+
+        redirect_url = request.GET.get('redirect_url')
+
         try:
             id = smart_str(urlsafe_base64_decode(uidb64))
             user = CustomUser.objects.get(id=id)
 
 
             if not PasswordResetTokenGenerator().check_token(user, token):
-                return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
 
-            return Response(
-                {'success': True, 'message': 'Valid credentials', 'uidb64': uidb64, 'token': token}, status=status.HTTP_200_OK)
+                if len(redirect_url)>3:
+                    return CustomRedirect(redirect_url+'?token_valid=False')
+
+                else:
+                     return CustomRedirect(os.environ.get('FRONTEND_URL', '')+'?token_valid=False')
+
+            
+            if redirect_url and len(redirect_url)>3:
+                return CustomRedirect(redirect_url+'?token_valid=True&?message=Valid credentials&?uidb64='+uidb64+'&?token='+token)
+            else:
+                return CustomRedirect(os.environ.get('FRONTEND_URL', '')+'?token_valid=False')
+
 
 
         except DjangoUnicodeDecodeError:
-            return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_401_UNAUTHORIZED)
+                if not PasswordResetTokenGenerator().check_token(user, token):
+                    return CustomRedirect(redirect_url+'?token_valid=False')
 
 
 class SetNewPasswordAPIView(generics.GenericAPIView):
