@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import os
+import datetime
 
 import cloudinary
 import cloudinary.uploader
@@ -53,7 +54,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     'drf_yasg',
-    
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+
 
 
 
@@ -99,9 +102,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trackerdb001',
-        'USER': 'oscar',
-        'PASSWORD': '123456789',
+        'NAME': 'tracker',
+        'USER': 'sammie',
+        'PASSWORD': 'samm',
     }
 }
 
@@ -157,7 +160,7 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     # ]
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
    'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -169,6 +172,11 @@ REST_FRAMEWORK = {
 
 }
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
