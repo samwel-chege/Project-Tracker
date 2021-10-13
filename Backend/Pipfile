@@ -17,6 +17,8 @@ psycopg2 = "*"
 pillow = "*"
 django-bootstrap5 = "*"
 django-filter = "==21.1"
+faker = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
