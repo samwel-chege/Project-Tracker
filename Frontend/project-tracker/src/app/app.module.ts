@@ -20,7 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     NavbarComponent,
     HomeComponent,
-
     ProjectPageComponent,
     ProjectFormComponent,
     SignupComponent,
@@ -28,14 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     StudentProfileComponent
   ],
   imports: [
-    BrowserModule
-    
-
-    LoginComponent,
-    SignupComponent
-  ],
-  imports: [
     BrowserModule,
+    
     HttpClientModule,
     AppRoutingModule,
 
