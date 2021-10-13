@@ -3,7 +3,27 @@ from Trackerapp.models import CustomUser,Student, UserManager, Cohort, DevStyle,
 from django.contrib.auth import get_user_model
 
 # Create your tests here.
-    
+
+class UserManagerTest(TestCase):
+
+    def test_create_user(self):
+        user = get_user_model().objects.create_user(email='fredrick@g.com',username='Freddy', password = 'trackerapp123')
+        self.assertEqual(user.email, 'fredrick@g.com')
+        self.assertTrue(user.is_active)
+        self.assertFalse(user.is_staff)
+        self.assertFalse(user.is_superuser)
+
+    def test_create_superuser(self):
+        email_lowercase = 'normal@normal.com'
+        username = 'Wambua'
+        password = 'password1234$%&/'
+        user = get_user_model().objects.create_superuser(email_lowercase, username, password)
+        self.assertEqual(user.email, email_lowercase)
+        self.assertEqual(user.username, username)
+        self.assertTrue(user.check_password, password)
+        self.assertTrue(user.is_active)
+        self.assertTrue(user.is_staff)
+        self.assertTrue(user.is_superuser)
 
 
 class CohortTestClass(TestCase):
