@@ -78,7 +78,7 @@ class ProjectSerializer(serializers.ModelSerializer):
     #     slug_field='email'
     # )
 
-    # member = serializers.SlugRelatedField(
+    # members = serializers.SlugRelatedField(
     #     many=True,
     #     read_only=True,
     #     slug_field='email'
@@ -96,7 +96,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id', 'title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')
+        fields = ('id', 'title', 'project_image', 'description', 'owner', 'scrum', 'members', 'cohort', 'style', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project(**validated_data)
@@ -304,10 +304,10 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 class UpdateProjectMembersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('member',)
+        fields = ('members',)
 
     def update(self, instance, validated_data):
-        instance.member = validated_data['member']
+        instance.members = validated_data['members']
 
         instance.save()
 

@@ -182,7 +182,7 @@ class Project(models.Model):
     style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
 
     scrum=models.ForeignKey(Student, on_delete=models.SET_NULL, related_name="is_scrum", blank=True, null=True)
-    member=models.ManyToManyField(Student, related_name="is_dev", blank=True)
+    members=models.ManyToManyField(Student, related_name="is_dev", blank=True)
 
     title=models.CharField(max_length=30, null=True)
     project_image=models.ImageField(upload_to='images/projects/', blank=True, default = 0, null=True)

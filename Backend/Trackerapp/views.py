@@ -56,19 +56,21 @@ class RegisterView(generics.GenericAPIView):
 
 
 class ProjectList(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filterset_fields = ['cohort', 'style', 'owner']
 
 
 class StudentList(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     filterset_fields = ['cohort',]
 
 
 class CohortsView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get(self, request, format=None):
         all_cohorts = Cohort.objects.all()
         serializers = CohortSerializer(all_cohorts, many=True)
@@ -77,7 +79,7 @@ class CohortsView(APIView):
 
 
 class StylesView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get(self, request, format=None):
         all_styles = DevStyle.objects.all()
         serializers = StyleSerializer(all_styles, many=True)
@@ -86,7 +88,7 @@ class StylesView(APIView):
 
 
 class StudentProfileView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_student(self, pk):
         try:
             return Student.objects.get(pk=pk)
@@ -101,6 +103,7 @@ class StudentProfileView(APIView):
 
 
 class CohortMembersView(APIView):
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_cohort(self, pk):
         try:
             return Cohort.objects.get(pk=pk)
@@ -116,7 +119,7 @@ class CohortMembersView(APIView):
 
 
 class ProjectProfileView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_project(self, pk):
         try:
             return Project.objects.get(pk=pk)
@@ -129,9 +132,16 @@ class ProjectProfileView(APIView):
         serializers = ProjectSerializer(project)
         return Response(serializers.data)
 
+    def delete(self, request, pk, format=None):
+        project = self.get_project(pk)
+        if project:
+            project.delete()
+            return Response({"status":"ok"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class CohortProfileView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_cohort(self, pk):
         try:
             return Cohort.objects.get(pk=pk)
@@ -146,7 +156,7 @@ class CohortProfileView(APIView):
 
 
 class StyleProfileView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_style(self, pk):
         try:
             return DevStyle.objects.get(pk=pk)
@@ -161,7 +171,7 @@ class StyleProfileView(APIView):
 
 
 class ProjectsByDevStyleView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_style(self, pk):
         try:
             return DevStyle.objects.get(pk=pk)
@@ -177,6 +187,7 @@ class ProjectsByDevStyleView(APIView):
 
 
 class ProjectsByCohortView(APIView):
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_cohort(self, pk):
         try:
             return Cohort.objects.get(pk=pk)
@@ -192,6 +203,7 @@ class ProjectsByCohortView(APIView):
 
 
 class NewProjectView(APIView):
+    permission_classes = (IsAuthenticated,)
     serializer_class = NewProjectSerializer
 
     def post(self, request, format=None):
@@ -220,7 +232,7 @@ class NewProjectView(APIView):
 
 
 class NewCohortView(APIView):
-    permission_classes = (IsAdminOrReadOnly,)
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     serializer_class = NewCohortSerializer
 
     def post(self, request, format=None):
@@ -235,6 +247,7 @@ class NewCohortView(APIView):
 
 
 class StudentSearch(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     filter_backends = [filters.SearchFilter]
@@ -242,6 +255,7 @@ class StudentSearch(generics.ListAPIView):
 
 
 class ProjectSearch(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [filters.SearchFilter]
