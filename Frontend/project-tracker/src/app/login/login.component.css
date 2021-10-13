@@ -1,48 +1,86 @@
-input,
-button {
+.image{
+  width: 70px;
+  float: left;
+  margin-left: 5%;
+  border-radius: 20px;
+  margin-top: 1%;
+  
+}
+form{
+  float: left;
+  /* margin-right: 10%; */
+  background-color: #28C2C6;
+  width: 80vh;
+  height: 52vh;
+  /* align-items: center; */
+  text-align: center;
+  border-radius: 20px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.btn{
+  background-color: #eb9d0d;
   border-radius: 20px;
   width: 30%;
   height: 5vh;
+  margin-top: 1%;
 }
+input{
+  border-radius: 20px;
+ 
+  text-align: center;
+  align-items: center;
+  
+}
+
 label {
   margin: 10px auto;
   color: #FFA500;
   text-align: right !important;
-  font-size: 26px;
+  font-size: 20px;
+}
+
+.form-control{
+  text-align: center;
+
 }
 .form-group{
-padding-top: 20px;
+padding-top: 10px;
  align-items: center;
  text-align: center;
- width: 100%;
+ width: 50%;
+ margin-left: 25%;
 }
-.bcol {
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  background-color: #28C2C6;
-  margin: 0px 20%;
-  border-radius: 20px;
+#col1{
+  float: right;
 }
-button {
-    border-radius: 15px;
-    width: 10%;
-    height: 5vh;
-    margin-top: 10px;
-    background-color:#ffa500 ;
-  }
+
   h1,a {
     text-align:center;
     color: #fff;
   }
-  .account{
+  /* .account{
     text-align:center;
-  }
+  } */
   footer{
    display: flex;
    width: 100%;
   }
-.contact{
+/* .contact{
   width: 50%;
   text-align: right;
-}
+} */
+/* form{
+  float: right;
+  
+} */
+/* Img{
+  float: left;
+  opacity: 0.7;
+  background: #8B50E8;
+  
+} */
+/* .image{
+  background: #8B50E8;
+} */
