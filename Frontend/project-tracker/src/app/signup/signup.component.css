@@ -1,0 +1,40 @@
+input,
+button {
+  border-radius: 20px;
+  width: 30%;
+  height: 5vh;
+}
+label {
+  margin: 10px auto;
+  color: #ffa500;
+  text-align: right !important;
+  font-size: 26px;
+}
+.form-group{
+padding-top: 20px;
+ align-items: center;
+ text-align: center;
+ width: 100%;
+}
+.bcol {
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: #28c2c6;
+  margin: 0px 20%;
+  border-radius: 20px;
+}
+button {
+    border-radius: 15px;
+    width: 10%;
+    height: 5vh;
+    margin-top: 10px;
+    background-color:#ffa500 ;
+  }
+  h1,a {
+    text-align:center;
+    color: #fff;
+  }
+  .account{
+    text-align:center;
+  }

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'Trackerapp',
     'cloudinary',
 
-    'rest_framework',
+   
     'django_bootstrap5',
     'django_filters',
 
