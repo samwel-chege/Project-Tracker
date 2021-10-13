@@ -1,7 +1,8 @@
 .container-fluid{
     background-color: #afb7b8;
-    height: 560px;
+    height: 80vh;
     justify-content: center;
-    
-    /* background-image: url(./assets/images/natalie-pedigo-wJK9eTiEZHY-unsplash.jpg); */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url(/assets/images/natalie-pedigo-wJK9eTiEZHY-unsplash.jpg); 
 }

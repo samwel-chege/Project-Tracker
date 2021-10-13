@@ -1,0 +1,57 @@
+
+#top{
+  margin-top:2%;
+  margin-left:5%;
+ }
+ input{
+   border-radius: 15px;
+   width: 400px;
+   margin-right: auto;
+   margin-left: auto;
+ }
+ 
+ label {
+   color: #ffa500;
+   font-size: 26px;
+ }
+ 
+ .bcol {
+  align-items: center;
+  text-align: center;
+  background-color: #28c2c6;
+  border-radius: 20px;
+  width: 150%;
+  margin-left: 10%;
+  height: 60vh;
+  margin-bottom: 5vh;
+ }
+ 
+ button {
+     border-radius: 15px;
+     margin-top: 10px;
+     background-color:#ffa500 ;
+   }
+ #form{
+   margin-left: auto;
+   margin-top: auto;
+ }
+ .flr{
+   margin-left: auto;
+   margin-top: auto;
+ }
+   h1,a {
+     text-align:center;
+     color: #fff;
+   }
+   .contact{
+     margin-top: auto;
+     margin-right: auto;
+   margin-left: auto;
+   } 
+ 
+   footer {
+     background-color:#28c2c6;
+     height: 31vh;
+   }
+   
+ 
