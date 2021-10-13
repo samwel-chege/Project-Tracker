@@ -17,7 +17,6 @@ urlpatterns = [
     path('accountverify/', VerifyEmail.as_view(), name='accountverify'),
 
 
-    #url(r'^api/students/new/$', NewStudentView.as_view(), name='api_new_student'),    # Create new Student
     url(r'api/students/all/$', StudentList.as_view(), name='api_students'),    # All Students
     url(r'^api/students/(?P<pk>[0-9]+)/update/$', UpdateStudentProfileView.as_view(), name='api_update_student'),    # Update Student Profile
     url(r'api/students/(?P<pk>[0-9]+)/$', StudentProfileView.as_view(), name='api_student'),    # Student Profile by id
@@ -31,6 +30,7 @@ urlpatterns = [
 
 
     url(r'^api/styles/all/$', StylesView.as_view(), name='api_styles'),    # All Languages/Development Styles
+    url(r'^api/styles/new/$', NewStyleView.as_view(), name='api_new_style'),    # Create new Style
     url(r'api/styles/(?P<pk>[0-9]+)/$', StyleProfileView.as_view(), name='api_style'),    # DevStyle profile by id
     url(r'api/styles/(?P<pk>[0-9]+)/projects/$', ProjectsByDevStyleView.as_view(), name='api_projects_style'),    # All Projects filtered by DevStyle
 

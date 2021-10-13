@@ -134,7 +134,7 @@ class ProjectProfileView(APIView):
 
     def delete(self, request, pk, format=None):
         project = self.get_project(pk)
-        if project:
+        if project and project.owner.user==request.user:
             project.delete()
             return Response({"status":"ok"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -203,6 +203,7 @@ class ProjectsByCohortView(APIView):
 
 
 class NewProjectView(APIView):
+    queryset = Project.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = NewProjectSerializer
 
@@ -217,26 +218,27 @@ class NewProjectView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class NewStudentView(APIView):
-#     serializer_class = NewStudentSerializer
-
-#     def post(self, request, format=None):
-#         serializers = NewStudentSerializer(data=request.data)
-
-#         if serializers.is_valid():
-#             serializers.save()
-
-#             return Response(serializers.data, status=status.HTTP_201_CREATED)
-
-#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
 class NewCohortView(APIView):
     permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     serializer_class = NewCohortSerializer
 
     def post(self, request, format=None):
         serializers = NewCohortSerializer(data=request.data)
+
+        if serializers.is_valid():
+            serializers.save()
+
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class NewStyleView(APIView):
+    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    serializer_class = NewStyleSerializer
+
+    def post(self, request, format=None):
+        serializers = NewStyleSerializer(data=request.data)
 
         if serializers.is_valid():
             serializers.save()

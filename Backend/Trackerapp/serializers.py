@@ -170,6 +170,19 @@ class NewCohortSerializer(serializers.ModelSerializer):
         return Cohort(**validated_data)
 
 
+class NewStyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DevStyle
+        fields = ('name', 'description')
+
+    def create(self, instance, validated_data):
+        instance.name = validated_data['name']
+        instance.details = validated_data['description']
+
+        instance.save()
+        return DevStyle(**validated_data)
+
+
 class EmailVerificationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=500)
 
@@ -187,6 +200,7 @@ class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model= CustomUser
         fields = ['email', 'username', 'password', 'tokens']
+        
     def validate(self, attrs):
         email=attrs.get('email', '')
         password=attrs.get('password', '')
