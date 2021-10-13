@@ -1,40 +1,66 @@
-input,
-button {
-  border-radius: 20px;
-  width: 30%;
-  height: 5vh;
+
+#top{
+ margin-top:2%;
+ margin-left:5%;
 }
+input{
+  border-radius: 15px;
+  width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 label {
-  margin: 10px auto;
   color: #ffa500;
-  text-align: right !important;
   font-size: 26px;
 }
-.form-group{
-padding-top: 20px;
- align-items: center;
- text-align: center;
- width: 100%;
-}
+
 .bcol {
   align-items: center;
   text-align: center;
-  padding: 20px;
   background-color: #28c2c6;
-  margin: 0px 20%;
   border-radius: 20px;
+  width: 150%;
+  margin-left: 10%;
 }
+
 button {
     border-radius: 15px;
-    width: 10%;
-    height: 5vh;
     margin-top: 10px;
     background-color:#ffa500 ;
   }
+#form{
+  margin-left: auto;
+  margin-top: auto;
+}
+.flr{
+  margin-left: auto;
+  margin-top: auto;
+}
+
   h1,a {
     text-align:center;
     color: #fff;
   }
-  .account{
-    text-align:center;
+  .contact{
+    margin-top: auto;
+    margin-right: auto;
+  margin-left: auto;
+  } 
+
+  footer {
+    background-color:#28c2c6;
+    height: 30vh;
   }
+  
+
+  .nav-item{
+    background-color: #28C2C6;
+    border-radius: 20%;
+    margin: 10px;
+} 
+.navbar-brand{
+  color: #28C2C6;
+}
+
+  
