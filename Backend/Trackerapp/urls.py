@@ -8,9 +8,6 @@ from rest_framework_simplejwt.views import TokenRefreshView
 
 from django.conf.urls import url, include
 from .views import *
-
-from .views import RegisterView, VerifyEmail, LoginAPIView
-
 from django.contrib.auth.views import LoginView, LogoutView
 from rest_framework import views
 from django.conf import settings
@@ -18,7 +15,6 @@ from django.conf.urls.static import static
 from django.http import Http404
 
 urlpatterns = [
-    path('register', RegisterView.as_view(), name='register'),
 
 
     # path('signup/', views.signup, name='signup'),
@@ -81,6 +77,7 @@ urlpatterns = [
     url(r'api/cohorts/(?P<pk>[0-9]+)/projects/$', ProjectsByCohortView.as_view(), name='api_projects_cohort'),
 
 # authentication url paths
+    path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginAPIView.as_view(), name='login'),
     path('logout/', LogoutAPIView.as_view(), name='logout'),
     path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
