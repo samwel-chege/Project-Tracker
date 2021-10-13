@@ -45,8 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Trackerapp',
     'cloudinary',
-    'django_filters',
-    'rest_framework',
     'django_bootstrap5',
     'corsheaders',
     'bootstrap4',
