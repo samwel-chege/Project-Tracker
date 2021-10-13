@@ -124,28 +124,51 @@ class StyleSerializer(serializers.ModelSerializer):
 class NewProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('id','title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
 
-    def create(self, validated_data):
+    def create(self, instance, validated_data):
+        instance.title = validated_data['title']
+        instance.project_image = validated_data['project_image']
+        instance.description = validated_data['description']
+        instance.owner = validated_data['owner']
+        instance.scrum = validated_data['scrum']
+        instance.cohort = validated_data['cohort']
+        instance.style = validated_data['style']
+        instance.github_link = validated_data['github_link']
+        instance.date = validated_data['date']
+
+        instance.save()
         return Project(**validated_data)
 
 
-class NewStudentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Student
-        fields = ('id', 'user', 'profile_pic', 'cohort', 'email', 'bio')
+# class NewStudentSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Student
+#         fields = ('user', 'profile_pic', 'cohort', 'email', 'bio')
 
-    def create(self, validated_data):
-        return Student(**validated_data)
+#     def create(self, validated_data):
+#         instance.user = validated_data['user']
+#         instance.profile_pic = validated_data['profile_pic']
+#         instance.cohort = validated_data['cohort']
+#         instance.email = validated_data['email']
+#         instance.bio = validated_data['bio']
+
+#         instance.save()
+#         return Student(**validated_data)
 
 
 class NewCohortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cohort
-        fields = ('id', 'name', 'details')
+        fields = ('name', 'details')
 
-    def create(self, validated_data):
+    def create(self, instance, validated_data):
+        instance.name = validated_data['name']
+        instance.details = validated_data['details']
+
+        instance.save()
         return Cohort(**validated_data)
+
 
 class EmailVerificationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=500)
@@ -153,6 +176,7 @@ class EmailVerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['token']
+
 
 class LoginSerializer(serializers.ModelSerializer):
     email=serializers.EmailField(max_length=255, min_length=3)
@@ -188,3 +212,103 @@ class LoginSerializer(serializers.ModelSerializer):
 
         return super().validate(attrs)
 
+
+class UpdateCustomUserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'email')
+        extra_kwargs = {
+            'username': {'required': True},
+        }
+
+    def validate_email(self, value):
+        user = self.context['request'].user
+
+        if CustomUser.objects.exclude(pk=user.pk).filter(email=value).exists():
+            raise serializers.ValidationError({"email": "This email is already in use."})
+
+        return value
+
+    def validate_username(self, value):
+
+        user = self.context['request'].user
+        if CustomUser.objects.exclude(pk=user.pk).filter(username=value).exists():
+            raise serializers.ValidationError({"username": "This username is already in use."})
+
+        return value
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data['email']
+        instance.username = validated_data['username']
+
+        instance.save()
+
+        return instance
+
+
+class UpdateStudentProfileSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+
+    class Meta:
+        model = Student
+        fields = ('profile_pic', 'cohort', 'email', 'bio')
+        extra_kwargs = {
+            'cohort': {'required': True},
+        }
+
+    def validate_email(self, value):
+        user = self.context['request'].user
+
+        if Student.objects.exclude(pk=user.pk).filter(email=value).exists():
+            raise serializers.ValidationError({"email": "This email is already in use."})
+
+        return value
+
+    def update(self, instance, validated_data):
+        instance.profile_pic = validated_data['profile_pic']
+        instance.cohort = validated_data['cohort']
+        instance.email = validated_data['email']
+        instance.bio = validated_data['bio']
+
+        instance.save()
+
+        return instance
+
+
+class UpdateProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link')
+        extra_kwargs = {
+            'title': {'required': True},
+            'style': {'required': True},
+        }
+
+    def update(self, instance, validated_data):
+        instance.title = validated_data['title']
+        instance.project_image = validated_data['project_image']
+        instance.description = validated_data['description']
+        instance.owner = validated_data['owner']
+        instance.scrum = validated_data['scrum']
+        instance.cohort = validated_data['cohort']
+        instance.style = validated_data['style']
+        instance.github_link = validated_data['github_link']
+
+        instance.save()
+
+        return instance
+
+
+class UpdateProjectMembersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('member',)
+
+    def update(self, instance, validated_data):
+        instance.member = validated_data['member']
+
+        instance.save()
+
+        return instance

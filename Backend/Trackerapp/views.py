@@ -9,6 +9,7 @@ from rest_framework import generics, serializers, status, filters
 from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from .models import *
 from .serializers import *
 from .permissions import *
@@ -45,30 +46,13 @@ class RegisterView(generics.GenericAPIView):
         token = RefreshToken.for_user(user).access_token
 
         current_site=get_current_site(request).domain
-        relativeLink=reverse('email-verify')
+        relativeLink=reverse('accountverify')
         absoluteurl = 'http://'+current_site+relativeLink+"?token="+str(token)
         email_body='Click on the link below to verify your email  \n'+ absoluteurl
         data={'email_body':email_body,'to_email':user.email, 'email_subject':'Verify your email'}
 
         Util.send_email(data)
         return Response(user_data, status=status.HTTP_201_CREATED)
-
-
-# class VerifyEmail(views.APIView):
-#     serializer_class = EmailVerificationSerializer
-#     token_param_config = openapi.Parameter(
-#         'token', in_=openapi.IN_QUERY, description='Description', type=openapi.TYPE_STRING)
-
-#     @swagger_auto_schema(manual_parameters=[token_param_config])
-#     def get(self, request):
-#         token=request.GET.get('token')
-#         try:
-#             payload = jwt.decode(token, settings.SECRET_KEY,algorithms=['HS256'])
-#             user = CustomUser.objects.get(id=payload['user_id'])
-#             if not user.is_verified:
-#                 user.is_verified = True
-#                 user.save()
-#             return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
 
 
 class ProjectList(generics.ListAPIView):
@@ -221,18 +205,18 @@ class NewProjectView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class NewStudentView(APIView):
-    serializer_class = NewStudentSerializer
+# class NewStudentView(APIView):
+#     serializer_class = NewStudentSerializer
 
-    def post(self, request, format=None):
-        serializers = NewStudentSerializer(data=request.data)
+#     def post(self, request, format=None):
+#         serializers = NewStudentSerializer(data=request.data)
 
-        if serializers.is_valid():
-            serializers.save()
+#         if serializers.is_valid():
+#             serializers.save()
 
-            return Response(serializers.data, status=status.HTTP_201_CREATED)
+#             return Response(serializers.data, status=status.HTTP_201_CREATED)
 
-        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+#         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class NewCohortView(APIView):
@@ -262,11 +246,6 @@ class ProjectSearch(generics.ListAPIView):
     serializer_class = ProjectSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['title', 'owner__user__username']
-
-    # except jwt.ExpiredSignatureError as identifier:
-    #     return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
-    # except jwt.exceptions.DecodeError as identifier:
-    #     return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_400_BAD_REQUEST)
     
 
 class LoginAPIView(generics.GenericAPIView):
@@ -277,3 +256,50 @@ class LoginAPIView(generics.GenericAPIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
+class VerifyEmail(APIView):
+    serializer_class = EmailVerificationSerializer
+    token_param_config = openapi.Parameter(
+        'token', in_=openapi.IN_QUERY, description='Description', type=openapi.TYPE_STRING)
+
+    @swagger_auto_schema(manual_parameters=[token_param_config])
+    
+    def get(self, request):
+        token=request.GET.get('token')
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY,algorithms=['HS256'])
+            user = CustomUser.objects.get(id=payload['user_id'])
+            if not user.is_verified:
+                user.is_verified = True
+                user.save()
+
+            return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
+
+        except jwt.ExpiredSignatureError as identifier:
+            return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
+        except jwt.exceptions.DecodeError as identifier:
+            return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UpdateCustomUserView(generics.UpdateAPIView): 
+    queryset = CustomUser.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UpdateCustomUserSerializer
+
+
+class UpdateStudentProfileView(generics.UpdateAPIView):  
+    queryset = Student.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UpdateStudentProfileSerializer
+
+
+class UpdateProjectView(generics.UpdateAPIView): 
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UpdateProjectSerializer
+
+
+class UpdateProjectMembersView(generics.UpdateAPIView): 
+    queryset = Project.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UpdateProjectMembersSerializer
