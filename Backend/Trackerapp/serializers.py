@@ -29,160 +29,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         return CustomUser.objects.create_user(**validated_data)
 
 
-
-class StudentSerializer(serializers.ModelSerializer):
-    projects_owned = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='title'
-    )
-
-    is_scrum = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='title'
-    )
-
-    is_dev = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='title'
-    )
-
-    cohort = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
-
-    user = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='username'
-    )
-
-    class Meta:
-        model = Student
-        fields = ('id', 'user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
-
-    def create(self, validated_data):
-        return Student(**validated_data)
-
-
-class ProjectSerializer(serializers.ModelSerializer):
-    # owner = serializers.SlugRelatedField(
-    #     read_only=True,
-    #     slug_field='email'
-    # )
-
-    # scrum = serializers.SlugRelatedField(
-    #     read_only=True,
-    #     slug_field='email'
-    # )
-
-    # members = serializers.SlugRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     slug_field='email'
-    # )
-
-    cohort = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
-
-    style = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='name'
-    )
-
-    class Meta:
-        model = Project
-        fields = ('id', 'title', 'project_image', 'description', 'owner', 'scrum', 'members', 'cohort', 'style', 'github_link', 'date')
-
-    def create(self, validated_data):
-        return Project(**validated_data)
-
-
-class CohortSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Cohort
-        fields = ('id', 'name', 'details')
-
-    def create(self, validated_data):
-        return Cohort(**validated_data)
-
-
-class StyleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DevStyle
-        fields = ('id', 'name', 'description')
-
-    def create(self, validated_data):
-        return DevStyle(**validated_data)
-
-
-class NewProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
-
-    def create(self, instance, validated_data):
-        instance.title = validated_data['title']
-        instance.project_image = validated_data['project_image']
-        instance.description = validated_data['description']
-        instance.owner = validated_data['owner']
-        instance.scrum = validated_data['scrum']
-        instance.cohort = validated_data['cohort']
-        instance.style = validated_data['style']
-        instance.github_link = validated_data['github_link']
-        instance.date = validated_data['date']
-
-        instance.save()
-        return Project(**validated_data)
-
-
-# class NewStudentSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Student
-#         fields = ('user', 'profile_pic', 'cohort', 'email', 'bio')
-
-#     def create(self, validated_data):
-#         instance.user = validated_data['user']
-#         instance.profile_pic = validated_data['profile_pic']
-#         instance.cohort = validated_data['cohort']
-#         instance.email = validated_data['email']
-#         instance.bio = validated_data['bio']
-
-#         instance.save()
-#         return Student(**validated_data)
-
-
-class NewCohortSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cohort
-        fields = ('name', 'details')
-
-    def create(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.details = validated_data['details']
-
-        instance.save()
-        return Cohort(**validated_data)
-
-
-class NewStyleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = DevStyle
-        fields = ('name', 'description')
-
-    def create(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.details = validated_data['description']
-
-        instance.save()
-        return DevStyle(**validated_data)
-
-
 class EmailVerificationSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=500)
 
@@ -227,6 +73,139 @@ class LoginSerializer(serializers.ModelSerializer):
         return super().validate(attrs)
 
 
+class CustomUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'username', 'email')
+
+    def create(self, validated_data):
+        return CustomUser(**validated_data)
+
+
+class StudentSerializer(serializers.ModelSerializer):
+    projects_owned = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
+
+    is_scrum = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
+
+    is_dev = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
+
+    cohort = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
+    user = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
+
+    class Meta:
+        model = Student
+        fields = ('id', 'user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
+
+    def create(self, validated_data):
+        return Student(**validated_data)
+
+
+class ProjectSerializer(serializers.ModelSerializer):
+    cohort = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
+    style = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
+    class Meta:
+        model = Project
+        fields = ('id', 'title', 'project_image', 'description', 'owner', 'scrum', 'members', 'cohort', 'style', 'github_link', 'date')
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
+class CohortSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Cohort
+        fields = ('id', 'name', 'details')
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)
+
+
+class StyleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DevStyle
+        fields = ('id', 'name', 'description')
+
+    def create(self, validated_data):
+        return DevStyle(**validated_data)
+
+
+class NewProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
+
+    def create(self, instance, validated_data):
+        instance.title = validated_data['title']
+        instance.project_image = validated_data['project_image']
+        instance.description = validated_data['description']
+        instance.owner = validated_data['owner']
+        instance.scrum = validated_data['scrum']
+        instance.cohort = validated_data['cohort']
+        instance.style = validated_data['style']
+        instance.github_link = validated_data['github_link']
+        instance.date = validated_data['date']
+
+        instance.save()
+        return Project(**validated_data)
+
+
+
+class NewCohortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cohort
+        fields = ('name', 'details')
+
+    def create(self, instance, validated_data):
+        instance.name = validated_data['name']
+        instance.details = validated_data['details']
+
+        instance.save()
+        return Cohort(**validated_data)
+
+
+class NewStyleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DevStyle
+        fields = ('name', 'description')
+
+    def create(self, instance, validated_data):
+        instance.name = validated_data['name']
+        instance.details = validated_data['description']
+
+        instance.save()
+        return DevStyle(**validated_data)
+
+
 class UpdateCustomUserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
 
@@ -262,7 +241,7 @@ class UpdateCustomUserSerializer(serializers.ModelSerializer):
         return instance
 
 
-class UpdateStudentProfileSerializer(serializers.ModelSerializer):
+class UpdateStudentSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True)
 
     class Meta:

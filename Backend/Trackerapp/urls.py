@@ -17,34 +17,29 @@ urlpatterns = [
     path('accountverify/', VerifyEmail.as_view(), name='accountverify'),
 
 
-    url(r'api/students/all/$', StudentList.as_view(), name='api_students'),    # All Students
-    url(r'^api/students/(?P<pk>[0-9]+)/update/$', UpdateStudentProfileView.as_view(), name='api_update_student'),    # Update Student Profile
-    url(r'api/students/(?P<pk>[0-9]+)/$', StudentProfileView.as_view(), name='api_student'),    # Student Profile by id
+    ## Cleaner urls
 
+    url(r'^api/users/$', CustomUsersList.as_view(), name='api_customusers'),    # All CustomUsers
+    url(r'^api/users/(?P<pk>[0-9]+)/$', CustomUserView.as_view(), name='api_customuser_profile'),    # CustomUserProfile
+    url(r'^api/users/(?P<pk>[0-9]+)/update/$', UpdateCustomUserView.as_view(), name='api_update_customuser'),    # Update CustomUser
 
-    url(r'api/projects/all/$', ProjectList.as_view(), name='api_projects'),    # All Projects
-    url(r'^api/projects/new/$', NewProjectView.as_view(), name='api_new_project'),    # Create new Project
-    url(r'api/projects/(?P<pk>[0-9]+)/$', ProjectProfileView.as_view(), name='api_project'),    # Project profile by id
-    url(r'^api/projects/(?P<pk>[0-9]+)/update/$', UpdateProjectView.as_view(), name='api_update_project'),    # Update Project
-    url(r'^api/projects/(?P<pk>[0-9]+)/update/members/$', UpdateProjectMembersView.as_view(), name='api_update_members'),    # Update Project Members
+    url(r'^api/cohorts/$', CohortsList.as_view(), name='api_cohorts'),    # Get all Cohorts + Create
+    url(r'api/cohorts/(?P<pk>[0-9]+)/$', CohortProfileView.as_view(), name='api_cohort'),    # Cohort by id + Delete
 
+    url(r'^api/styles/$', StylesList.as_view(), name='api_styles'),    # Get all Styles + Create
+    url(r'api/styles/(?P<pk>[0-9]+)/$', StyleProfileView.as_view(), name='api_style'),    # DevStyle by id + Delete
 
-    url(r'^api/styles/all/$', StylesView.as_view(), name='api_styles'),    # All Languages/Development Styles
-    url(r'^api/styles/new/$', NewStyleView.as_view(), name='api_new_style'),    # Create new Style
-    url(r'api/styles/(?P<pk>[0-9]+)/$', StyleProfileView.as_view(), name='api_style'),    # DevStyle profile by id
-    url(r'api/styles/(?P<pk>[0-9]+)/projects/$', ProjectsByDevStyleView.as_view(), name='api_projects_style'),    # All Projects filtered by DevStyle
+    url(r'^api/projects/$', ProjectsList.as_view(), name='api_projects'),    # Get all Projects
+    url(r'^api/projects/new/$', NewProjectView.as_view(), name='api_new_project'),    # Create new project
+    url(r'api/projects/(?P<pk>[0-9]+)/$', ProjectProfileView.as_view(), name='api_project'),    # Project by id + Delete + ProjectMembers
+    url(r'api/projects/(?P<pk>[0-9]+)/update/$', UpdateProjectView.as_view(), name='api_update_project'),    # Update Project
+    url(r'api/projects/(?P<pk>[0-9]+)/update/members/$', UpdateProjectMembersView.as_view(), name='api_update_projectmembers'),    # Update Project Members
 
-
-    url(r'^api/cohorts/all/$', CohortsView.as_view(), name='api_cohorts'),    # All Cohorts/Classes
-    url(r'^api/cohorts/new/$', NewCohortView.as_view(), name='api_new_cohort'),    # Create new Cohort
-    url(r'api/cohorts/(?P<pk>[0-9]+)/$', CohortProfileView.as_view(), name='api_cohort'),    # Cohort Profile by id
-    url(r'api/cohorts/(?P<pk>[0-9]+)/members/$', CohortMembersView.as_view(), name='api_cohort_members'),    # All Cohort Members
-    url(r'api/cohorts/(?P<pk>[0-9]+)/projects/$', ProjectsByCohortView.as_view(), name='api_projects_cohort'),    # All Projects filtered by Cohort
-
+    url(r'^api/students/$', StudentsList.as_view(), name='api_students'),    # Get all Students
+    url(r'api/students/(?P<pk>[0-9]+)/$', StudentProfileView.as_view(), name='api_student'),    # Student by id + StudentProjects
+    url(r'api/students/(?P<pk>[0-9]+)/update/$', UpdateStudentView.as_view(), name='api_update_student'),    # Update Student profile
 
     url(r'api/search/projects/$', ProjectSearch.as_view(), name='api_project_search'),    # Project search
-    url(r'api/search/students/$', StudentSearch.as_view(), name='api_student_search'),    # Student Profile by id
+    url(r'api/search/students/$', StudentSearch.as_view(), name='api_student_search'),    # Student search
 
-
-    url(r'^api/users/(?P<pk>[0-9]+)/update/$', UpdateCustomUserView.as_view(), name='api_update_user'),    # Update CustomUser
 ]

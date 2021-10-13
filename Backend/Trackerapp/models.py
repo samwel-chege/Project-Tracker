@@ -137,7 +137,7 @@ class Student(models.Model):
     bio = models.CharField(max_length=500, null=True, blank=True, default="A student at Moringa School.")
     email = models.EmailField(blank=True, default="N/A", null=True)
 
-    cohort=models.ForeignKey(Cohort, null=True, blank=True, on_delete=models.SET_NULL, related_name="student")
+    cohort=models.ForeignKey(Cohort, null=True, blank=True, on_delete=models.SET_NULL, related_name="students")
 
     def __str__(self):
         return f'{self.user.username}'
@@ -178,8 +178,8 @@ class Project(models.Model):
     '''
     
     owner=models.ForeignKey(Student,on_delete=models.CASCADE, related_name="projects_owned", null=True)
-    cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="project")
-    style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="project")
+    cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="projects")
+    style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="projects")
 
     scrum=models.ForeignKey(Student, on_delete=models.SET_NULL, related_name="is_scrum", blank=True, null=True)
     members=models.ManyToManyField(Student, related_name="is_dev", blank=True)
