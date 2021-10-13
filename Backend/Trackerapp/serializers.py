@@ -61,7 +61,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
+        fields = ('id', 'user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
 
     def create(self, validated_data):
         return Student(**validated_data)
@@ -96,7 +96,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')
+        fields = ('id', 'title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project(**validated_data)
@@ -106,7 +106,7 @@ class CohortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Cohort
-        fields = ('name', 'details')
+        fields = ('id', 'name', 'details')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
@@ -115,7 +115,7 @@ class CohortSerializer(serializers.ModelSerializer):
 class StyleSerializer(serializers.ModelSerializer):
     class Meta:
         model = DevStyle
-        fields = ('name', 'description')
+        fields = ('id', 'name', 'description')
 
     def create(self, validated_data):
         return DevStyle(**validated_data)
@@ -124,7 +124,7 @@ class StyleSerializer(serializers.ModelSerializer):
 class NewProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
+        fields = ('id','title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project(**validated_data)
@@ -133,7 +133,7 @@ class NewProjectSerializer(serializers.ModelSerializer):
 class NewStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ('user', 'profile_pic', 'cohort', 'email', 'bio')
+        fields = ('id', 'user', 'profile_pic', 'cohort', 'email', 'bio')
 
     def create(self, validated_data):
         return Student(**validated_data)
@@ -142,7 +142,7 @@ class NewStudentSerializer(serializers.ModelSerializer):
 class NewCohortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cohort
-        fields = ('name', 'details')
+        fields = ('id', 'name', 'details')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
