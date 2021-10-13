@@ -2,11 +2,13 @@
 
 from pathlib import Path
 import os
+import datetime
 
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+#import django_filters
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -18,9 +20,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-qzk08=()s(#j()bq&f*fbk*7voz+g3sw*9j%7*ej$d%mvg=eff'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+#DEBUG = os.environ.get('DEBUG')
+DEBUG = True
 
 ALLOWED_HOSTS =['*']
 
@@ -40,15 +44,24 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Trackerapp',
     'cloudinary',
+
+   
+    'django_bootstrap5',
+    'django_filters',
+
     'bootstrap4',
     'django_registration',
     'crispy_forms',
     'crispy_bootstrap5',
+    'drf_yasg',
     'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
 
 
 
-    'bootstrap5',
+
+    
+
 
 ]
 
@@ -141,13 +154,29 @@ STATICFILES_DIRS = [
 
 # rest_framework
 REST_FRAMEWORK = {
+
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ]
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+
+   'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+
+   ),
+    'NON_FIELD_ERRORS': 'error',
+    
+
 }
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -161,6 +190,12 @@ cloudinary.config(
 
 
 )
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

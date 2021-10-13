@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { AuthService } from '../_services/auth.service';
 import { TokenStorageService } from '../_services/token-storage.service';
+
 
 @Component({
   selector: 'app-login',
@@ -8,6 +10,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
   form: any = {
     username: null,
     password: null
@@ -21,6 +24,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     
+
+  constructor() { }
+
+  ngOnInit(): void {
+
   }
 
 }
