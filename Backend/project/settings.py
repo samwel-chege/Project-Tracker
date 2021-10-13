@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Trackerapp',
-
     'cloudinary',
     'bootstrap4',
     'django_registration',
