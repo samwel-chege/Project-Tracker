@@ -107,7 +107,15 @@ class LoginSerializer(serializers.ModelSerializer):
     email=serializers.EmailField(max_length=255, min_length=3)
     password=serializers.CharField(max_length=68, min_length=6, write_only=True)
     username=serializers.EmailField(max_length=68, min_length=3, read_only=True)
-    tokens=serializers.CharField(max_length=255, read_only=True)
+    tokens=serializers.SerializerMethodField()
+
+    def get_tokens(self, obj):
+        user = CustomUser.objects.get(email=obj['email'])
+
+        return {
+            'refresh': user.tokens()['refresh'],
+            'access': user.tokens()['access']
+        }
 
     class Meta:
         model= CustomUser
@@ -115,11 +123,16 @@ class LoginSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         email=attrs.get('email', '')
         password=attrs.get('password', '')
-
+        filtered_user_by_email = CustomUser.objects.filter(email=email)
         user=auth.authenticate(email=email, password=password)
 
+        if filtered_user_by_email.exists() and filtered_user_by_email[0].auth_provider !='email':
+            raise AuthenticationFailed(
+                detail='Please continue your login using ' + filtered_user_by_email[0].auth_provider
+            )
+
         if not user:
-            raise AuthenticationFailed('Confirm if your credentials are valid')
+            raise AuthenticationFailed('Confirm if your credentials are valid, try again')
 
         if not user.is_active:
             raise AuthenticationFailed('Account disabled for inactivity')
