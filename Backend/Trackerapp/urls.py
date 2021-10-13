@@ -3,7 +3,8 @@ from django.urls import include, path
 from django.conf.urls import url, include
 from .views import *
 
-from .views import RegisterView, VerifyEmail, LoginAPIView
+from .views import RegisterView, LoginAPIView
+#from .views import VerifyEmail
 
 from django.contrib.auth.views import LoginView, LogoutView
 from rest_framework import views
@@ -74,8 +75,8 @@ urlpatterns = [
     # All Projects filtered by Cohort
     url(r'api/cohorts/(?P<pk>[0-9]+)/projects/$', ProjectsByCohortView.as_view(), name='api_projects_cohort'),
 
-    path('login/', LoginAPIView.as_view(), name='login'),
-    path('accountverify/', VerifyEmail.as_view(), name='accountverify')
+    # path('login/', LoginAPIView.as_view(), name='login'),
+    # path('accountverify/', VerifyEmail.as_view(), name='accountverify')
 
 
 

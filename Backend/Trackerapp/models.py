@@ -131,7 +131,7 @@ class Student(models.Model):
     '''
     
 
-    #username=models.CharField(max_length=20, null=True)
+    #username=models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="username")
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student", null=True)
 
     

@@ -31,6 +31,34 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
+    projects_owned = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
+
+    is_scrum = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
+
+    is_dev = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
+
+    cohort = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
+    user = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
+
     class Meta:
         model = Student
         fields = ('user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
@@ -40,6 +68,32 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+    # owner = serializers.SlugRelatedField(
+    #     read_only=True,
+    #     slug_field='email'
+    # )
+
+    # scrum = serializers.SlugRelatedField(
+    #     read_only=True,
+    #     slug_field='email'
+    # )
+
+    # member = serializers.SlugRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     slug_field='email'
+    # )
+
+    cohort = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
+    style = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='name'
+    )
+
     class Meta:
         model = Project
         fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'member', 'cohort', 'style', 'github_link', 'date')
@@ -49,6 +103,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class CohortSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Cohort
         fields = ('name', 'details')
