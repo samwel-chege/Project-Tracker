@@ -164,7 +164,7 @@ class Student(models.Model):
 
  
     def save_student_profile(sender, instance, **kwargs):
-        instance.student.save()
+        instance.profile.save()
 
     def create(self, validated_data):
         return Student.objects.create(**validated_data)

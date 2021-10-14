@@ -225,19 +225,8 @@ class NewProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
 
-    def create(self, instance, validated_data):
-        instance.title = validated_data['title']
-        instance.project_image = validated_data['project_image']
-        instance.description = validated_data['description']
-        instance.owner = validated_data['owner']
-        instance.scrum = validated_data['scrum']
-        instance.cohort = validated_data['cohort']
-        instance.style = validated_data['style']
-        instance.github_link = validated_data['github_link']
-        instance.date = validated_data['date']
-
-        instance.save()
-        return Project(**validated_data)
+    def create(self, validated_data):
+        return Project.objects.create(**validated_data)
 
 
 
@@ -246,12 +235,8 @@ class NewCohortSerializer(serializers.ModelSerializer):
         model = Cohort
         fields = ('name', 'details')
 
-    def create(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.details = validated_data['details']
-
-        instance.save()
-        return Cohort(**validated_data)
+    def create(self, validated_data):
+        return Cohort.objects.create(**validated_data)
 
 
 class NewStyleSerializer(serializers.ModelSerializer):
@@ -259,12 +244,8 @@ class NewStyleSerializer(serializers.ModelSerializer):
         model = DevStyle
         fields = ('name', 'description')
 
-    def create(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.details = validated_data['description']
-
-        instance.save()
-        return DevStyle(**validated_data)
+    def create(self, validated_data):
+        return DevStyle.objects.create(**validated_data)
 
 
 class UpdateCustomUserSerializer(serializers.ModelSerializer):

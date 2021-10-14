@@ -284,6 +284,22 @@ class StudentProfileView(APIView):
         return Response(serializers.data)
 
 
+class StudentProjectsView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+
+        except Student.DoesNotExist:
+            return Http404
+
+    def get(self, request, pk, format=None):
+        student = self.get_student(pk)
+        projects = student.projects_owned
+        serializers = ProjectSerializer(projects, many=True)
+        return Response(serializers.data)
+
+
 class ProjectProfileView(APIView):
     permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_project(self, pk):
@@ -303,7 +319,7 @@ class ProjectProfileView(APIView):
         if project and project.owner.user==request.user:
             project.delete()
             return Response({"status":"ok"}, status=status.HTTP_200_OK)
-            
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
