@@ -423,7 +423,7 @@ class StudentSearch(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['user__username', 'email']
+    search_fields = ['user__username', 'email', 'first_name', 'surname']
 
 
 class ProjectSearch(generics.ListAPIView):
@@ -431,7 +431,7 @@ class ProjectSearch(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'owner__user__username']
+    search_fields = ['title', 'owner__user__username', 'owner__first_name', 'owner__surname', 'scrum__user__username', 'members__user__username']
 
 
 class UpdateCustomUserView(generics.UpdateAPIView): 

@@ -175,13 +175,30 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('id', 'user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
+        fields = ('id', 'user', 'first_name', 'surname', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
 
     def create(self, validated_data):
         return Student(**validated_data)
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+
+    owner = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='surname'
+    )
+
+    scrum = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='surname'
+    )
+
+    members = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='surname'
+    )
+
     cohort = serializers.SlugRelatedField(
         read_only=True,
         slug_field='name'
@@ -217,19 +234,30 @@ class CohortSerializer(serializers.ModelSerializer):
         slug_field='title'
     )
 
+    students = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='surname'
+    )
+
     class Meta:
         model = Cohort
-        fields = ('id', 'name', 'details', 'projects')
+        fields = ('id', 'name', 'details', 'projects', 'students')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
 
 
 class StyleSerializer(serializers.ModelSerializer):
+    projects = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
 
     class Meta:
         model = DevStyle
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'projects')
 
     def create(self, validated_data):
         return DevStyle(**validated_data)
@@ -279,9 +307,12 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('profile_pic', 'cohort', 'email', 'bio')
+        fields = ('first_name', 'surname', 'profile_pic', 'cohort', 'email', 'bio')
         extra_kwargs = {
+            'first_name': {'required': True},
+            'surname': {'required': True},
             'cohort': {'required': True},
+            'email': {'required': True},
         }
 
     def validate_email(self, value):
@@ -293,6 +324,8 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
         return value
 
     def update(self, instance, validated_data):
+        instance.first_name = validated_data['first_name']
+        instance.surname = validated_data['surname']
         instance.profile_pic = validated_data['profile_pic']
         instance.cohort = validated_data['cohort']
         instance.email = validated_data['email']
@@ -308,6 +341,7 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link')
         extra_kwargs = {
+            'owner': {'required': True},
             'title': {'required': True},
             'style': {'required': True},
         }

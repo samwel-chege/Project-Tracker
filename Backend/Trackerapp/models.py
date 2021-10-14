@@ -11,6 +11,8 @@ from project import settings
 import datetime as dt
 from django.db.models.deletion import CASCADE
 import django_filters
+from django.db.models.fields import SlugField
+from autoslug import AutoSlugField
 
 # Create your models here.
 
@@ -139,7 +141,8 @@ class Student(models.Model):
     Student class to define student objects
     '''
 
-    #username=models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="username")
+    first_name = models.CharField(max_length=20, default="", blank=True, null=True,)
+    surname = models.CharField(max_length=40, default="", blank=True, null=True,)
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile", null=True)
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
@@ -147,6 +150,7 @@ class Student(models.Model):
     email = models.EmailField(blank=True, default="N/A", null=True)
 
     cohort=models.ForeignKey(Cohort, null=True, blank=True, on_delete=models.SET_NULL, related_name="students")
+
 
     def __str__(self):
         return f'{self.user.username}'
