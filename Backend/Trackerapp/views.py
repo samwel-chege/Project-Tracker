@@ -107,6 +107,7 @@ class VerifyEmail(APIView):
         except jwt.exceptions.DecodeError as identifier:
             return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_400_BAD_REQUEST)
     
+
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
     def post(self, request):
@@ -140,6 +141,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
 
             Util.send_email(data)
         return Response({'Successful reset: ' 'A link has been sent to your email for password reset'}, status=status.HTTP_200_OK)
+
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
     serializer_class = SetNewPasswordSerializer
@@ -201,7 +203,7 @@ class LogoutAPIView(generics.GenericAPIView):
 # End of authenticaton classes apiviews
 
 class CustomUsersList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
@@ -301,6 +303,7 @@ class ProjectProfileView(APIView):
         if project and project.owner.user==request.user:
             project.delete()
             return Response({"status":"ok"}, status=status.HTTP_200_OK)
+            
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

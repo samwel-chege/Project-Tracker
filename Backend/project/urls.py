@@ -27,10 +27,10 @@ schema_view = get_schema_view(
    openapi.Info(
       title="PROJECT TRACKER API",
       default_version='v1',
-      description="Test description",
+      description="Backend API for the Tracker App.",
       terms_of_service="https://www.myapp.com/policies/terms/",
       contact=openapi.Contact(email="contact@projecttracker.local"),
-      license=openapi.License(name="Test License"),
+      license=openapi.License(name="MIT License(2021)"),
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),

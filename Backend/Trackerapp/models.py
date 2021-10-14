@@ -140,7 +140,7 @@ class Student(models.Model):
     '''
 
     #username=models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL, related_name="username")
-    user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="student", null=True)
+    user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile", null=True)
 
     profile_pic = models.ImageField(upload_to='images/profiles/', blank=True, default = 0, null=True)
     bio = models.CharField(max_length=500, null=True, blank=True, default="A student at Moringa School.")
