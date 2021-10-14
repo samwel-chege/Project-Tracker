@@ -107,6 +107,7 @@ class VerifyEmail(APIView):
         except jwt.exceptions.DecodeError as identifier:
             return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_400_BAD_REQUEST)
     
+
 class LoginAPIView(generics.GenericAPIView):
     serializer_class = LoginSerializer
     def post(self, request):
@@ -140,6 +141,7 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
 
             Util.send_email(data)
         return Response({'Successful reset: ' 'A link has been sent to your email for password reset'}, status=status.HTTP_200_OK)
+
 
 class PasswordTokenCheckAPI(generics.GenericAPIView):
     serializer_class = SetNewPasswordSerializer
@@ -201,7 +203,7 @@ class LogoutAPIView(generics.GenericAPIView):
 # End of authenticaton classes apiviews
 
 class CustomUsersList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
@@ -259,7 +261,7 @@ class CustomUserView(APIView):
             return CustomUser.objects.get(pk=pk)
 
         except CustomUser.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         custom_user = self.get_custom_user(pk)
@@ -274,11 +276,27 @@ class StudentProfileView(APIView):
             return Student.objects.get(pk=pk)
 
         except Student.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         student = self.get_student(pk)
         serializers = StudentSerializer(student)
+        return Response(serializers.data)
+
+
+class StudentProjectsView(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get_student(self, pk):
+        try:
+            return Student.objects.get(pk=pk)
+
+        except Student.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        student = self.get_student(pk)
+        projects = student.projects_owned
+        serializers = ProjectSerializer(projects, many=True)
         return Response(serializers.data)
 
 
@@ -289,7 +307,7 @@ class ProjectProfileView(APIView):
             return Project.objects.get(pk=pk)
 
         except Project.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         project = self.get_project(pk)
@@ -301,17 +319,34 @@ class ProjectProfileView(APIView):
         if project and project.owner.user==request.user:
             project.delete()
             return Response({"status":"ok"}, status=status.HTTP_200_OK)
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CohortProfileView(APIView):
+class ProjectMembersView(APIView):
     permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    def get_project(self, pk):
+        try:
+            return Project.objects.get(pk=pk)
+
+        except Project.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        project = self.get_project(pk)
+        serializers = ProjectMembersSerializer(project)
+        return Response(serializers.data)
+
+
+class CohortProfileView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get_cohort(self, pk):
         try:
             return Cohort.objects.get(pk=pk)
 
         except Cohort.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         cohort = self.get_cohort(pk)
@@ -319,11 +354,30 @@ class CohortProfileView(APIView):
         return Response(serializers.data)
 
     def delete(self, request, pk, format=None):
+        permission_classes = (IsAdminOrReadOnly,)
         cohort = self.get_cohort(pk)
         if cohort:
             cohort.delete()
             return Response({"status":"ok"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CohortProjectsView(APIView):
+    permission_classes = (IsAuthenticated,)
+    filterset_fields = ['style',]
+
+    def get_cohort(self, pk):
+        try:
+            return Cohort.objects.get(pk=pk)
+
+        except Cohort.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        cohort = self.get_cohort(pk)
+        projects = cohort.projects
+        serializers = ProjectSerializer(projects, many=True)
+        return Response(serializers.data)
 
 
 class StyleProfileView(APIView):
@@ -333,7 +387,7 @@ class StyleProfileView(APIView):
             return DevStyle.objects.get(pk=pk)
 
         except DevStyle.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         style = self.get_style(pk)
@@ -369,7 +423,7 @@ class StudentSearch(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['user__username', 'email']
+    search_fields = ['user__username', 'email', 'first_name', 'surname']
 
 
 class ProjectSearch(generics.ListAPIView):
@@ -377,7 +431,7 @@ class ProjectSearch(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'owner__user__username']
+    search_fields = ['title', 'owner__user__username', 'owner__first_name', 'owner__surname', 'scrum__user__username', 'members__user__username']
 
 
 class UpdateCustomUserView(generics.UpdateAPIView): 

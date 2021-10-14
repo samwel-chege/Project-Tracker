@@ -175,13 +175,30 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('id', 'user', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
+        fields = ('id', 'user', 'first_name', 'surname', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
 
     def create(self, validated_data):
         return Student(**validated_data)
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+
+    owner = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='surname'
+    )
+
+    scrum = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='surname'
+    )
+
+    members = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='surname'
+    )
+
     cohort = serializers.SlugRelatedField(
         read_only=True,
         slug_field='name'
@@ -200,21 +217,47 @@ class ProjectSerializer(serializers.ModelSerializer):
         return Project(**validated_data)
 
 
+class ProjectMembersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ('title', 'owner', 'scrum', 'members')
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
 class CohortSerializer(serializers.ModelSerializer):
+    projects = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
+
+    students = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='surname'
+    )
 
     class Meta:
         model = Cohort
-        fields = ('id', 'name', 'details')
+        fields = ('id', 'name', 'details', 'projects', 'students')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
 
 
 class StyleSerializer(serializers.ModelSerializer):
+    projects = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
 
     class Meta:
         model = DevStyle
-        fields = ('id', 'name', 'description')
+        fields = ('id', 'name', 'description', 'projects')
 
     def create(self, validated_data):
         return DevStyle(**validated_data)
@@ -225,19 +268,8 @@ class NewProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
 
-    def create(self, instance, validated_data):
-        instance.title = validated_data['title']
-        instance.project_image = validated_data['project_image']
-        instance.description = validated_data['description']
-        instance.owner = validated_data['owner']
-        instance.scrum = validated_data['scrum']
-        instance.cohort = validated_data['cohort']
-        instance.style = validated_data['style']
-        instance.github_link = validated_data['github_link']
-        instance.date = validated_data['date']
-
-        instance.save()
-        return Project(**validated_data)
+    def create(self, validated_data):
+        return Project.objects.create(**validated_data)
 
 
 
@@ -246,12 +278,8 @@ class NewCohortSerializer(serializers.ModelSerializer):
         model = Cohort
         fields = ('name', 'details')
 
-    def create(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.details = validated_data['details']
-
-        instance.save()
-        return Cohort(**validated_data)
+    def create(self, validated_data):
+        return Cohort.objects.create(**validated_data)
 
 
 class NewStyleSerializer(serializers.ModelSerializer):
@@ -259,12 +287,8 @@ class NewStyleSerializer(serializers.ModelSerializer):
         model = DevStyle
         fields = ('name', 'description')
 
-    def create(self, instance, validated_data):
-        instance.name = validated_data['name']
-        instance.details = validated_data['description']
-
-        instance.save()
-        return DevStyle(**validated_data)
+    def create(self, validated_data):
+        return DevStyle.objects.create(**validated_data)
 
 
 class UpdateCustomUserSerializer(serializers.ModelSerializer):
@@ -283,9 +307,12 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('profile_pic', 'cohort', 'email', 'bio')
+        fields = ('first_name', 'surname', 'profile_pic', 'cohort', 'email', 'bio')
         extra_kwargs = {
+            'first_name': {'required': True},
+            'surname': {'required': True},
             'cohort': {'required': True},
+            'email': {'required': True},
         }
 
     def validate_email(self, value):
@@ -297,6 +324,8 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
         return value
 
     def update(self, instance, validated_data):
+        instance.first_name = validated_data['first_name']
+        instance.surname = validated_data['surname']
         instance.profile_pic = validated_data['profile_pic']
         instance.cohort = validated_data['cohort']
         instance.email = validated_data['email']
@@ -312,6 +341,7 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
         model = Project
         fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link')
         extra_kwargs = {
+            'owner': {'required': True},
             'title': {'required': True},
             'style': {'required': True},
         }
@@ -332,6 +362,7 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
 
 class UpdateProjectMembersSerializer(serializers.ModelSerializer):
+    #members = StudentSerializer(many=True)
     class Meta:
         model = Project
         fields = ('members',)
@@ -339,7 +370,7 @@ class UpdateProjectMembersSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.members = validated_data['members']
 
-        instance.save()
+        instance.add()
         return instance
 
 
@@ -379,4 +410,3 @@ class SetNewPasswordSerializer(serializers.Serializer):
             raise AuthenticationFailed('The password reset link is invalid', 401)
 
         return super().validate(attrs)
-
