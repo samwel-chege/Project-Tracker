@@ -187,11 +187,20 @@ class Project(models.Model):
     '''
     
     owner=models.ForeignKey(Student,on_delete=models.CASCADE, related_name="projects_owned", null=True)
-    cohort=models.ForeignKey(Cohort, null=True, on_delete=models.SET_NULL, related_name="projects")
-    style=models.ForeignKey(DevStyle, null=True, on_delete=models.SET_NULL, related_name="projects")
+    cohort=models.ForeignKey(Cohort, blank=True, null=True, on_delete=models.SET_NULL, related_name="projects")
+    style=models.ForeignKey(DevStyle, blank=True, null=True, on_delete=models.SET_NULL, related_name="projects")
 
     scrum=models.ForeignKey(Student, on_delete=models.SET_NULL, related_name="is_scrum", blank=True, null=True)
     members=models.ManyToManyField(Student, related_name="is_dev", blank=True)
+
+    # dev1=models.ManyToManyField(Student, related_name="is_dev1", blank=True)
+    # dev2=models.ManyToManyField(Student, related_name="is_dev2", blank=True)
+    # dev3=models.ManyToManyField(Student, related_name="is_dev3", blank=True)
+    # dev4=models.ManyToManyField(Student, related_name="is_dev4", blank=True)
+    # dev5=models.ManyToManyField(Student, related_name="is_dev5", blank=True)
+    # dev6=models.ManyToManyField(Student, related_name="is_dev6", blank=True)
+    # dev7=models.ManyToManyField(Student, related_name="is_dev7", blank=True)
+    # dev8=models.ManyToManyField(Student, related_name="is_dev8", blank=True)
 
     title=models.CharField(max_length=30, null=True)
     project_image=models.ImageField(upload_to='images/projects/', blank=True, default = 0, null=True)

@@ -200,11 +200,26 @@ class ProjectSerializer(serializers.ModelSerializer):
         return Project(**validated_data)
 
 
+class ProjectMembersSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Project
+        fields = ('title', 'owner', 'scrum', 'members')
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
 class CohortSerializer(serializers.ModelSerializer):
+    projects = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='title'
+    )
 
     class Meta:
         model = Cohort
-        fields = ('id', 'name', 'details')
+        fields = ('id', 'name', 'details', 'projects')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
@@ -313,6 +328,7 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
 
 class UpdateProjectMembersSerializer(serializers.ModelSerializer):
+    #members = StudentSerializer(many=True)
     class Meta:
         model = Project
         fields = ('members',)
@@ -320,7 +336,7 @@ class UpdateProjectMembersSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.members = validated_data['members']
 
-        instance.save()
+        instance.add()
         return instance
 
 
@@ -360,4 +376,3 @@ class SetNewPasswordSerializer(serializers.Serializer):
             raise AuthenticationFailed('The password reset link is invalid', 401)
 
         return super().validate(attrs)
-

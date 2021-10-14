@@ -261,7 +261,7 @@ class CustomUserView(APIView):
             return CustomUser.objects.get(pk=pk)
 
         except CustomUser.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         custom_user = self.get_custom_user(pk)
@@ -276,7 +276,7 @@ class StudentProfileView(APIView):
             return Student.objects.get(pk=pk)
 
         except Student.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         student = self.get_student(pk)
@@ -291,7 +291,7 @@ class StudentProjectsView(APIView):
             return Student.objects.get(pk=pk)
 
         except Student.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         student = self.get_student(pk)
@@ -307,7 +307,7 @@ class ProjectProfileView(APIView):
             return Project.objects.get(pk=pk)
 
         except Project.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         project = self.get_project(pk)
@@ -323,14 +323,30 @@ class ProjectProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CohortProfileView(APIView):
+class ProjectMembersView(APIView):
     permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    def get_project(self, pk):
+        try:
+            return Project.objects.get(pk=pk)
+
+        except Project.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        project = self.get_project(pk)
+        serializers = ProjectMembersSerializer(project)
+        return Response(serializers.data)
+
+
+class CohortProfileView(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get_cohort(self, pk):
         try:
             return Cohort.objects.get(pk=pk)
 
         except Cohort.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         cohort = self.get_cohort(pk)
@@ -338,11 +354,32 @@ class CohortProfileView(APIView):
         return Response(serializers.data)
 
     def delete(self, request, pk, format=None):
+        permission_classes = (IsAdminOrReadOnly,)
         cohort = self.get_cohort(pk)
         if cohort:
             cohort.delete()
             return Response({"status":"ok"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CohortProjectsView(APIView):
+    permission_classes = (IsAuthenticated,)
+    #queryset = Project.objects.all()
+    #serializer_class = ProjectSerializer
+    filterset_fields = ['style',]
+
+    def get_cohort(self, pk):
+        try:
+            return Cohort.objects.get(pk=pk)
+
+        except Cohort.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        cohort = self.get_cohort(pk)
+        projects = cohort.projects
+        serializers = ProjectSerializer(projects, many=True)
+        return Response(serializers.data)
 
 
 class StyleProfileView(APIView):
@@ -352,7 +389,7 @@ class StyleProfileView(APIView):
             return DevStyle.objects.get(pk=pk)
 
         except DevStyle.DoesNotExist:
-            return Http404
+            raise Http404
 
     def get(self, request, pk, format=None):
         style = self.get_style(pk)
