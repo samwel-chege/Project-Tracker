@@ -37,6 +37,12 @@ urlpatterns = [
     url(r'^api/styles/$', StylesList.as_view(), name='api_styles'),    # Get all Styles + Create
     url(r'api/styles/(?P<pk>[0-9]+)/$', StyleProfileView.as_view(), name='api_style'),    # DevStyle by id + Delete
 
+    url(r'^api/projects/$', ProjectsList.as_view(), name='api_projects'),    # Get all Projects
+    url(r'^api/projects/new/$', NewProjectView.as_view(), name='api_new_project'),    # Create new project
+    url(r'api/projects/(?P<pk>[0-9]+)/$', ProjectProfileView.as_view(), name='api_project'),    # Project by id + Delete + ProjectMembers
+    url(r'api/projects/(?P<pk>[0-9]+)/update/$', UpdateProjectView.as_view(), name='api_update_project'),    # Update Project
+    url(r'api/projects/(?P<pk>[0-9]+)/update/members/$', UpdateProjectMembersView.as_view(), name='api_update_projectmembers'),    # Update Project Members
+
     url(r'^api/students/$', StudentsList.as_view(), name='api_students'),    # Get all Students
     url(r'api/students/(?P<pk>[0-9]+)/$', StudentProfileView.as_view(), name='api_student'),    # Student by id + StudentProjects
     url(r'api/students/(?P<pk>[0-9]+)/update/$', UpdateStudentView.as_view(), name='api_update_student'),    # Update Student profile
