@@ -362,24 +362,22 @@ class CohortProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class CohortProjectsView(APIView):
-#     permission_classes = (IsAuthenticated,)
-#     #queryset = Project.objects.all()
-#     #serializer_class = ProjectSerializer
-#     filterset_fields = ['style',]
+class CohortProjectsView(APIView):
+    permission_classes = (IsAuthenticated,)
+    filterset_fields = ['style',]
 
-#     def get_cohort(self, pk):
-#         try:
-#             return Cohort.objects.get(pk=pk)
+    def get_cohort(self, pk):
+        try:
+            return Cohort.objects.get(pk=pk)
 
-#         except Cohort.DoesNotExist:
-#             raise Http404
+        except Cohort.DoesNotExist:
+            raise Http404
 
-#     def get(self, request, pk, format=None):
-#         cohort = self.get_cohort(pk)
-#         projects = cohort.projects
-#         serializers = ProjectSerializer(projects, many=True)
-#         return Response(serializers.data)
+    def get(self, request, pk, format=None):
+        cohort = self.get_cohort(pk)
+        projects = cohort.projects
+        serializers = ProjectSerializer(projects, many=True)
+        return Response(serializers.data)
 
 
 class StyleProfileView(APIView):
