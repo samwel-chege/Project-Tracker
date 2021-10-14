@@ -33,7 +33,7 @@ urlpatterns = [
 
     url(r'^api/cohorts/$', CohortsList.as_view(), name='api_cohorts'),    # Get all Cohorts + Create
     url(r'api/cohorts/(?P<pk>[0-9]+)/$', CohortProfileView.as_view(), name='api_cohort'),    # Cohort by id + Delete + All Projects in a Cohort
-    url(r'api/cohorts/(?P<pk>[0-9]+)/projects/$', CohortProjectsView.as_view(), name='api_cohort_projects'),    # Filter Cohort Projects by Style
+    #url(r'api/cohorts/(?P<pk>[0-9]+)/projects/$', CohortProjectsView.as_view(), name='api_cohort_projects'),    # Filter Cohort Projects by Style
 
     url(r'^api/styles/$', StylesList.as_view(), name='api_styles'),    # Get all Styles + Create
     url(r'api/styles/(?P<pk>[0-9]+)/$', StyleProfileView.as_view(), name='api_style'),    # DevStyle by id + Delete
