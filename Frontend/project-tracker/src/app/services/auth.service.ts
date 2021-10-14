@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-  private apiRoot = 'http://localhost:8000/auth/';
+  private apiRoot = 'http://127.0.0.1:8000/auth/register/';
 
   constructor(private http: HttpClient) { }
 
