@@ -10,6 +10,7 @@ from django.dispatch import receiver
 from project import settings
 import datetime as dt
 from django.db.models.deletion import CASCADE
+import django_filters
 
 # Create your models here.
 
@@ -54,7 +55,7 @@ class UserManager(BaseUserManager):
 AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google',
                   'twitter': 'twitter', 'email': 'email'}
 
-                  
+
 # customuser class start
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
