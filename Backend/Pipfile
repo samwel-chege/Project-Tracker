@@ -1,0 +1,26 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+cloudinary = "*"
+django-registration = "*"
+django-crispy-forms = "*"
+crispy-bootstrap5 = "*"
+django-bootstrap4 = "*"
+djangorestframework = "*"
+djangorestframework-simplejwt = "*"
+drf-yasg = "*"
+psycopg2 = "*"
+pillow = "*"
+django-bootstrap5 = "*"
+django-filter = "==21.1"
+faker = "*"
+django-cors-headers = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.8"
