@@ -53,13 +53,8 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
-
-
-
-
-    
-
-
+    'rest_framework',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -100,7 +95,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trackerapp',
+        'NAME': 'trackerdb',
         'USER': 'oscar',
         'PASSWORD': '123456789',
     }
@@ -152,6 +147,7 @@ STATICFILES_DIRS = [
 
 # rest_framework
 REST_FRAMEWORK = {
+
     'DEFAULT_FILTER_BACKENDS': (['django_filters.rest_framework.DjangoFilterBackend']),
 
     'DEFAULT_AUTHENTICATION_CLASSES': ([
