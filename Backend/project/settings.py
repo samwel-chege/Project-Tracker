@@ -2,6 +2,7 @@
 
 from pathlib import Path
 import os
+import datetime
 
 import cloudinary
 import cloudinary.uploader
@@ -35,6 +36,7 @@ AUTH_USER_MODEL='Trackerapp.CustomUser'
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,17 +45,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Trackerapp',
     'cloudinary',
-
-    'rest_framework',
     'django_bootstrap5',
-    'django_filters',
-
+    'corsheaders',
     'bootstrap4',
     'django_registration',
     'crispy_forms',
     'crispy_bootstrap5',
     'drf_yasg',
-    
+    'rest_framework_simplejwt.token_blacklist',
+
 
 
 
@@ -65,6 +65,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -99,7 +100,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trackerdb001',
+        'NAME': 'trackerapp',
         'USER': 'oscar',
         'PASSWORD': '123456789',
     }
@@ -138,7 +139,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+CORS_ALLOW_ALL_ORIGINS=True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -190,8 +191,12 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTHENTICATION_BACKENDS = (
+        'django.contrib.auth.backends.ModelBackend',
+)

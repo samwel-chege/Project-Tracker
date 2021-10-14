@@ -1,22 +1,21 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser,PermissionsMixin
+from django.contrib.auth.base_user import BaseUserManager
 from cloudinary.models import CloudinaryField
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from django.db.models import ImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from project import settings
-
-
 import datetime as dt
-import django_filters
+from django.db.models.deletion import CASCADE
 
 # Create your models here.
 
+# Custom usermanager class start
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None):
+    def create_user(self, username, email, password):
 
         if username is None:
             raise ValueError('Users must have a username')
@@ -29,10 +28,10 @@ class UserManager(BaseUserManager):
 
         user=self.model(username=username, email=self.normalize_email(email))
         user.set_password(password)
-        user.save()
+        user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, password=None):
+    def create_superuser(self,email, username, password, **kwargs):
 
         if username is None:
             raise ValueError('Users must have a username')
@@ -43,25 +42,32 @@ class UserManager(BaseUserManager):
         if email is None:
             raise ValueError("User must have an email")
 
-        user=create_user(self, username, email, password)
+        user=self.create_user(username, email, password, **kwargs)
+
         user.is_superuser = True
         user.is_staff = True
         user.is_active = True
-        user.save()
+        user.save(using=self._db)
         return user
 
 
+AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google',
+                  'twitter': 'twitter', 'email': 'email'}
+# customuser class start
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
     email = models.EmailField(max_length=255, unique=True, db_index=True)
-    is_verified = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    auth_provider = models.CharField(
+        max_length=255, blank=False,
+        null=False, default=AUTH_PROVIDERS.get('email'))
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email','password']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username','password']
 
     objects = UserManager()
 
@@ -75,7 +81,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             'access':str(refresh.access_token)
         }
 
-
+# customuser class end
 
 class Cohort(models.Model):
     '''
