@@ -3,12 +3,42 @@
 from pathlib import Path
 import os
 import datetime
-
+import django_heroku
+import dj_database_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+from decouple import config,Csv
+
+
 #import django_filters
+DEBUG = config('DEBUG', default=False, cast=bool)
+# development
+if config('MODE')=="dev":
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql_psycopg2',
+           'NAME': config('DB_NAME'),
+           'USER': config('DB_USER'),
+           'PASSWORD': config('DB_PASSWORD'),
+           'HOST': config('DB_HOST'),
+           'PORT': '',
+       }
+       
+   }
+# production
+else:
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=config('DATABASE_URL')
+       )
+   }
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +50,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qzk08=()s(#j()bq&f*fbk*7voz+g3sw*9j%7*ej$d%mvg=eff'
+# SECRET_KEY = 'django-insecure-qzk08=()s(#j()bq&f*fbk*7voz+g3sw*9j%7*ej$d%mvg=eff'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = os.environ.get('DEBUG')
@@ -66,6 +96,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -95,9 +126,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trackerdb',
-        'USER': 'oscar',
-        'PASSWORD': '123456789',
+        'NAME': 'tracker',
+        'USER': 'sammie',
+        'PASSWORD': 'samm',
     }
 }
 
@@ -143,7 +174,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # rest_framework
 REST_FRAMEWORK = {
@@ -196,3 +227,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
 )
+
+django_heroku.settings(locals())

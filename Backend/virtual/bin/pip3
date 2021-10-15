@@ -1,4 +1,6 @@
-#!/home/oscar/Documents/GitHub/Project-Tracker/Backend/virtual/bin/python3.6
+#!/bin/sh
+'''exec' "/home/sammie/Project Tracker/Backend/virtual/bin/python3" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
