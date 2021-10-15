@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 import os
 import datetime
@@ -95,7 +93,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trackerdb001',
+        'NAME': 'taliban_tracker',
         'USER': 'oscar',
         'PASSWORD': '123456789',
     }
