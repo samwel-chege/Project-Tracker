@@ -23,7 +23,7 @@
 As a user, I would like to;
 
 - Sign in with the application to start using.
-- View porjects posted by other users.
+- View projects posted by other users.
 - Add projects. 
 - Add group members.  
 

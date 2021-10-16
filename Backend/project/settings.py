@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 import os
 import datetime
@@ -53,7 +51,12 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
+<<<<<<< HEAD
 
+=======
+    'rest_framework',
+    'django_filters',
+>>>>>>> b134b91d10939b88c5cc04b08b336ae0eadd7587
 ]
 
 MIDDLEWARE = [
@@ -94,9 +97,15 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+<<<<<<< HEAD
         'NAME': 'tracker',
         'USER': 'sammie',
         'PASSWORD': 'samm',
+=======
+        'NAME': 'taliban_tracker',
+        'USER': 'oscar',
+        'PASSWORD': '123456789',
+>>>>>>> b134b91d10939b88c5cc04b08b336ae0eadd7587
     }
 }
 
@@ -146,23 +155,24 @@ STATICFILES_DIRS = [
 
 # rest_framework
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
 
-   'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_FILTER_BACKENDS': (['django_filters.rest_framework.DjangoFilterBackend']),
+
+    'DEFAULT_AUTHENTICATION_CLASSES': ([
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]),
 
-   ),
-    'NON_FIELD_ERRORS': 'error',
-    
-
+    'NON_FIELD_ERRORS': (['error',])
 }
-
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
 }
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -185,6 +195,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
