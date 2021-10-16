@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from './services/project.service';
+import { UserService } from './services/user.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,19 +10,27 @@ import { ProjectService } from './services/project.service';
 })
 export class AppComponent implements OnInit {
   title = 'project-tracker';
+  public user: any;
 
-  constructor(private _ProjectService: ProjectService){
+  constructor(private _userService: UserService){
 
   }
   ngOnInit(){
-    this.getProjects();
-    this.new_project ={};
     this.user = {
       username: '',
       password: '',
 
     };
   }
+  // login(){
+  //   this._userService.login({'username': this.user.username,'password': this.user.password});
+  // }
+  // refreshToken(){
+  //   this._userService.refreshToken();
+  // }
+  // logout(){
+  //   this._userService.logout();
+  // }
 }
 
 
