@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 import os
 import datetime
@@ -95,7 +93,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'trackerdb',
+        'NAME': 'taliban_tracker',
         'USER': 'oscar',
         'PASSWORD': '123456789',
     }
@@ -196,3 +194,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
 )
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:4200/",
+# ]
