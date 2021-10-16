@@ -203,27 +203,27 @@ class LogoutAPIView(generics.GenericAPIView):
 # End of authenticaton classes apiviews
 
 class CustomUsersList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
+    #permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
 
 
 class ProjectsList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filterset_fields = ['cohort', 'style', 'owner']
 
 
 class StudentsList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
+    #permission_classes = (IsAuthenticated,)
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     filterset_fields = ['cohort',]
 
 
 class CohortsList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
+    #permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
     queryset = Cohort.objects.all()
     serializer_class = CohortSerializer
 
@@ -239,7 +239,7 @@ class CohortsList(generics.ListAPIView):
 
 
 class StylesList(generics.ListAPIView):
-    permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
+    #permission_classes = (IsAuthenticated, IsAdminOrReadOnly)
     queryset = DevStyle.objects.all()
     serializer_class = StyleSerializer
 
