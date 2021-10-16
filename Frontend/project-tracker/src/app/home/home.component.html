@@ -13,19 +13,15 @@
             <!-- <h3>Sign up for free and get all your groups and personal projects tracked <br> No room to forget about your projects</h3> -->
             <img src="/assets/images/homept.png" alt="landing image"  class="image">
         </div>
-        <!-- <ul>
-            <li *ngFor= "let project of projects">
-                <p>{{ project.title }}</p>
-                <p>{{ project.owner }}</p>
-                <p>{{ project.cohort }}</p>
-                <p>{{ project.style }}</p>
-            </li>
-        </ul> -->
     </div>
 
 
     <br>
     <hr>
+    <br>
+
+    <h1 style="text-align:center"><b> All Projects </b></h1>
+    <br>
     <br>
 
     <table class="table table-striped table-light">
@@ -39,15 +35,15 @@
           </tr>
         </thead>
         <tbody>
-
-        <tr *ngFor= "let project of projects">
-            <th scope="row">*</th>
-            <td>{{ project.title }}</td>
-            <td>{{ project.owner }}</td>
-            <td>{{ project.cohort }}</td>
-            <td>{{ project.style }}</td>
-        </tr>
-        
+            <br>
+            <tr *ngFor= "let project of projects">
+                <th scope="row">*</th>
+                <td>{{ project.title }}</td>
+                <td>{{ project.owner }}</td>
+                <td>{{ project.cohort }}</td>
+                <td>{{ project.style }}</td>
+                <br>
+            </tr>
         </tbody>
       </table>
     
