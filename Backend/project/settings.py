@@ -148,11 +148,16 @@ REST_FRAMEWORK = {
 
     'DEFAULT_FILTER_BACKENDS': (['django_filters.rest_framework.DjangoFilterBackend']),
 
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+
     'DEFAULT_AUTHENTICATION_CLASSES': ([
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ]),
 
     'NON_FIELD_ERRORS': (['error',])
@@ -161,6 +166,11 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=1),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 }
 
 # Default primary key field type
