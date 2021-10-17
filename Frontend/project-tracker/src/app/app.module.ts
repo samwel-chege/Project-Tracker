@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ProjectService } from './services/project.service';
+import { UserService } from './services/user.service';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module'; 
@@ -33,7 +34,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
 
   ],
-  providers: [ProjectService],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

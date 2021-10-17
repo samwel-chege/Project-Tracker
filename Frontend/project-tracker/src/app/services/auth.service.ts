@@ -17,12 +17,16 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-  private apiRoot = 'http://localhost:8000/auth/';
+  private apiRoot = 'http://127.0.0.1:8000/auth/register/';
 
   constructor(private http: HttpClient) { }
 
   // private setSession(authResult:any){
   //   const token = authResult.token;
   //   const payload = <JWTPayload> jwtDecode(token);
+  //   const expiresAt = moment.unix(payload.exp);
   // }
+  // localStorage.setItem('token',authResult.token);
+  // localStorage.setItem('expires_at',JSON.stringify(expiresAt.valueOf()));
+
 }

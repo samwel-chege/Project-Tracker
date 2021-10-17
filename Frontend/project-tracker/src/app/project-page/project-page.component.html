@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects page</title>
+</head>
+<body>
+    
+    <div *ngFor="let project of projects">
+    <div class="container">
+        <div class="card" style="margin-bottom: 5rem;">
+            <div class="card-header d-flex">
+                <h3>{{project.title}} </h3>
+            </div>
+            <div *ngIf="project.project_image">
+            <img src="{{project.project_image}}"  class="img-responsive">
+            </div>
+            <div>{{project.description}}</div>
+            <div>{{project.owner}}</div>
+            <div>{{project.cohort}}</div>
+            <div>{{project.style}}</div>
+            <div>{{project.scrum}}</div>
+            <div>{{project.members}}</div>
+            <!-- Backend/media/images/projects/Screenshot_from_2021-09-18_09-14-45.png -->
+            <div class="text-muted">{{project.date}}</div>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html> 

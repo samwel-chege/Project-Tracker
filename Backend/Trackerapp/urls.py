@@ -4,7 +4,9 @@ from .views import (
      RegisterView, VerifyEmail, LoginAPIView, PasswordTokenCheckAPI, 
      RequestPasswordResetEmail, SetNewPasswordAPIView, LogoutAPIView)
 from rest_framework import views
+
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+
 
 from django.conf.urls import url, include
 from .views import *
@@ -13,6 +15,7 @@ from rest_framework import views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import Http404
+
 
 urlpatterns = [
 # authentication url paths
