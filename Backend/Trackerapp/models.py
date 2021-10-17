@@ -145,7 +145,7 @@ class Student(models.Model):
     surname = models.CharField(max_length=40, default="", blank=True, null=True,)
     user=models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile", null=True)
 
-    profile_pic = Cloudinary(blank=True, default = 0, null=True)
+    profile_pic = CloudinaryField('image', blank=True, default = 0, null=True)
     bio = models.CharField(max_length=500, null=True, blank=True, default="A student at Moringa School.")
     email = models.EmailField(blank=True, default="N/A", null=True)
 
@@ -207,7 +207,7 @@ class Project(models.Model):
     # dev8=models.ManyToManyField(Student, related_name="is_dev8", blank=True)
 
     title=models.CharField(max_length=30, null=True)
-    project_image=Cloudinary(blank=True, default = 0, null=True)
+    project_image=CloudinaryField('image', blank=True, default = 0, null=True)
     description=models.TextField(max_length=320, blank=True, null=True)
     github_link=models.URLField(blank=True, null=True)
 
