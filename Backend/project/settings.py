@@ -95,7 +95,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'tracker',
+
         'USER': 'sammie',
+
+
         'PASSWORD': 'samm',
     }
 }
@@ -160,7 +163,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
 }
 
