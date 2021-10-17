@@ -185,18 +185,18 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     owner = serializers.SlugRelatedField(
         read_only=True,
-        slug_field='surname'
+        slug_field='id'
     )
 
     scrum = serializers.SlugRelatedField(
         read_only=True,
-        slug_field='surname'
+        slug_field='id'
     )
 
     members = serializers.SlugRelatedField(
         many=True,
         read_only=True,
-        slug_field='surname'
+        slug_field='id'
     )
 
     cohort = serializers.SlugRelatedField(
@@ -219,6 +219,22 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectMembersSerializer(serializers.ModelSerializer):
 
+    owner = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='id'
+    )
+
+    scrum = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='id'
+    )
+
+    members = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='id'
+    )
+
     class Meta:
         model = Project
         fields = ('title', 'owner', 'scrum', 'members')
@@ -237,7 +253,7 @@ class CohortSerializer(serializers.ModelSerializer):
     students = serializers.SlugRelatedField(
         many=True,
         read_only=True,
-        slug_field='surname'
+        slug_field='id'
     )
 
     class Meta:
@@ -363,6 +379,11 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
 class UpdateProjectMembersSerializer(serializers.ModelSerializer):
     #members = StudentSerializer(many=True)
+    members = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='id'
+    )
     class Meta:
         model = Project
         fields = ('members',)

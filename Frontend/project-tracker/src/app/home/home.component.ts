@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
 import { HomeService } from '../services/home.service';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-home',
@@ -9,17 +10,17 @@ import { HomeService } from '../services/home.service';
 })
 
 export class HomeComponent implements OnInit {
-  projects: any;
-  constructor(private HService: HomeService) { }
+  students: any;
+  constructor(private HService: HomeService,) { }
 
   ngOnInit(): void {
-    this.AllProjects();
+    this.AllStudents();
   }
 
-  AllProjects() {
-    this.HService.getprojects().subscribe(projects => {
-      this.projects = projects;
-      console.log(this.projects);
+  AllStudents() {
+    this.HService.getprofiles().subscribe(students => {
+      this.students = students;
+      console.log(this.students);
     })
   }
 

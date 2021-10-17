@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProjectService } from './services/project.service';
+import { AuthService } from './_services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,12 @@ import { ProjectService } from './services/project.service';
 export class AppComponent {
   title = 'project-tracker';
 
-  constructor(private _ProjectService: ProjectService){
+  constructor(private _ProjectService: ProjectService, private authService: AuthService){
 
+  }
+
+  logout() {
+    // this.authService.logout();
   }
 }
 
