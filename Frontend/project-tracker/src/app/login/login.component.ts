@@ -15,8 +15,9 @@ import { first } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
 
   myForm: FormGroup;
+  //data: any;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,) { }
 
   ngOnInit(): void {
     this.myForm = new FormGroup({

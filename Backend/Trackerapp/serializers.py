@@ -90,21 +90,21 @@ class LoginSerializer(serializers.ModelSerializer):
         return super().validate(attrs)
 
 
-    def validate_email(self, value):
-        user = self.context['request'].user
+    # def validate_email(self, value):
+    #     user = self.context['request'].user
 
-        if CustomUser.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
+    #     if CustomUser.objects.exclude(pk=user.pk).filter(email=value).exists():
+    #         raise serializers.ValidationError({"email": "This email is already in use."})
 
-        return value
+    #     return value
 
-    def validate_username(self, value):
+    # def validate_username(self, value):
 
-        user = self.context['request'].user
-        if CustomUser.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "This username is already in use."})
+    #     user = self.context['request'].user
+    #     if CustomUser.objects.exclude(pk=user.pk).filter(username=value).exists():
+    #         raise serializers.ValidationError({"username": "This username is already in use."})
 
-        return value
+    #     return value
 
     def update(self, instance, validated_data):
         instance.email = validated_data['email']
@@ -138,10 +138,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email')
-
-    def create(self, validated_data):
-        return CustomUser(**validated_data)
+        fields = ('id', 'username', 'email', 'is_verified', 'is_active', 'is_staff', 'created_at', 'updated_at', 'auth_provider',)
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -331,13 +328,13 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
             'email': {'required': True},
         }
 
-    def validate_email(self, value):
-        user = self.context['request'].user
+    # def validate_email(self, value):
+    #     user = self.context['request'].user
 
-        if Student.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
+    #     if Student.objects.exclude(pk=user.pk).filter(email=value).exists():
+    #         raise serializers.ValidationError({"email": "This email is already in use."})
 
-        return value
+    #     return value
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data['first_name']
@@ -378,15 +375,11 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
 
 class UpdateProjectMembersSerializer(serializers.ModelSerializer):
-    #members = StudentSerializer(many=True)
-    members = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='id'
-    )
+    members = StudentSerializer(many=True)
     class Meta:
         model = Project
         fields = ('members',)
+        filter_horizontal = ('members',)
 
     def update(self, instance, validated_data):
         instance.members = validated_data['members']

@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <br>
+    <hr>
+    <br>
+
+    <h1 style="text-align:center"><b> All Projects </b></h1>
+    <br>
+    <br>
+    <div *ngFor= "let project of projects">
+        <br>
+        <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}" alt="" class="img-responsive">
+        <br>
+        <br>
+        <p>Title: {{ project.title }}</p>
+        <br>
+        <p>Owner: {{ project.owner }}</p>
+        <br>
+        <p *ngIf="project.style">Dev Mode: {{ project.style }}</p>
+        <p *ngIf="project.cohort">Cohort: {{ project.style }}</p>
+        <p *ngIf="project.scrum">Scrum-Master: {{ project.scrum }}</p>
+        <p *ngIf="project.members">Members: {{ project.members }}</p>     
+        <a *ngIf="project.github_link" href="{{ project.github_link }}">Github Link</a>
+        <br>       
+            
+        <hr>
+        <br>
+    </div>
+    
+</body>
+</html>

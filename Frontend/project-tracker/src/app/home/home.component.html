@@ -61,7 +61,7 @@
         <br>
         <p>Student: {{ student.user }}</p>
         <br>
-        <p>Projects: {{ student.projects_owned }}</p>
+        <p *ngIf="student.projects_owned">Projects: {{ student.projects_owned }}</p>
         <br>
         <hr>
         <br>

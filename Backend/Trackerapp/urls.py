@@ -53,4 +53,6 @@ urlpatterns = [
     url(r'api/search/projects/$', ProjectSearch.as_view(), name='api_project_search'),    # Project search
     url(r'api/search/students/$', StudentSearch.as_view(), name='api_student_search'),    # Student search
 
+    url(r'api/user/$', CurrentUserView.as_view(), name='api_user'),    # Current User
+    url(r'api/user/profile/$', CurrentUserProfileView.as_view(), name='api_user_profile'),    # Current User Profile
 ]

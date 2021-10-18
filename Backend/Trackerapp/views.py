@@ -1,7 +1,7 @@
 from django.db.models.fields import IPAddressField
 from django.shortcuts import render
 from rest_framework import generics, serializers,status,views, permissions
-
+from rest_framework import viewsets
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render,redirect, resolve_url
@@ -67,7 +67,7 @@ class RegisterView(generics.GenericAPIView):
         token = RefreshToken.for_user(user).access_token
 
         current_site=get_current_site(request).domain
-        relativeLink=reverse('accountverify')
+        relativeLink=reverse('email-verify')
         absoluteurl = 'http://'+current_site+relativeLink+"?token="+str(token)
         email_body='Click on the link below to verify your email  \n'+ absoluteurl
         data={'email_body':email_body,'to_email':user.email, 'email_subject':'Verify your email'}
@@ -456,3 +456,22 @@ class UpdateProjectMembersView(generics.UpdateAPIView):
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateProjectMembersSerializer
+
+
+class CurrentUserView(generics.ListAPIView): 
+    #permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        current_user = request.user
+        serializers = CustomUserSerializer(current_user)
+        return Response(serializers.data)
+
+
+class CurrentUserProfileView(generics.ListAPIView): 
+    #permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        current_user = self.request.user
+        profile = current_user.profile
+        serializers = StudentSerializer(profile)
+        return Response(serializers.data)

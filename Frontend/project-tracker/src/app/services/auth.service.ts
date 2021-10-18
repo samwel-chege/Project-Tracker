@@ -31,12 +31,13 @@ export class AuthService {
     return this.http.post<any>(this.api_url + 'login',
       { email, password }, httpOptions).pipe(
         map(user => {
-          if (user && user.token) {
+          if (user && user.tokens) {
             localStorage.setItem("currentUser", JSON.stringify(user));
           }
           return user;
-        })
-      );
+        }
+      )
+    );
   }
 
   // register(user): Observable<any> {
