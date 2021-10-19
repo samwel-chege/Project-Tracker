@@ -7,26 +7,51 @@
     <title>Projects page</title>
 </head>
 <body>
-    
+    <br>
+    <hr>
+    <br>
+  
+    <h1 style="text-align:center"><b> All Projects </b></h1>
+    <br>
+    <br>
     <div *ngFor="let project of projects">
-    <div class="container">
-        <div class="card" style="margin-bottom: 5rem;">
-            <div class="card-header d-flex">
-                <h3>{{project.title}} </h3>
+        <div class="container">
+            <br>
+            <div class="card" style="margin-bottom: 5rem;">
+                <div class="card-header d-flex">
+                    <h3><b>{{project.title}}</b></h3>
+                </div>
+                <br>
+                <div *ngIf="project.project_image" class="container">
+                <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
+                </div>
+                <br>
+                <div class="container">
+                    <div *ngIf="project.owner"><b>Owner:</b> {{project.owner.user}}</div>
+                    <br>
+                    <div *ngIf="project.scrum"><b>Scrum-Master:</b> {{project.scrum.user}}</div>
+                    <br>
+                    <div *ngIf="project.cohort"><b>Cohort:</b> {{project.cohort}}</div>
+                    <div *ngIf="project.style"><b>Development Mode:</b> {{project.style}}</div>
+                    <br>
+                    <div *ngIf="project.description"><b>Description:</b> {{project.description}}</div>
+                    <br>
+                    <div class="text-muted"><b>Date:</b> {{project.date}}</div>
+                    <br>
+                    <a href="{{project.github_link}}"><b>Github Link</b></a>
+                    <br>
+                    <br>
+                    <div *ngIf="project.members"><b>Project Members:</b>
+                        <br>
+                        <ul>
+                          <li *ngFor= "let member of project.members">{{ member.user }}</li>
+                        </ul>
+                    </div> 
+                    <br>
+                    <br>
+                </div>
             </div>
-            <div *ngIf="project.project_image">
-            <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
-            </div>
-            <div>{{project.description}}</div>
-            <div>{{project.owner}}</div>
-            <div>{{project.cohort}}</div>
-            <div>{{project.style}}</div>
-            <div>{{project.scrum}}</div>
-            <div>{{project.members}}</div>
-            <!-- Backend/media/images/projects/Screenshot_from_2021-09-18_09-14-45.png -->
-            <div class="text-muted">{{project.date}}</div>
         </div>
-    </div>
     </div>
 
 </body>

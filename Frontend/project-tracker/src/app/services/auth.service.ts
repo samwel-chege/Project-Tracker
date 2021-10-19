@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient,HttpHeaders,HttpErrorResponse, HttpInterceptor,HttpRequest,HttpHandler,HttpEvent } from '@angular/common/http';
 import { CanActivate, Router } from '@angular/router';
 
 import { Observable,throwError } from 'rxjs';
-import { tap, shareReplay } from 'rxjs/operators';
+import { tap, shareReplay, map } from 'rxjs/operators';
+
+import 'rxjs/add/operator/map';
 
 import * as jwtDecode from 'jwt-decode';
 import * as moment from 'moment';
@@ -13,11 +16,16 @@ import { User } from '../user';
 import { catchError,map } from 'rxjs/operators';
 
 
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   endpoint: string = 'http://127.0.0.1:8000/auth/';

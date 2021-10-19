@@ -6,12 +6,11 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 
-export class ProjectService{
+export class StylesService{
     api_link: string = "http://localhost:8000/";
     constructor( private http: HttpClient) { }
 
-    getprojects(){
-        return this.http.get(this.api_link + 'auth/api/projects/');
+    getStyles(){
+        return this.http.get(this.api_link + 'auth/api/styles/');
     }
-
 }
