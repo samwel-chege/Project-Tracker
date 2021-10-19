@@ -56,7 +56,7 @@ class RegisterView(generics.GenericAPIView):
     renderer_classes = (UserRender,)
 
     def post(self, request):
-        permission_classes = (IsAdminOrReadOnly,)
+        #permission_classes = (IsAdminOrReadOnly,)
         user = request.data
         serializer =self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
@@ -255,7 +255,7 @@ class StylesList(generics.ListAPIView):
 
 
 class CustomUserView(APIView):
-    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_custom_user(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
@@ -270,7 +270,7 @@ class CustomUserView(APIView):
 
 
 class StudentProfileView(APIView):
-    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_student(self, pk):
         try:
             return Student.objects.get(pk=pk)
@@ -301,7 +301,7 @@ class StudentProjectsView(APIView):
 
 
 class ProjectProfileView(APIView):
-    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_project(self, pk):
         try:
             return Project.objects.get(pk=pk)
@@ -324,7 +324,7 @@ class ProjectProfileView(APIView):
 
 
 class ProjectMembersView(APIView):
-    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_project(self, pk):
         try:
             return Project.objects.get(pk=pk)
@@ -354,7 +354,7 @@ class CohortProfileView(APIView):
         return Response(serializers.data)
 
     def delete(self, request, pk, format=None):
-        permission_classes = (IsAdminOrReadOnly,)
+        #permission_classes = (IsAdminOrReadOnly,)
         cohort = self.get_cohort(pk)
         if cohort:
             cohort.delete()
@@ -381,7 +381,7 @@ class CohortProjectsView(APIView):
 
 
 class StyleProfileView(APIView):
-    permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
     def get_style(self, pk):
         try:
             return DevStyle.objects.get(pk=pk)
