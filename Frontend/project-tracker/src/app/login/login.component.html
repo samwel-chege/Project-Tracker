@@ -8,32 +8,24 @@
         
             <div class="form">
                 
-                  <form>
+                  <form class="form-signin" [formGroup]="loginForm" (ngSubmit)="loginUser()" >
                     <div class="bcol">
                         <h1>Login</h1>
              
 
                           <div class="form-group">
-
-                            <label for="email">Email</label><br>
-                
-                            <input type="text" name="email" class = "form-control" ngModel>
-                
+                            <label for="email">Email</label><br>                
+                            <input type="email" formControlName="email" class = "form-control" placeholder="Enter email" required>
                           </div>
 
                         <div class="form-group">
-
                             <label for="password">Password</label><br>
-                
-                            <input type="text" name="password" class = "form-control" ngModel>
-                
+                            <input type="password" formControlName="password" class = "form-control" placeholder="Password" required>
                         </div>
                 
-          
-        
-                        <button class="btn" type="submit"><a routerLink="/login">Login</a> </button>
+                        <button class="btn" type="submit">Login</button>
 
-                        <P class="account">Don't have an account? <a routerLink="/signup">Sign up</a></P>
+                        <P class="account">Don't have an account? <a routerLink="signup">Sign up</a></P>
                       </div>
                        
                         
