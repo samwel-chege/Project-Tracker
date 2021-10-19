@@ -17,7 +17,6 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Auth/interceptor';
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
 

@@ -22,7 +22,6 @@ class TestViews(TestSetUp, APITestCase):
         response = self.client.post(self.register_url, self.user_data, format='json')
         email = response.data['email']
         user = CustomUser.objects.get(email=email)
-        #user.is_verified = True
         user.save()
         res = self.client.post(self.login_url, self.user_data, format='json')
         self.assertEqual(res.status_code, 200)

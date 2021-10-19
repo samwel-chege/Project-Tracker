@@ -4,9 +4,7 @@ import { HttpClient,HttpHeaders,HttpErrorResponse, HttpInterceptor,HttpRequest,H
 import { CanActivate, Router } from '@angular/router';
 
 import { Observable,throwError } from 'rxjs';
-import { tap, shareReplay, map } from 'rxjs/operators';
-
-import 'rxjs/add/operator/map';
+import { tap, shareReplay } from 'rxjs/operators';
 
 import * as jwtDecode from 'jwt-decode';
 import * as moment from 'moment';

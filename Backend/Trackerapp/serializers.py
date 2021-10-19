@@ -80,9 +80,6 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user.is_active:
             raise AuthenticationFailed('Account disabled for inactivity')
 
-        # if not user.is_verified:
-        #     raise AuthenticationFailed('Account not verified')
-
 
 
         return {
@@ -142,7 +139,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'is_active', 'is_staff', 'created_at', 'updated_at', 'auth_provider',)
+        fields = ('id', 'username', 'email')
+
+    def create(self, validated_data):
+        return CustomUser(**validated_data)
 
 
 class StudentSerializer(serializers.ModelSerializer):
