@@ -239,6 +239,12 @@ class CohortSerializer(serializers.ModelSerializer):
         slug_field='title'
     )
 
+    students = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='id'
+    )
+  
     class Meta:
         model = Cohort
         fields = ('id', 'name', 'details', 'projects', 'students',)

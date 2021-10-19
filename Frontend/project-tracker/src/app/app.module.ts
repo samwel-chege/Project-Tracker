@@ -40,7 +40,6 @@ import { StylesComponent } from './styles/styles.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-
   ],
   providers: [UserService],
   bootstrap: [AppComponent]
