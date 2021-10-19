@@ -149,6 +149,9 @@ STATICFILES_DIRS = [
 
 # rest_framework
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':(
+        'rest_framework.permissions.AllowAny',
+    ),
 
     'DEFAULT_FILTER_BACKENDS': (['django_filters.rest_framework.DjangoFilterBackend']),
 
@@ -159,11 +162,12 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]),
 
-    'NON_FIELD_ERRORS': (['error',])
+    'NON_FIELD_ERRORS': (['error',]),
+    
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
 }
 
