@@ -6,7 +6,7 @@ export class User {
         public password: string,
         public username: string,
         // public email: string,
-        public is_verified: boolean,
+        // public is_verified: boolean,
         public is_active: boolean,
         public is_staff: boolean,
         public created_at: Date,
