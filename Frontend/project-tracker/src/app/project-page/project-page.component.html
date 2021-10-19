@@ -28,6 +28,7 @@
                 <br>
                 <div class="container">
                     <div *ngIf="project.owner"><b>Owner:</b> {{project.owner.user}}</div>
+                    <br>
                     <div *ngIf="project.scrum"><b>Scrum-Master:</b> {{project.scrum.user}}</div>
                     <br>
                     <div *ngIf="project.cohort"><b>Cohort:</b> {{project.cohort}}</div>
@@ -37,7 +38,11 @@
                     <br>
                     <div class="text-muted"><b>Date:</b> {{project.date}}</div>
                     <br>
+                    <a href="{{project.github_link}}"><b>Github Link</b></a>
+                    <br>
+                    <br>
                     <div *ngIf="project.members"><b>Project Members:</b>
+                        <br>
                         <ul>
                           <li *ngFor= "let member of project.members">{{ member.user }}</li>
                         </ul>

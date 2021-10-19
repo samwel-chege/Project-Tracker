@@ -9,6 +9,8 @@ import { SignupComponent } from './signup/signup.component';
 import { ProjectPageComponent } from './project-page/project-page.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CohortsComponent } from './cohorts/cohorts.component';
+import { StylesComponent } from './styles/styles.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,6 +21,8 @@ const routes: Routes = [
   { path: 'projects', component: ProjectPageComponent },
   { path: 'profiles', component:ProfileComponent },
   { path: 'profile', component:StudentProfileComponent },
+  { path: 'cohorts', component:CohortsComponent },
+  { path: 'styles', component:StylesComponent },
 ];
 
 

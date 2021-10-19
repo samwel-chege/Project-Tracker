@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+  <br>
+  <hr>
+  <br>
+
+  <h1 style="text-align:center"><b> All Cohorts </b></h1>
+  <br>
+  <br>
+  <div *ngFor= "let cohort of cohorts">
+    <div class="container">
+        <div class="card" style="margin-bottom: 5rem;">
+            <div class="card-header d-flex">
+                <h3><b>{{cohort.name}}</b></h3>
+            </div>
+            <br>
+
+            <div class="container">
+              <div *ngIf="cohort.details"><b>Details:</b> {{ cohort.details }}</div>  
+              <br>
+              <div *ngIf="cohort.students"><b>Students:</b>
+                <br>
+                <ul>
+                  <li *ngFor= "let student of cohort.students">{{ student.user }}</li>
+                </ul>
+              </div> 
+              <br>
+              <div *ngIf="cohort.projects"><b>Projects:</b>
+                <br>
+                <ul>
+                  <li *ngFor= "let project of cohort.projects">{{ project }}</li>
+                </ul>
+              </div> 
+            </div>
+        </div>
+    </div>
+  </div>
+  <br>
+  <hr>
+  <br>
+</body>
+</html>

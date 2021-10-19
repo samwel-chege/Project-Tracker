@@ -16,6 +16,8 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 import { ProfileComponent } from './profile/profile.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { CohortsComponent } from './cohorts/cohorts.component';
+import { StylesComponent } from './styles/styles.component';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { HttpClientModule } from '@angular/common/http';
     LoginComponent,
     StudentProfileComponent,
     ProfileComponent,
+    CohortsComponent,
+    StylesComponent,
   ],
   imports: [
     BrowserModule,

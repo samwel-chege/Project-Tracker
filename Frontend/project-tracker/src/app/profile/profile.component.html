@@ -28,8 +28,7 @@
             <br>
 
             <div class="container">
-              <div *ngIf="student.first_name"><b>First Name:</b> {{ student.first_name }}</div>  
-              <div *ngIf="student.surname"><b>Surname:</b> {{ student.surname }}</div>
+              <div *ngIf="student.first_name && student.surname"><b>Full Name:</b> {{ student.first_name }} {{ student.surname }}</div>
               <br>
               <div *ngIf="student.cohort"><b>Cohort:</b> {{ student.cohort }}</div>  
               <div *ngIf="student.email"><b>Email:</b> {{ student.email }}</div> 
@@ -37,18 +36,21 @@
               <div *ngIf="student.bio"><b>Bio:</b> {{ student.bio }}</div> 
               <br>
               <div *ngIf="student.projects_owned"><b>Projects Owned:</b>
+                <br>
                 <ul>
                   <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
                 </ul>
               </div> 
               <br>
               <div *ngIf="student.is_scrum"><b>Scrum-Master for:</b>
+                <br>
                 <ul>
                   <li *ngFor= "let project of student.is_scrum">{{ project }}</li>
                 </ul>
               </div> 
               <br>
               <div *ngIf="student.is_dev"><b>Member of:</b>
+                <br>
                 <ul>
                   <li *ngFor= "let project of student.is_dev">{{ project }}</li>
                 </ul>
