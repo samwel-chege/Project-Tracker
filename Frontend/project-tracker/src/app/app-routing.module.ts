@@ -8,6 +8,8 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ProjectPageComponent } from './project-page/project-page.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { ProjectFormComponent } from './project-form/project-form.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -15,7 +17,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
   { path: 'projects', component: ProjectPageComponent },
-  { path: 'profiles', component:StudentProfileComponent }
+  { path: 'profiles', component:StudentProfileComponent,canActivate:[AuthGuard] },
+  { path: 'add-projects', component:ProjectFormComponent },
 ];
 
 

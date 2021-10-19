@@ -14,7 +14,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password=serializers.CharField(max_length=68, min_length=6, write_only=True)
+    password=serializers.CharField(max_length=68, min_length=6,)
 
     class Meta:
         model = CustomUser
@@ -23,6 +23,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         email = attrs.get('email', '')
         username = attrs.get('username', '')
+        password  = attrs.get('password', '')
 
         if not username.isalnum():
             raise serializers.ValidationError('The username should only contain alphanumeric characters')
@@ -33,18 +34,18 @@ class RegisterSerializer(serializers.ModelSerializer):
         return CustomUser.objects.create_user(**validated_data)
 
 
-class EmailVerificationSerializer(serializers.ModelSerializer):
-    token = serializers.CharField(max_length=500)
+# class EmailVerificationSerializer(serializers.ModelSerializer):
+#     token = serializers.CharField(max_length=500)
 
-    class Meta:
-        model = CustomUser
-        fields = ['token']
+#     class Meta:
+#         model = CustomUser
+#         fields = ['token']
 
 
 class LoginSerializer(serializers.ModelSerializer):
     email=serializers.EmailField(max_length=255, min_length=3)
     password=serializers.CharField(max_length=68, min_length=6, write_only=True)
-    username=serializers.EmailField(max_length=68, min_length=3, read_only=True)
+    username=serializers.CharField(max_length=68, min_length=3, read_only=True)
     tokens=serializers.SerializerMethodField()
 
     def get_tokens(self, obj):
@@ -62,13 +63,15 @@ class LoginSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         email=attrs.get('email', '')
         password=attrs.get('password', '')
-        filtered_user_by_email = CustomUser.objects.filter(email=email)
-        user=auth.authenticate(email=email, password=password)
+        # filtered_user_by_email = CustomUser.objects.filter(email=email)
+        # user=auth.authenticate(email=email, password=password)
 
-        if filtered_user_by_email.exists() and filtered_user_by_email[0].auth_provider !='email':
-            raise AuthenticationFailed(
-                detail='Please continue your login using ' + filtered_user_by_email[0].auth_provider
-            )
+        # if filtered_user_by_email.exists() and filtered_user_by_email[0].auth_provider !='email':
+        #     raise AuthenticationFailed(
+        #         detail='Please continue your login using ' + filtered_user_by_email[0].auth_provider
+        #     )
+
+        user = auth.authenticate(email=email,password=password)
 
         if not user:
             raise AuthenticationFailed('Confirm if your credentials are valid, try again')
@@ -76,43 +79,43 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user.is_active:
             raise AuthenticationFailed('Account disabled for inactivity')
 
-        if not user.is_verified:
-            raise AuthenticationFailed('Account not verified')
+        # if not user.is_verified:
+        #     raise AuthenticationFailed('Account not verified')
 
 
 
         return {
             'email': user.email,
             'username': user.username,
-            'tokens': user.tokens(),
+            'tokens': user.tokens,
         }
 
         return super().validate(attrs)
 
 
-    def validate_email(self, value):
-        user = self.context['request'].user
+    # def validate_email(self, value):
+    #     user = self.context['request'].user
 
-        if CustomUser.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
+    #     if CustomUser.objects.exclude(pk=user.pk).filter(email=value).exists():
+    #         raise serializers.ValidationError({"email": "This email is already in use."})
 
-        return value
+    #     return value
 
-    def validate_username(self, value):
+    # def validate_username(self, value):
 
-        user = self.context['request'].user
-        if CustomUser.objects.exclude(pk=user.pk).filter(username=value).exists():
-            raise serializers.ValidationError({"username": "This username is already in use."})
+    #     user = self.context['request'].user
+    #     if CustomUser.objects.exclude(pk=user.pk).filter(username=value).exists():
+    #         raise serializers.ValidationError({"username": "This username is already in use."})
 
-        return value
+    #     return value
 
-    def update(self, instance, validated_data):
-        instance.email = validated_data['email']
-        instance.username = validated_data['username']
+    # def update(self, instance, validated_data):
+    #     instance.email = validated_data['email']
+    #     instance.username = validated_data['username']
 
-        instance.save()
+    #     instance.save()
 
-        return instance
+    #     return instance
 
 
 class LogoutSerializer(serializers.Serializer):
