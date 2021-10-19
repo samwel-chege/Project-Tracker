@@ -37,6 +37,7 @@ from .utils import Util
 from django.http import HttpResponsePermanentRedirect
 import os
 import django_filters
+from rest_framework.parsers import JSONParser, MultiPartParser
  
 
 
@@ -457,6 +458,19 @@ class UpdateProjectMembersView(generics.UpdateAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateProjectMembersSerializer
 
+    def get_project(self, pk):
+        try:
+            return Project.objects.get(pk=pk)
+
+        except Project.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        project = self.get_project(pk)
+        members = project.members
+        serializers = StudentInfoSerializer(members, many=True)
+        return Response(serializers.data)
+
 
 class CurrentUserView(generics.ListAPIView): 
     #permission_classes = (IsAuthenticated,)
@@ -475,3 +489,39 @@ class CurrentUserProfileView(generics.ListAPIView):
         profile = current_user.profile
         serializers = StudentSerializer(profile)
         return Response(serializers.data)
+
+
+# class UploadProjectImageView(APIView):
+#     permission_classes = (IsAuthenticated,)
+#     parser_classes = (
+#         MultiPartParser,
+#         JSONParser,
+#     )
+
+#     @staticmethod
+#     def post(request):
+#         file = request.data.get('project_image')
+
+#         upload_data = cloudinary.uploader.upload(file)
+#         return Response({
+#             'status': 'success',
+#             'data': upload_data,
+#         }, status=201)
+
+
+# class UploadProfilePicView(APIView):
+#     permission_classes = (IsAuthenticated,)
+#     parser_classes = (
+#         MultiPartParser,
+#         JSONParser,
+#     )
+
+#     @staticmethod
+#     def post(request):
+#         file = request.data.get('profile_pic')
+
+#         upload_data = cloudinary.uploader.upload(file)
+#         return Response({
+#             'status': 'success',
+#             'data': upload_data,
+#         }, status=201)

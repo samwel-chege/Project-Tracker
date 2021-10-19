@@ -10,6 +10,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, smart_bytes, force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from rest_framework.parsers import JSONParser, MultiPartParser
 
 
 
@@ -264,7 +265,7 @@ class StyleSerializer(serializers.ModelSerializer):
 class NewProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
+        fields = ('title', 'description', 'owner', 'style', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project.objects.create(**validated_data)
@@ -305,7 +306,7 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('first_name', 'surname', 'profile_pic', 'cohort', 'email', 'bio')
+        fields = ('first_name', 'surname', 'cohort', 'email', 'bio')
         extra_kwargs = {
             'first_name': {'required': True},
             'surname': {'required': True},
@@ -324,7 +325,7 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.first_name = validated_data['first_name']
         instance.surname = validated_data['surname']
-        instance.profile_pic = validated_data['profile_pic']
+        #instance.profile_pic = validated_data['profile_pic']
         instance.cohort = validated_data['cohort']
         instance.email = validated_data['email']
         instance.bio = validated_data['bio']
@@ -335,9 +336,10 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
 
 class UpdateProjectSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link')
+        fields = ('title', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link')
         extra_kwargs = {
             'owner': {'required': True},
             'title': {'required': True},
@@ -346,7 +348,7 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data['title']
-        instance.project_image = validated_data['project_image']
+        #instance.project_image = validated_data['project_image']
         instance.description = validated_data['description']
         instance.owner = validated_data['owner']
         instance.scrum = validated_data['scrum']
@@ -360,16 +362,21 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
 
 class UpdateProjectMembersSerializer(serializers.ModelSerializer):
-    members = StudentSerializer(many=True)
+    #members = StudentSerializer(many=True,)
     class Meta:
         model = Project
         fields = ('members',)
-        filter_horizontal = ('members',)
+        #filter_horizontal = ('members',)
+        extra_kwargs = {
+            'members': {'required': True},
+        }
+
+    def create(self, validated_data):
+        return Project.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.members = validated_data['members']
-
-        instance.add()
+        instance.members = validated_data('members', instance.members)
+        instance.set()
         return instance
 
 
@@ -409,3 +416,37 @@ class SetNewPasswordSerializer(serializers.Serializer):
             raise AuthenticationFailed('The password reset link is invalid', 401)
 
         return super().validate(attrs)
+
+
+# class UpdateProjectImageSerializer(serializers.ModelSerializer):
+    
+#     class Meta:
+#         model = Project
+#         fields = ('project_image',)
+#         extra_kwargs = {
+#             'project_image': {'required': True},
+#         }
+
+#     def update(self, instance, validated_data):
+#         instance.project_image = validated_data['project_image']
+
+#         instance.save()
+
+#         return instance
+
+
+# class UpdateProfilePicSerializer(serializers.ModelSerializer):
+    
+#     class Meta:
+#         model = Student
+#         fields = ('profile_pic',)
+#         extra_kwargs = {
+#             'profile_pic': {'required': True},
+#         }
+
+#     def update(self, instance, validated_data):
+#         instance.profile_pic = validated_data['profile_pic']
+
+#         instance.save()
+
+#         return instance
