@@ -1,7 +1,7 @@
 from django.db.models.fields import IPAddressField
 from django.shortcuts import render
 from rest_framework import generics, serializers,status,views, permissions
-
+from rest_framework import viewsets
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, render,redirect, resolve_url
@@ -37,6 +37,7 @@ from .utils import Util
 from django.http import HttpResponsePermanentRedirect
 import os
 import django_filters
+from rest_framework.parsers import JSONParser, MultiPartParser
  
 
 
@@ -57,6 +58,7 @@ class RegisterView(generics.GenericAPIView):
 
     def post(self, request):
         permission_classes = (AllowAny,)
+        #permission_classes = (IsAdminOrReadOnly,)
         user = request.data
         serializer =self.serializer_class(data=user)
         serializer.is_valid(raise_exception=True)
@@ -83,38 +85,6 @@ class LoginAPIView(generics.GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-# class VerifyEmail(APIView):
-#     serializer_class = EmailVerificationSerializer
-#     token_param_config = openapi.Parameter(
-#         'token', in_=openapi.IN_QUERY, description='Description', type=openapi.TYPE_STRING)
-
-#     @swagger_auto_schema(manual_parameters=[token_param_config])
-    
-#     def get(self, request):
-#         token=request.GET.get('token')
-#         try:
-#             payload = jwt.decode(token, settings.SECRET_KEY,algorithms=['HS256'])
-#             user = CustomUser.objects.get(id=payload['user_id'])
-#             if not user.is_verified:
-#                 user.is_verified = True
-#                 user.save()
-
-#             return Response({'email': 'Successfully activated'}, status=status.HTTP_200_OK)
-#         except jwt.ExpiredSignatureError as identifier:
-#             return Response({'error': 'Activation Expired'}, status=status.HTTP_400_BAD_REQUEST)
-#         except jwt.exceptions.DecodeError as identifier:
-#             return Response({'error': 'Ivalid token, request a new one'}, status=status.HTTP_400_BAD_REQUEST)
-    
-
-# class LoginAPIView(generics.GenericAPIView):
-#     serializer_class = LoginSerializer
-#     def post(self, request):
-#         serializer = self.serializer_class(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-
-#         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class RequestPasswordResetEmail(generics.GenericAPIView):
@@ -255,7 +225,8 @@ class StylesList(generics.ListAPIView):
 
 
 class CustomUserView(APIView):
-    # permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    
     def get_custom_user(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
@@ -270,7 +241,8 @@ class CustomUserView(APIView):
 
 
 class StudentProfileView(APIView):
-    # permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+
     def get_student(self, pk):
         try:
             return Student.objects.get(pk=pk)
@@ -301,7 +273,8 @@ class StudentProjectsView(APIView):
 
 
 class ProjectProfileView(APIView):
-    # permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+
     def get_project(self, pk):
         try:
             return Project.objects.get(pk=pk)
@@ -324,7 +297,8 @@ class ProjectProfileView(APIView):
 
 
 class ProjectMembersView(APIView):
-    # permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+
     def get_project(self, pk):
         try:
             return Project.objects.get(pk=pk)
@@ -354,7 +328,8 @@ class CohortProfileView(APIView):
         return Response(serializers.data)
 
     def delete(self, request, pk, format=None):
-        # permission_classes = (IsAdminOrReadOnly,)
+        #permission_classes = (IsAdminOrReadOnly,)
+
         cohort = self.get_cohort(pk)
         if cohort:
             cohort.delete()
@@ -381,7 +356,8 @@ class CohortProjectsView(APIView):
 
 
 class StyleProfileView(APIView):
-    # permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+    #permission_classes = (IsAdminOrReadOnly, IsAuthenticated)
+
     def get_style(self, pk):
         try:
             return DevStyle.objects.get(pk=pk)
@@ -456,3 +432,71 @@ class UpdateProjectMembersView(generics.UpdateAPIView):
     queryset = Project.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UpdateProjectMembersSerializer
+
+    def get_project(self, pk):
+        try:
+            return Project.objects.get(pk=pk)
+
+        except Project.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        project = self.get_project(pk)
+        members = project.members
+        serializers = StudentInfoSerializer(members, many=True)
+        return Response(serializers.data)
+
+
+class CurrentUserView(generics.ListAPIView): 
+    #permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        current_user = request.user
+        serializers = CustomUserSerializer(current_user)
+        return Response(serializers.data)
+
+
+class CurrentUserProfileView(generics.ListAPIView): 
+    #permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        current_user = self.request.user
+        profile = current_user.profile
+        serializers = StudentSerializer(profile)
+        return Response(serializers.data)
+
+
+# class UploadProjectImageView(APIView):
+#     permission_classes = (IsAuthenticated,)
+#     parser_classes = (
+#         MultiPartParser,
+#         JSONParser,
+#     )
+
+#     @staticmethod
+#     def post(request):
+#         file = request.data.get('project_image')
+
+#         upload_data = cloudinary.uploader.upload(file)
+#         return Response({
+#             'status': 'success',
+#             'data': upload_data,
+#         }, status=201)
+
+
+# class UploadProfilePicView(APIView):
+#     permission_classes = (IsAuthenticated,)
+#     parser_classes = (
+#         MultiPartParser,
+#         JSONParser,
+#     )
+
+#     @staticmethod
+#     def post(request):
+#         file = request.data.get('profile_pic')
+
+#         upload_data = cloudinary.uploader.upload(file)
+#         return Response({
+#             'status': 'success',
+#             'data': upload_data,
+#         }, status=201)

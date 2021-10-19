@@ -10,7 +10,7 @@ export class HomeService{
     api_link: string = "http://localhost:8000/";
     constructor( private http: HttpClient) { }
 
-    getprojects(){
-        return this.http.get(this.api_link + 'auth/api/projects/');
+    getprofiles(){
+        return this.http.get(this.api_link + 'auth/api/students/');
     }
 }
