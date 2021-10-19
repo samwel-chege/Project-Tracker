@@ -1,10 +1,12 @@
 from os import name
 from django.urls import include, path
 from .views import (
-     RegisterView, VerifyEmail, LoginAPIView, PasswordTokenCheckAPI, 
+     RegisterView, LoginAPIView, PasswordTokenCheckAPI, 
      RequestPasswordResetEmail, SetNewPasswordAPIView, LogoutAPIView)
 from rest_framework import views
+
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+
 
 from django.conf.urls import url, include
 from .views import *
@@ -14,12 +16,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.http import Http404
 
+
 urlpatterns = [
 # authentication url paths
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', LoginAPIView.as_view(), name='login'),
     path('logout/', LogoutAPIView.as_view(), name='logout'),
-    path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
+    # path('email-verify/', VerifyEmail.as_view(), name='email-verify'),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('request-reset-email/', RequestPasswordResetEmail.as_view(), name='request-reset-email'),
