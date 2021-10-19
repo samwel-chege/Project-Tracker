@@ -19,23 +19,38 @@
     <div class="container">
         <div class="card" style="margin-bottom: 5rem;">
             <div class="card-header d-flex">
-                <h3>{{student.user}} </h3>
+                <h3><b>{{student.user}}</b></h3>
             </div>
             <br>
-            <div *ngIf="student.profile_pic">
+            <div *ngIf="student.profile_pic" class="container">
             <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="img-responsive">
             </div>
             <br>
 
             <div class="container">
-              <div *ngIf="student.first_name"> First Name: {{ student.first_name }}</div>  
-              <div *ngIf="student.surname"> Surname: {{ student.surname }}</div>
-              <div *ngIf="student.cohort"> Cohort: {{ student.cohort }}</div>  
-              <div *ngIf="student.email"> Email: {{ student.email }}</div>  
-              <div *ngIf="student.bio"> Bio: {{ student.bio }}</div> 
-              <div *ngIf="student.projects_owned"> Projects:
+              <div *ngIf="student.first_name"><b>First Name:</b> {{ student.first_name }}</div>  
+              <div *ngIf="student.surname"><b>Surname:</b> {{ student.surname }}</div>
+              <br>
+              <div *ngIf="student.cohort"><b>Cohort:</b> {{ student.cohort }}</div>  
+              <div *ngIf="student.email"><b>Email:</b> {{ student.email }}</div> 
+              <br> 
+              <div *ngIf="student.bio"><b>Bio:</b> {{ student.bio }}</div> 
+              <br>
+              <div *ngIf="student.projects_owned"><b>Projects Owned:</b>
                 <ul>
                   <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
+                </ul>
+              </div> 
+              <br>
+              <div *ngIf="student.is_scrum"><b>Scrum-Master for:</b>
+                <ul>
+                  <li *ngFor= "let project of student.is_scrum">{{ project }}</li>
+                </ul>
+              </div> 
+              <br>
+              <div *ngIf="student.is_dev"><b>Member of:</b>
+                <ul>
+                  <li *ngFor= "let project of student.is_dev">{{ project }}</li>
                 </ul>
               </div> 
             </div>
