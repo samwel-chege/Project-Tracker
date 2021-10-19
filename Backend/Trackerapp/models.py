@@ -12,7 +12,7 @@ import datetime as dt
 from django.db.models.deletion import CASCADE
 import django_filters
 from django.db.models.fields import SlugField
-from autoslug import AutoSlugField
+# from autoslug import AutoSlugField
 
 # Create your models here.
 
@@ -207,6 +207,7 @@ class Project(models.Model):
     # dev8=models.ManyToManyField(Student, related_name="is_dev8", blank=True)
 
     title=models.CharField(max_length=30, null=True)
+
     project_image=CloudinaryField('image', blank=True, default = 0, null=True)
     description=models.TextField(max_length=320, blank=True, null=True)
     github_link=models.URLField(blank=True, null=True)

@@ -1,1 +1,30 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profiles</title>
+</head>
+<body>
+    <div *ngFor="let student of students">
+        <div class="container">
+            <div class="card" style="margin-bottom: 5rem;">
+                <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}" alt="" class="img-responsive">
+            <div>{{student.first_name}}</div>
+            <div>{{student.email}}</div>
+            <div>{{student.bio}}</div>
+            <ul>
+                <li>{{student.projects_owned}}</li>
+            </ul>
+        </div>
+        <!-- <div *ngFor="let project of projects" class="container">
+            <div>{{student.first_name}}</div>
+            <div>{{student.email}}</div>
+        </div> -->
+        
+    </div>
+    </div>
+   
+</body>
+</html>

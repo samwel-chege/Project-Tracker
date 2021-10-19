@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { StudentProfileService } from '../services/student.service';
+import { ProjectService } from '../services/project.service';
 
 @Component({
   selector: 'app-student-profile',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./student-profile.component.css']
 })
 export class StudentProfileComponent implements OnInit {
-
-  constructor() { }
+  students: any;
+  constructor( private studentProfileService: StudentProfileService) { }
 
   ngOnInit(): void {
+    this.AllProfiles();
+  }
+  AllProfiles(){
+    this.studentProfileService.getprofiles().subscribe(students =>{
+      this.students = students;
+      console.log(this.students)
+    })
+
   }
 
 }

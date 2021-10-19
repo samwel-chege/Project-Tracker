@@ -285,7 +285,7 @@ class StudentProfileView(APIView):
 
 
 class StudentProjectsView(APIView):
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
     def get_student(self, pk):
         try:
             return Student.objects.get(pk=pk)

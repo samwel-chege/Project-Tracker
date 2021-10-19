@@ -1,3 +1,4 @@
+import { HashLocationStrategy } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from '../services/project.service';
 
@@ -9,16 +10,16 @@ import { ProjectService } from '../services/project.service';
 
 export class ProjectPageComponent implements OnInit {
   projects: any;
-  constructor(private PService: ProjectService,) { }
+  constructor(private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.AllProjects();
   }
 
-  AllProjects() {
-    this.PService.getprojects().subscribe(projects => {
+  AllProjects(){
+    this.projectService.getprojects().subscribe(projects => {
       this.projects = projects;
-      console.log(this.projects);
+      console.log(this.projects)
     })
   }
 

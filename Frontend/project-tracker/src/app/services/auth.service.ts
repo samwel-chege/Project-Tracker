@@ -23,32 +23,16 @@ const httpOptions = {
 
 export class AuthService {
 
-  api_url: string = 'http://localhost:8000/';
+  private apiRoot = 'http://127.0.0.1:8000/auth/register/';
 
   constructor(private http: HttpClient) { }
 
-  login(email: string, password: string) {
-    return this.http.post<any>(this.api_url + 'login',
-      { email, password }, httpOptions).pipe(
-        map(user => {
-          if (user && user.tokens) {
-            localStorage.setItem("currentUser", JSON.stringify(user));
-          }
-          return user;
-        }
-      )
-    );
-  }
-
-  // register(user): Observable<any> {
-  //   return this.http.post<any>(this.api_url + 'register', {
-  //     username: user.username,
-  //     email: user.email,
-  //     password: user.password
-  //   }, httpOptions);
+  // private setSession(authResult:any){
+  //   const token = authResult.token;
+  //   const payload = <JWTPayload> jwtDecode(token);
+  //   const expiresAt = moment.unix(payload.exp);
   // }
+  // localStorage.setItem('token',authResult.token);
+  // localStorage.setItem('expires_at',JSON.stringify(expiresAt.valueOf()));
 
-  logout(){
-    localStorage.removeitem('currentUser');
-  }
 }
