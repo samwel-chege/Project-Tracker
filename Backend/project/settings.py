@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
+
     'rest_framework',
     'django_filters',
 ]
@@ -149,8 +150,15 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (['django_filters.rest_framework.DjangoFilterBackend']),
 
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        #'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        #'rest_framework.permissions.IsAdminUser',
     ),
+
+    'DEFAULT_PARSER_CLASSES': [
+      'rest_framework.parsers.JSONParser',
+      'rest_framework.parsers.FormParser',
+      'rest_framework.parsers.MultiPartParser',
+    ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': ([
         'rest_framework.authentication.BasicAuthentication',
@@ -164,7 +172,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=10),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
 }
 

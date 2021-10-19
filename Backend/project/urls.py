@@ -26,7 +26,7 @@ from drf_yasg import openapi
 schema_view = get_schema_view(
    openapi.Info(
       title="PROJECT TRACKER API",
-      default_version='v1',
+      default_version='v1.0',
       description="Backend API for the Tracker App.",
       terms_of_service="https://www.myapp.com/policies/terms/",
       contact=openapi.Contact(email="contact@projecttracker.local"),

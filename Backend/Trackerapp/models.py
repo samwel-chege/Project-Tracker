@@ -4,7 +4,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from cloudinary.models import CloudinaryField
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
-from django.db.models import ImageField
+#from django.db.models import ImageField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from project import settings
@@ -12,7 +12,7 @@ import datetime as dt
 from django.db.models.deletion import CASCADE
 import django_filters
 from django.db.models.fields import SlugField
-from autoslug import AutoSlugField
+# from autoslug import AutoSlugField
 
 # Create your models here.
 
@@ -62,7 +62,7 @@ AUTH_PROVIDERS = {'facebook': 'facebook', 'google': 'google',
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(max_length=255, unique=True, db_index=True)
     email = models.EmailField(max_length=255, unique=True, db_index=True)
-    is_verified = models.BooleanField(default=True)
+    #is_verified = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -207,6 +207,7 @@ class Project(models.Model):
     # dev8=models.ManyToManyField(Student, related_name="is_dev8", blank=True)
 
     title=models.CharField(max_length=30, null=True)
+
     project_image=CloudinaryField('image', blank=True, default = 0, null=True)
     description=models.TextField(max_length=320, blank=True, null=True)
     github_link=models.URLField(blank=True, null=True)
