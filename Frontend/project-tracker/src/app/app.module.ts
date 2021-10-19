@@ -13,6 +13,7 @@ import { ProjectFormComponent } from './project-form/project-form.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -26,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
     ProjectFormComponent,
     SignupComponent,
     LoginComponent,
-    StudentProfileComponent
+    StudentProfileComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

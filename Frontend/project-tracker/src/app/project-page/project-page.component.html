@@ -7,26 +7,36 @@
     <title>Projects page</title>
 </head>
 <body>
-    
+    <br>
+    <br>
     <div *ngFor="let project of projects">
-    <div class="container">
-        <div class="card" style="margin-bottom: 5rem;">
-            <div class="card-header d-flex">
-                <h3>{{project.title}} </h3>
+        <div class="container">
+            <br>
+            <div class="card" style="margin-bottom: 5rem;">
+                <div class="card-header d-flex">
+                    <h3>{{project.title}} </h3>
+                </div>
+                <br>
+                <div *ngIf="project.project_image">
+                <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
+                </div>
+                <div class="container">
+                    <div *ngIf="project.owner">Owner: {{project.owner.user}}</div>
+                    <div *ngIf="project.scrum">Scrum-Master: {{project.scrum.user}}</div>
+                    <div *ngIf="project.cohort">Cohort: {{project.cohort}}</div>
+                    <div *ngIf="project.style">Development Mode: {{project.style}}</div>
+                    <div *ngIf="project.description">Description: {{project.description}}</div>
+                    <div class="text-muted">Date: {{project.date}}</div>
+                    <div *ngIf="project.members"> Project Members:
+                        <ul>
+                          <li *ngFor= "let member of project.members">{{ member.user }}</li>
+                        </ul>
+                    </div> 
+                    <br>
+                    <br>
+                </div>
             </div>
-            <div *ngIf="project.project_image">
-            <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
-            </div>
-            <div>{{project.description}}</div>
-            <div>{{project.owner}}</div>
-            <div>{{project.cohort}}</div>
-            <div>{{project.style}}</div>
-            <div>{{project.scrum}}</div>
-            <div>{{project.members}}</div>
-            <!-- Backend/media/images/projects/Screenshot_from_2021-09-18_09-14-45.png -->
-            <div class="text-muted">{{project.date}}</div>
         </div>
-    </div>
     </div>
 
 </body>

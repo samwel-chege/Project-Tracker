@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ProjectPageComponent } from './project-page/project-page.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
 
   { path: 'projects', component: ProjectPageComponent },
-  { path: 'profiles', component:StudentProfileComponent }
+  { path: 'profiles', component:ProfileComponent },
+  { path: 'profile', component:StudentProfileComponent },
 ];
 
 

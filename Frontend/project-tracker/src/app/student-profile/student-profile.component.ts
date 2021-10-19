@@ -8,16 +8,16 @@ import { ProjectService } from '../services/project.service';
   styleUrls: ['./student-profile.component.css']
 })
 export class StudentProfileComponent implements OnInit {
-  students: any;
+  student: any;
   constructor( private studentProfileService: StudentProfileService) { }
 
   ngOnInit(): void {
-    this.AllProfiles();
+    this.MyProfile();
   }
-  AllProfiles(){
-    this.studentProfileService.getprofiles().subscribe(students =>{
-      this.students = students;
-      console.log(this.students)
+  MyProfile(){
+    this.studentProfileService.getProfile().subscribe(student =>{
+      this.student = student;
+      console.log(this.student)
     })
 
   }

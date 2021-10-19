@@ -12,41 +12,35 @@
   <hr>
   <br>
 
-  <h1 style="text-align:center"><b> User Data </b></h1>
+  <h1 style="text-align:center"><b> All Students </b></h1>
   <br>
   <br>
-  <div>
-      <br>
-      <br>
-      <p>ID: {{ user.id }}</p>
-      <p>Username: {{ user.username }}</p>
-      <p *ngIf="user.email">Email: {{ user.email }}</p>  
-      <p *ngIf="user.is_verified">Is verified: {{ user.is_verified }}</p>
-      <p *ngIf="user.is_active">Is active: {{ user.is_active }}</p>  
-      <p *ngIf="user.is_staff">Is staff: {{ user.is_staff }}</p>  
-      <p *ngIf="user.created_at">Created at: {{ user.created_at }}</p> 
-      <p *ngIf="user.updated_at">Updated at: {{ user.updated_at }}</p>
-      <p *ngIf="user.auth_provider">Auth Provider: {{ user.auth_provider }}</p>  
-      <br>       
-  </div>
+  <div *ngFor= "let student of students">
+    <div class="container">
+        <div class="card" style="margin-bottom: 5rem;">
+            <div class="card-header d-flex">
+                <h3>{{student.user}} </h3>
+            </div>
+            <br>
+            <div *ngIf="student.profile_pic">
+            <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="img-responsive">
+            </div>
+            <br>
 
-  <br>
-  <hr>
-  <br>
-
-  <h1 style="text-align:center"><b> My Profile </b></h1>
-  <br>
-  <br>
-  <div>
-      <br>
-      <br>
-      <p>Username: {{ profile.user }}</p>
-      <p *ngIf="profile.first_name"> First Name: {{ profile.first_name }}</p>  
-      <p *ngIf="profile.surname"> Surname: {{ profile.surname }}</p>
-      <p *ngIf="profile.cohort"> Cohort: {{ profile.cohort }}</p>  
-      <p *ngIf="profile.email"> Email: {{ profile.email }}</p>  
-      <p *ngIf="profile.bio"> Bio: {{ profile.bio }}</p> 
-      <p *ngIf="profile.projects_owned"> Projects: {{ profile.projects_owned }}</p> 
+            <div class="container">
+              <div *ngIf="student.first_name"> First Name: {{ student.first_name }}</div>  
+              <div *ngIf="student.surname"> Surname: {{ student.surname }}</div>
+              <div *ngIf="student.cohort"> Cohort: {{ student.cohort }}</div>  
+              <div *ngIf="student.email"> Email: {{ student.email }}</div>  
+              <div *ngIf="student.bio"> Bio: {{ student.bio }}</div> 
+              <div *ngIf="student.projects_owned"> Projects:
+                <ul>
+                  <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
+                </ul>
+              </div> 
+            </div>
+        </div>
+    </div>
   </div>
   <br>
   <hr>

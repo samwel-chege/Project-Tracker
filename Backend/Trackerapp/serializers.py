@@ -76,8 +76,8 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user.is_active:
             raise AuthenticationFailed('Account disabled for inactivity')
 
-        if not user.is_verified:
-            raise AuthenticationFailed('Account not verified')
+        # if not user.is_verified:
+        #     raise AuthenticationFailed('Account not verified')
 
 
 
@@ -138,7 +138,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'is_verified', 'is_active', 'is_staff', 'created_at', 'updated_at', 'auth_provider',)
+        fields = ('id', 'username', 'email', 'is_active', 'is_staff', 'created_at', 'updated_at', 'auth_provider',)
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -178,23 +178,25 @@ class StudentSerializer(serializers.ModelSerializer):
         return Student(**validated_data)
 
 
+class StudentInfoSerializer(serializers.ModelSerializer):
+    
+    user = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
+
+    class Meta:
+        model = Student
+        fields = ('user',)
+
+    def create(self, validated_data):
+        return Student(**validated_data)
+
+
 class ProjectSerializer(serializers.ModelSerializer):
-
-    owner = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='id'
-    )
-
-    scrum = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='id'
-    )
-
-    members = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='id'
-    )
+    owner = StudentInfoSerializer()
+    scrum = StudentInfoSerializer()
+    members = StudentInfoSerializer(many=True,)
 
     cohort = serializers.SlugRelatedField(
         read_only=True,
@@ -215,22 +217,9 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class ProjectMembersSerializer(serializers.ModelSerializer):
-
-    owner = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='id'
-    )
-
-    scrum = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='id'
-    )
-
-    members = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='id'
-    )
+    owner = StudentInfoSerializer()
+    scrum = StudentInfoSerializer()
+    members = StudentInfoSerializer(many=True,)
 
     class Meta:
         model = Project
@@ -241,21 +230,17 @@ class ProjectMembersSerializer(serializers.ModelSerializer):
 
 
 class CohortSerializer(serializers.ModelSerializer):
+    students = StudentInfoSerializer(many=True,)
+
     projects = serializers.SlugRelatedField(
         many=True,
         read_only=True,
         slug_field='title'
     )
 
-    students = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='id'
-    )
-
     class Meta:
         model = Cohort
-        fields = ('id', 'name', 'details', 'projects', 'students')
+        fields = ('id', 'name', 'details', 'projects', 'students',)
 
     def create(self, validated_data):
         return Cohort(**validated_data)
