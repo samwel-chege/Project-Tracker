@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentProfileService } from '../services/student.service';
-import { ProjectService } from '../services/project.service';
+import { UserDataService } from '../services/userdata.service';
 import { AuthService } from '../services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -37,16 +37,24 @@ export class StudentProfileComponent implements OnInit {
 
 
   student: any;
-  constructor( private studentProfileService: StudentProfileService) { }
+  user: any;
+  constructor( private studentProfileService: StudentProfileService, private UDService: UserDataService) { }
 
   ngOnInit(): void {
     this.MyProfile();
+    this.MyData();
   }
   MyProfile(){
     this.studentProfileService.getProfile().subscribe(student =>{
       this.student = student;
       console.log(this.student)
     })
+  }
 
+  MyData() {
+    this.UDService.getUser().subscribe(user => {
+      this.user = user;
+      console.log(this.user);
+    })
   }
 }
