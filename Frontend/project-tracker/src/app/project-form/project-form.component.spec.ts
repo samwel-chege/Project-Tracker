@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { } from 'jasmine';
 import { ProjectFormComponent } from './project-form.component';
 
 describe('ProjectFormComponent', () => {
@@ -23,12 +23,3 @@ describe('ProjectFormComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
-function beforeEach(arg0: () => Promise<void>) {
-  throw new Error('Function not implemented.');
-}
-
-
-function expect(component: ProjectFormComponent) {
-  throw new Error('Function not implemented.');
-}
