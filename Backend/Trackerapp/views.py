@@ -337,9 +337,15 @@ class CohortProfileView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CohortProjectsView(APIView):
+class CohortProjectsView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-    filterset_fields = ['style',]
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+    filterset_fields = ['style', 'cohort',]
+    # filter_fields = (
+    #     'style',
+    #     'cohort',
+    # )
 
     def get_cohort(self, pk):
         try:
