@@ -17,9 +17,10 @@
   <br>
   <div *ngFor= "let cohort of cohorts">
     <div class="container">
-        <div class="card" style="margin-bottom: 5rem;">
+        <div (click)="navigateToCohort(cohort.id)" class="card" style="margin-bottom: 5rem;">
             <div class="card-header d-flex">
                 <h3><b>{{cohort.name}}</b></h3>
+                <br>
             </div>
             <br>
 

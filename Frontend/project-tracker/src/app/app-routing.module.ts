@@ -15,6 +15,7 @@ import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
 import { SingleProjectComponent } from './single-project/single-project.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CohortProfileComponent } from './cohort-profile/cohort-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -36,7 +37,12 @@ const routes: Routes = [
       { path: ':id', component: UserProfileComponent },
     ]
   },
-  { path: 'cohorts', component:CohortsComponent },
+  { path: 'cohorts',
+    children: [
+      { path: '', component: CohortsComponent },
+      { path: ':id', component: CohortProfileComponent },
+    ]
+  },
   { path: 'styles', component:StylesComponent },
 ];
 
