@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../services/profile.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,6 +10,7 @@ import { ProfileService } from '../services/profile.service';
 
 export class ProfileComponent implements OnInit {
   students: any;
+
   constructor(private PfService: ProfileService) { }
 
   ngOnInit(): void {
@@ -21,5 +23,4 @@ export class ProfileComponent implements OnInit {
       console.log(this.students);
     })
   }
-
 }

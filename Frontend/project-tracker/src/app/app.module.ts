@@ -19,6 +19,7 @@ import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Auth/interceptor';
 import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
+import { SingleProjectComponent } from './single-project/single-project.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { StylesComponent } from './styles/styles.component';
     ProfileComponent,
     CohortsComponent,
     StylesComponent,
+    SingleProjectComponent,
   ],
   imports: [
     BrowserModule,

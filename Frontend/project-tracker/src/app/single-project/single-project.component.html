@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project</title>
+</head>
+<body>
+    <br>
+    <br>
+    <div class="container">
+        <br>
+        <div class="card" style="margin-bottom: 5rem;">
+            <div class="card-header d-flex">
+                <h3><b>{{project.title}}</b></h3>
+            </div>
+            <br>
+            <div *ngIf="project.project_image" class="container">
+            <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
+            </div>
+            <br>
+            <div class="container">
+                <div *ngIf="project.owner"><b>Owner:</b> {{project.owner.user}}</div>
+                <br>
+                <div *ngIf="project.scrum"><b>Scrum-Master:</b> {{project.scrum.user}}</div>
+                <br>
+                <div *ngIf="project.cohort"><b>Cohort:</b> {{project.cohort}}</div>
+                <div *ngIf="project.style"><b>Development Mode:</b> {{project.style}}</div>
+                <br>
+                <div *ngIf="project.description"><b>Description:</b> {{project.description}}</div>
+                <br>
+                <div class="text-muted"><b>Date:</b> {{project.date}}</div>
+                <br>
+                <a href="{{project.github_link}}"><b>Github Link</b></a>
+                <br>
+                <br>
+                <div *ngIf="project.members"><b>Project Members:</b>
+                    <br>
+                    <ul>
+                      <li *ngFor= "let member of project.members">{{ member.user }}</li>
+                    </ul>
+                </div> 
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html> 

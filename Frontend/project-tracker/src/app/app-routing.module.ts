@@ -13,6 +13,7 @@ import { AuthGuard } from './auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
+import { SingleProjectComponent } from './single-project/single-project.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'profiles', component:ProfileComponent },
   { path: 'cohorts', component:CohortsComponent },
   { path: 'styles', component:StylesComponent },
+  { path: 'project', component:SingleProjectComponent },
 ];
 
 
