@@ -9,25 +9,44 @@
 <body>
     
     <div *ngFor="let project of projects">
-    <div class="container">
-        <div class="card" style="margin-bottom: 5rem;">
-            <div class="card-header d-flex">
-                <h3>{{project.title}} </h3>
+    <div class="container"><br><br>
+        
+        <div class="row">
+            <div class="col-md-3"> 
+            <div class="card" style="margin-bottom: 5rem;" >
+           
+                <div class="card-header">
+              
+                <h5 class="card-title">{{project.title}}</h5>
+              </div>
+            
+               <div *ngIf="project.project_image" class="card" >
+                <img
+                src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"
+                class="card-img-top"  alt="project image" class="img-responsive" >
+               
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">{{project.description}}</li>
+                  <li class="list-group-item">{{project.owner}}</li>
+                  <li class="list-group-item">{{project.cohort}}</li>
+                  <li class="list-group-item">{{project.style}}</li>
+                  <li class="list-group-item">{{project.scrum}}</li>
+                  <li class="list-group-item">{{project.members}}</li>
+                  
+                </ul>
+                <div class="card-body">
+                  <a href="{{project.github_link}}" class="card-link">Github Link</a>
+                  </div>
+                
+                  <div class="text-muted">{{project.date}}</div>
+
+              </div>
+            </div> 
             </div>
-            <div *ngIf="project.project_image">
-            <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
-            </div>
-            <div>{{project.description}}</div>
-            <div>{{project.owner}}</div>
-            <div>{{project.cohort}}</div>
-            <div>{{project.style}}</div>
-            <div>{{project.scrum}}</div>
-            <div>{{project.members}}</div>
-            <!-- Backend/media/images/projects/Screenshot_from_2021-09-18_09-14-45.png -->
-            <div class="text-muted">{{project.date}}</div>
+            
         </div>
     </div>
-    </div>
-
+    
+</div>
 </body>
 </html> 
