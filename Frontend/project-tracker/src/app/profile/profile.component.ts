@@ -11,7 +11,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class ProfileComponent implements OnInit {
   students: any;
 
-  constructor(private PfService: ProfileService) { }
+  constructor(private PfService: ProfileService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.AllProfiles();
@@ -22,5 +22,9 @@ export class ProfileComponent implements OnInit {
       this.students = students;
       console.log(this.students);
     })
+  }
+
+  navigateToProfile(id) {
+    this.router.navigate(['./' + id], {relativeTo: this.activatedRoute});
   }
 }

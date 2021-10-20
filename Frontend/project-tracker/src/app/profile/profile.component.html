@@ -39,23 +39,30 @@
                 <br>
                 <ul>
                   <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
+                  <br>
                 </ul>
               </div> 
               <br>
-              <div *ngIf="student.is_scrum"><b>Scrum-Master for:</b>
-                <br>
-                <ul>
-                  <li *ngFor= "let project of student.is_scrum">{{ project }}</li>
-                </ul>
-              </div> 
               <br>
               <div *ngIf="student.is_dev"><b>Member of:</b>
                 <br>
                 <ul>
                   <li *ngFor= "let project of student.is_dev">{{ project }}</li>
+                  <br>
                 </ul>
-              </div> 
+              </div>
             </div>
+            <br>
+            <br>
+            <div class="container">
+              <div class="container">
+                  <div class="container">
+                      <a class="btn btn-lg btn-outline-success btn-block" href="{{student.github_profile}}" role="button">Github Profile</a>
+                      <br>
+                      <br>
+                  </div>
+              </div>
+          </div>
         </div>
     </div>
   </div>

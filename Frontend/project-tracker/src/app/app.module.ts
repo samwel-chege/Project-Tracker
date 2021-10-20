@@ -20,6 +20,7 @@ import { AuthInterceptor } from './Auth/interceptor';
 import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
 import { SingleProjectComponent } from './single-project/single-project.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { SingleProjectComponent } from './single-project/single-project.componen
     CohortsComponent,
     StylesComponent,
     SingleProjectComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

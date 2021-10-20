@@ -152,12 +152,6 @@ class StudentSerializer(serializers.ModelSerializer):
         slug_field='title'
     )
 
-    is_scrum = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='title'
-    )
-
     is_dev = serializers.SlugRelatedField(
         many=True,
         read_only=True,
@@ -176,7 +170,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('id', 'user', 'first_name', 'surname', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
+        fields = ('id', 'user', 'first_name', 'surname', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_dev', 'github_profile')
 
     def create(self, validated_data):
         return Student(**validated_data)
@@ -199,7 +193,6 @@ class StudentInfoSerializer(serializers.ModelSerializer):
 
 class ProjectSerializer(serializers.ModelSerializer):
     owner = StudentInfoSerializer()
-    scrum = StudentInfoSerializer()
     members = StudentInfoSerializer(many=True,)
 
     cohort = serializers.SlugRelatedField(
@@ -214,7 +207,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id', 'title', 'project_image', 'description', 'owner', 'scrum', 'members', 'cohort', 'style', 'github_link', 'date')
+        fields = ('id', 'title', 'project_image', 'description', 'owner', 'members', 'cohort', 'style', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project(**validated_data)
@@ -222,38 +215,113 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectMembersSerializer(serializers.ModelSerializer):
     owner = StudentInfoSerializer()
-    scrum = StudentInfoSerializer()
     members = StudentInfoSerializer(many=True,)
 
     class Meta:
         model = Project
-        fields = ('title', 'owner', 'scrum', 'members')
+        fields = ('title', 'owner', 'members')
 
     def create(self, validated_data):
         return Project(**validated_data)
 
 
+class ProjectMemberGithubSerializer(serializers.ModelSerializer):
+    
+    members = serializers.SlugRelatedField(
+        read_only=True,
+        many=True,
+        slug_field='github_profile'
+    )
+
+    class Meta:
+        model = Project
+        fields = ('members',)
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
+class StudentProjectGithubSerializer(serializers.ModelSerializer):
+    
+    projects_owned = serializers.SlugRelatedField(
+        read_only=True,
+        many=True,
+        slug_field='github_link'
+    )
+
+    is_dev = serializers.SlugRelatedField(
+        read_only=True,
+        many=True,
+        slug_field='github_link'
+    )
+
+    class Meta:
+        model = Student
+        fields = ('projects_owned', 'is_dev')
+
+    def create(self, validated_data):
+        return Student(**validated_data)
+
+
+class CohortMemberGithubSerializer(serializers.ModelSerializer):
+    
+    students = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='github_profile'
+    )
+
+    class Meta:
+        model = Cohort
+        fields = ('students',)
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)
+
+
+class CohortProjectsGithubSerializer(serializers.ModelSerializer):
+    
+    projects = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='github_link'
+    )
+
+    class Meta:
+        model = Cohort
+        fields = ('projects',)
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)
+
+
 class CohortSerializer(serializers.ModelSerializer):
     students = StudentInfoSerializer(many=True,)
-
     projects = serializers.SlugRelatedField(
         many=True,
         read_only=True,
         slug_field='title'
     )
-
-    students = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='id'
-    )
   
     class Meta:
         model = Cohort
-        fields = ('id', 'name', 'details', 'projects', 'students',)
+        fields = ('id', 'name', 'details', 'projects', 'students')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
+
+
+class StyleProjectsGithubSerializer(serializers.ModelSerializer):
+    
+    projects = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='github_link'
+    )
+
+    class Meta:
+        model = DevStyle
+        fields = ('projects',)
+
+    def create(self, validated_data):
+        return DevStyle(**validated_data)
 
 
 class StyleSerializer(serializers.ModelSerializer):
@@ -315,12 +383,13 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('first_name', 'surname', 'cohort', 'email', 'bio')
+        fields = ('first_name', 'surname', 'cohort', 'email', 'bio', 'github_profile')
         extra_kwargs = {
             'first_name': {'required': True},
             'surname': {'required': True},
             'cohort': {'required': True},
             'email': {'required': True},
+            'github_profile': {'required': True},
         }
 
     # def validate_email(self, value):
@@ -338,6 +407,7 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
         instance.cohort = validated_data['cohort']
         instance.email = validated_data['email']
         instance.bio = validated_data['bio']
+        instance.github_profile = validated_data['github_profile']
 
         instance.save()
 
@@ -348,7 +418,7 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('title', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link')
+        fields = ('title', 'description', 'owner', 'cohort', 'style', 'github_link')
         extra_kwargs = {
             'owner': {'required': True},
             'title': {'required': True},
@@ -360,7 +430,6 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
         #instance.project_image = validated_data['project_image']
         instance.description = validated_data['description']
         instance.owner = validated_data['owner']
-        instance.scrum = validated_data['scrum']
         instance.cohort = validated_data['cohort']
         instance.style = validated_data['style']
         instance.github_link = validated_data['github_link']

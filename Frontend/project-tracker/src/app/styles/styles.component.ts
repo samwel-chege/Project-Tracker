@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StylesService } from '../services/styles.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-styles',
@@ -9,7 +10,7 @@ import { StylesService } from '../services/styles.service';
 export class StylesComponent implements OnInit {
 
   styles: any;
-  constructor(private StService: StylesService) { }
+  constructor(private StService: StylesService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.AllStyles();
@@ -22,4 +23,7 @@ export class StylesComponent implements OnInit {
     })
   }
 
+  navigateToStyle(id) {
+    this.router.navigate(['./' + id], {relativeTo: this.activatedRoute});
+  }
 }

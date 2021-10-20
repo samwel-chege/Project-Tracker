@@ -29,17 +29,15 @@
                 <div class="container">
                     <div *ngIf="project.owner"><b>Owner:</b> {{project.owner.user}}</div>
                     <br>
-                    <div *ngIf="project.scrum"><b>Scrum-Master:</b> {{project.scrum.user}}</div>
-                    <br>
                     <div *ngIf="project.cohort"><b>Cohort:</b> {{project.cohort}}</div>
                     <div *ngIf="project.style"><b>Development Mode:</b> {{project.style}}</div>
                     <br>
                     <div *ngIf="project.description"><b>Description:</b> {{project.description}}</div>
                     <br>
                     <div class="text-muted"><b>Date:</b> {{project.date}}</div>
-                    <br>
+                    <!-- <br>
                     <a href="{{project.github_link}}"><b>Github Link</b></a>
-                    <br>
+                    <br> -->
                     <br>
                     <div *ngIf="project.members"><b>Project Members:</b>
                         <br>
@@ -49,6 +47,16 @@
                     </div> 
                     <br>
                     <br>
+
+                    <div class="container">
+                        <div class="container">
+                            <div class="container">
+                                <a class="btn btn-lg btn-outline-success btn-block" href="{{project.github_link}}" role="button">View Project</a>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

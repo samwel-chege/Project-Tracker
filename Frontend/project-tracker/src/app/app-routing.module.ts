@@ -14,6 +14,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
 import { SingleProjectComponent } from './single-project/single-project.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,13 +22,22 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
 
-  { path: 'projects', component: ProjectPageComponent },
+  { path: 'projects',
+    children: [
+      { path: '', component: ProjectPageComponent },
+      { path: ':id', component: SingleProjectComponent },
+    ]
+  },
   { path: 'profile', component:StudentProfileComponent,canActivate:[AuthGuard] },
   { path: 'add-projects', component:ProjectFormComponent },
-  { path: 'profiles', component:ProfileComponent },
+  { path: 'profiles',
+    children: [
+      { path: '', component: ProfileComponent },
+      { path: ':id', component: UserProfileComponent },
+    ]
+  },
   { path: 'cohorts', component:CohortsComponent },
   { path: 'styles', component:StylesComponent },
-  { path: 'project', component:SingleProjectComponent },
 ];
 
 

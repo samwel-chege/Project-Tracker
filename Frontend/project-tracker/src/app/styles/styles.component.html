@@ -20,6 +20,7 @@
         <div class="card" style="margin-bottom: 5rem;">
             <div class="card-header d-flex">
                 <h3><b>{{style.name}}</b></h3>
+                <br>
             </div>
             <br>
 
@@ -29,6 +30,7 @@
               <div *ngIf="style.projects"><b>Projects:</b>
                 <ul>
                   <li *ngFor= "let project of style.projects">{{ project }}</li>
+                  <br>
                 </ul>
               </div> 
             </div>

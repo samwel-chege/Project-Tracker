@@ -413,7 +413,7 @@ class ProjectSearch(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'owner__user__username', 'owner__first_name', 'owner__surname', 'scrum__user__username', 'members__user__username']
+    search_fields = ['title', 'owner__user__username', 'owner__first_name', 'owner__surname', 'members__user__username']
 
 
 class UpdateCustomUserView(generics.UpdateAPIView): 

@@ -14,25 +14,24 @@
         <div class="card" style="margin-bottom: 5rem;">
             <div class="card-header d-flex">
                 <h3><b>{{project.title}}</b></h3>
+                <br>
             </div>
-            <br>
             <div *ngIf="project.project_image" class="container">
-            <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
+                <br>
+                <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
+                <br>
             </div>
-            <br>
             <div class="container">
                 <div *ngIf="project.owner"><b>Owner:</b> {{project.owner.user}}</div>
-                <br>
-                <div *ngIf="project.scrum"><b>Scrum-Master:</b> {{project.scrum.user}}</div>
                 <br>
                 <div *ngIf="project.cohort"><b>Cohort:</b> {{project.cohort}}</div>
                 <div *ngIf="project.style"><b>Development Mode:</b> {{project.style}}</div>
                 <br>
                 <div *ngIf="project.description"><b>Description:</b> {{project.description}}</div>
                 <br>
-                <div class="text-muted"><b>Date:</b> {{project.date}}</div>
+                <div *ngIf="project.date" class="text-muted"><b>Date:</b> {{project.date}}</div>
                 <br>
-                <a href="{{project.github_link}}"><b>Github Link</b></a>
+                <a *ngIf="project.github_link" href="{{project.github_link}}"><b>Github Link</b></a>
                 <br>
                 <br>
                 <div *ngIf="project.members"><b>Project Members:</b>
