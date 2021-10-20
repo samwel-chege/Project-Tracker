@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NewProjectService } from '../services/new-project.service';
 
 @Component({
   selector: 'app-project-form',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectFormComponent implements OnInit {
 
-  constructor() { }
+  constructor(private newProjectService: NewProjectService) { }
 
   ngOnInit(): void {
+    
   }
 
 }

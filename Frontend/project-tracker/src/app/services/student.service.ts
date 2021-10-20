@@ -10,8 +10,8 @@ export class StudentProfileService{
     api_link: string = "http://localhost:8000/";
     constructor( private http: HttpClient) { }
 
-    getprofiles(){
-        return this.http.get(this.api_link + 'auth/api/students/');
+    getProfile(){
+        return this.http.get(this.api_link + 'auth/api/user/profile');
     }
    
 }
