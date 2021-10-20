@@ -52,44 +52,14 @@
                       <li *ngFor= "let project of student.is_dev">{{ project }}</li>
                     </ul>
                   </div> 
-                </div>
-            </div>
-        </div>
-
-        <br>
-        <hr>
-        <br>
-
-        <h1 style="text-align:center"><b> User Data </b></h1>
-        <br>
-        <br>
-        <div class="container">
-          <div class="card" style="margin-bottom: 5rem;">
-            <div class="card-header d-flex">
-               <br>
-               <h3><b>{{ user.username }}</b></h3>
-               <br>
-             </div>
-             <div class="card-body">
-               <br>
-               <p><b>User ID:</b> {{ user.id }}</p>
-               <br>
-               <p *ngIf="user.email"><b>Email:</b> {{ user.email }}</p>  
-               <br>
-               <p *ngIf="user.is_active"><b>Is active:</b> {{ user.is_active }}</p>  
-               <p *ngIf="user.is_staff"><b>Is staff:</b> {{ user.is_staff }}</p>  
-               <p *ngIf="user.created_at"><b>Created at:</b> {{ user.created_at }}</p> 
-               <p *ngIf="user.updated_at"><b>Updated at:</b> {{ user.updated_at }}</p>
-               <p *ngIf="user.auth_provider"><b>Auth Provider:</b> {{ user.auth_provider }}</p>  
-               <br>    
-             </div>   
-         </div>
-       
-         <br>
-         <hr>
-         <br>
-         </div>
+              </div>
+          </div>
       </div>
+
+      <br>
+      <hr>
+      <br>
+    </div>
 
 </body>
 </html>
