@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'drf_yasg',
     'rest_framework_simplejwt.token_blacklist',
-
     'rest_framework',
     'django_filters',
 ]
@@ -94,12 +93,12 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tracker',
+        'NAME': 'theapp',
 
-        'USER': 'sammie',
+        'USER': 'moringa',
 
 
-        'PASSWORD': 'samm',
+        'PASSWORD': '12345',
     }
 }
 

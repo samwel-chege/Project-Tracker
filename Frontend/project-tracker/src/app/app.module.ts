@@ -6,9 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module'; 
 import { HomeComponent } from './home/home.component';
-
 import { ProjectPageComponent } from './project-page/project-page.component';
-import { ProjectFormComponent } from './project-form/project-form.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
@@ -16,7 +14,7 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Auth/interceptor';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
-
+import { UploadprojectComponent } from './uploadproject/uploadproject.component';
 
 @NgModule({
   declarations: [
@@ -24,10 +22,11 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
     NavbarComponent,
     HomeComponent,
     ProjectPageComponent,
-    ProjectFormComponent,
     SignupComponent,
     LoginComponent,
-    StudentProfileComponent
+    StudentProfileComponent,
+    UploadprojectComponent,
+    
   ],
   imports: [
     BrowserModule,

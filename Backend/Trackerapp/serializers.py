@@ -25,8 +25,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         username = attrs.get('username', '')
         password  = attrs.get('password', '')
 
-        if not username.isalnum():
-            raise serializers.ValidationError('The username should only contain alphanumeric characters')
+        # if not username.isalnum():
+        #     raise serializers.ValidationError('The username should only contain alphanumeric characters')
 
         return attrs
     
