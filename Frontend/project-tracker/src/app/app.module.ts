@@ -10,11 +10,15 @@ import { ProjectPageComponent } from './project-page/project-page.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Auth/interceptor';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { UploadprojectComponent } from './uploadproject/uploadproject.component';
+import { CohortsComponent } from './cohorts/cohorts.component';
+import { StylesComponent } from './styles/styles.component';
+
 
 @NgModule({
   declarations: [
@@ -25,17 +29,18 @@ import { UploadprojectComponent } from './uploadproject/uploadproject.component'
     SignupComponent,
     LoginComponent,
     StudentProfileComponent,
-    UploadprojectComponent,
-    
+    UploadprojectComponent, 
+    ProfileComponent,
+    CohortsComponent,
+    StylesComponent,
   ],
   imports: [
     BrowserModule,
-    
+    ReactiveFormsModule,  
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule
-
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

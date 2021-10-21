@@ -14,5 +14,5 @@ export class ProjectService{
     getprojects(){
         return this.http.get(this.api_link + 'auth/api/projects/');
     }
-   
+
 }

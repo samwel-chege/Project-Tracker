@@ -93,12 +93,25 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+<<<<<<< HEAD
         'NAME': 'theapp',
 
         'USER': 'moringa',
 
 
         'PASSWORD': '12345',
+=======
+<<<<<<< HEAD
+        'NAME': 'cindy',
+        'HOST':'127.0.0.1',
+        'USER': 'postgres',
+        'PASSWORD': 'Access'
+=======
+        'NAME': 'project_tracking',
+        'USER': 'oscar',
+        'PASSWORD': '123456789',
+>>>>>>> 3b0edfbf5ec681840e93ebabf23dc77b0ec2a633
+>>>>>>> e5f12c9ff04d266f61d2b1a66ca38545a6fcd042
     }
 }
 
@@ -154,11 +167,23 @@ REST_FRAMEWORK = {
 
     'DEFAULT_FILTER_BACKENDS': (['django_filters.rest_framework.DjangoFilterBackend']),
 
+    'DEFAULT_PERMISSION_CLASSES': (
+        #'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        #'rest_framework.permissions.IsAdminUser',
+    ),
+
+    'DEFAULT_PARSER_CLASSES': [
+      'rest_framework.parsers.JSONParser',
+      'rest_framework.parsers.FormParser',
+      'rest_framework.parsers.MultiPartParser',
+    ],
+
     'DEFAULT_AUTHENTICATION_CLASSES': ([
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ]),
 
     'NON_FIELD_ERRORS': (['error',]),
@@ -168,6 +193,11 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 }
 
 # Default primary key field type

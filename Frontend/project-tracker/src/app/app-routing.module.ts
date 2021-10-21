@@ -10,6 +10,9 @@ import { ProjectPageComponent } from './project-page/project-page.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { AuthGuard } from './auth.guard';
 import { UploadprojectComponent } from './uploadproject/uploadproject.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CohortsComponent } from './cohorts/cohorts.component';
+import { StylesComponent } from './styles/styles.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,8 +20,11 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
   { path: 'projects', component: ProjectPageComponent },
-  { path: 'profiles', component:StudentProfileComponent,canActivate:[AuthGuard] },
   { path: 'add-projects', component:UploadprojectComponent },
+  { path: 'profile', component:StudentProfileComponent,canActivate:[AuthGuard] },
+  { path: 'profiles', component:ProfileComponent },
+  { path: 'cohorts', component:CohortsComponent },
+  { path: 'styles', component:StylesComponent },
 ];
 
 
@@ -26,7 +32,9 @@ const routes: Routes = [
   declarations: [],
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
+
+    RouterModule.forRoot(routes, { useHash: true })
+
   ],
   exports: [RouterModule]
 })
