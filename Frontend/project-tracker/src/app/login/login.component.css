@@ -9,7 +9,7 @@
    font-size: 26px;
  }
  
-
+ 
  
  button {
      border-radius: 15px;
@@ -19,12 +19,12 @@
  
    h1,a {
      text-align:center;
-     color: #fff;
+     
    }
     .contact{
      margin-top: auto;
      margin-right: auto;
-   margin-left: auto;
+     margin-left: auto;
    } 
   
   

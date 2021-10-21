@@ -25,6 +25,12 @@ const httpOptions = {
 })
 
 export class AuthService {
+  logout() {
+    throw new Error('Method not implemented.');
+  }
+  isAuthenticated() {
+    throw new Error('Method not implemented.');
+  }
 
   endpoint: string = 'http://127.0.0.1:8000/auth/';
   headers = new HttpHeaders().set('Content-Type','application/json');
@@ -46,8 +52,7 @@ export class AuthService {
       //   this.currentUser = res;
         this.router.navigate(['home']);
       // })
-    })
-  }
+    })  }
   getToken(){
     return localStorage.getItem('access');
   }
