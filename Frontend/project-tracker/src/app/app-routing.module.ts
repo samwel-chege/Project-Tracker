@@ -25,6 +25,12 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
+  { path: 'profile', component:StudentProfileComponent,canActivate:[AuthGuard] },
+  { path: 'add-projects', component:ProjectFormComponent },
+  { path: 'styles', component:StylesComponent },
+  { path: 'android', component: AndroidComponent },
+  { path: 'fullstack', component: FullstackComponent },
+  { path: 'cohort', component: CohortProjectsComponent },
 
   { path: 'projects',
     children: [
@@ -32,8 +38,6 @@ const routes: Routes = [
       { path: ':id', component: SingleProjectComponent },
     ]
   },
-  { path: 'profile', component:StudentProfileComponent,canActivate:[AuthGuard] },
-  { path: 'add-projects', component:ProjectFormComponent },
   { path: 'profiles',
     children: [
       { path: '', component: ProfileComponent },
@@ -46,10 +50,6 @@ const routes: Routes = [
       { path: ':id', component: CohortProfileComponent },
     ]
   },
-  { path: 'styles', component:StylesComponent },
-  { path: 'android', component: AndroidComponent },
-  { path: 'fullstack', component: FullstackComponent },
-  { path: 'cohort', component: CohortProjectsComponent },
 ];
 
 
