@@ -36,6 +36,7 @@ export class AuthService {
   signUp(user:User):Observable<any>{
     let api = `${this.endpoint}register/`;
     return this.http.post(api,user).pipe(catchError(this.handleError))
+    
   }
 
   //sign in

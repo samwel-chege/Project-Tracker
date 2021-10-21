@@ -11,13 +11,15 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class UploadprojectComponent implements OnInit {
 
-    formData = new Proj('','','','','')
+    formData = new Proj('','','','','');
+    form!: FormGroup
     
 
   constructor(
     private UploadprojectService: UploadprojectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {

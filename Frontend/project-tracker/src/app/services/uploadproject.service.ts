@@ -12,7 +12,7 @@ export class UploadprojectService {
   constructor(private http: HttpClient) { }
 
   uploadProject(data:any){
-    return this.http.post(this.api_link + 'auth/api/projects/new', data);
+    return this.http.post(this.api_link + 'auth/api/projects/new/', data);
   }
   
 }

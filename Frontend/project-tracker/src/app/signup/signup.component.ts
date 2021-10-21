@@ -18,7 +18,7 @@ export class SignupComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     public authService: AuthService,
-    public router: Router
+    private router: Router
   ) { 
     this.signupForm = this.fb.group({
       name: [''],
@@ -34,15 +34,13 @@ export class SignupComponent implements OnInit {
       password: '',
     }
   }
-
-  registerUser(){
-    
-    this.authService.signUp(this.register).subscribe((res)=>{
+  registerUser(){ 
+  this.authService.signUp(this.register).subscribe((res)=>{
       if (res.result){
-        this.signupForm.reset()
-        this.router.navigate(['login']);
+      this.signupForm.reset()
       }
-    })
+      this.router.navigate(['login']);
+    });
   }
 
 }
