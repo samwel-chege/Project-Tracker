@@ -4,47 +4,64 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrackerApp-Cohorts</title>
+    <title>TrackerApp-Filters</title>
 </head>
 
 <body>
   <br>
-    <div class="row" >
+    <div class="container" >
       <br>
-      <h1><b> All Cohorts </b></h1>
-      <br>
-      <br>
-      <div *ngFor= "let cohort of cohorts">
-        <div class="container">
-          <br>
-          <br>
-            <div (click)="navigateToCohort(cohort.id)" class="card">
-                <div class="card-header d-flex">
-                    <h3><b>{{cohort.name}}</b></h3>
-                </div>
-                <br>
-                <div class="container">
-                  <div *ngIf="cohort.details"><b>Details:</b> {{ cohort.details }}</div>  
-                  <br>
-                  <div *ngIf="cohort.students"><b>Students:</b>
-                    <br>
-                    <ul>
-                      <li *ngFor= "let student of cohort.students">{{ student.user }}</li>
-                      <br>
-                    </ul>
-                  </div> 
-                  <br>
-                  <div *ngIf="cohort.projects"><b>Projects:</b>
-                    <br>
-                    <ul>
-                      <li *ngFor= "let project of cohort.projects">{{ project }}</li>
-                      <br>
-                    </ul>
-                  </div> 
-                </div>
-            </div>
+      <!-- <h1><b> Development Modes </b></h1>
+      <br> -->
+      <div class="container">
+        <div class="container text-center">
+          <button class="btn btn-lg btn-success inline-block" routerLink="/android">Android</button>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <button class="btn btn-lg btn-success inline-block" routerLink="/fullstack">Fullstack</button>
         </div>
       </div>
+      <br>
+      <hr>
+      <br>
+      <h1><b> Cohorts </b></h1>
+      <br>
+      <div class="row">
+          <div *ngFor= "let cohort of cohorts" class="col-sm-6">
+            <br>
+            <br>
+            <!-- <div class="container text-center">
+              <button class="btn btn-lg btn-success" routerLink="/cohort"><b>{{cohort.name}}</b></button>     
+              <br> -->
+                <!-- <div (click)="navigateToCohort(cohort.id)" class="card"> -->
+                  <div class="card border-secondary">
+                    <div class="card-header d-flex">
+                        <h3><b>{{cohort.name}}</b></h3>
+                    </div>
+                    <br>
+                    <div class="container">
+                      <div *ngIf="cohort.details"><b>Details:</b> {{ cohort.details }}</div>  
+                      <br>
+                      <div *ngIf="cohort.students"><b>Students:</b>
+                        <br>
+                        <ul>
+                          <li *ngFor= "let student of cohort.students">{{ student.user }}</li>
+                          <br>
+                        </ul>
+                      </div> 
+                      <br>
+                      <div *ngIf="cohort.projects"><b>Projects:</b>
+                        <br>
+                        <ul>
+                          <li *ngFor= "let project of cohort.projects">{{ project }}</li>
+                          <br>
+                        </ul>
+                      </div> 
+                    </div>
+                <!-- </div> -->
+            </div>       
+          </div>
+        </div>
     </div>
   <br>
   <br>
@@ -55,9 +72,8 @@
             <div class="row">
                 <div class="col-sm-6 col-md-4 item">
                     <ul>
-                        <li>API</li>
-                        <li>Projects</li>
-                        <li>Students</li>
+                        <li routerLink="/projects">Projects</li>
+                        <li routerLink="/profiles">Students</li>
                     </ul>
                 </div>
                 <div class="col-sm-6 col-md-4 item">

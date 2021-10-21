@@ -384,6 +384,26 @@ class StyleProfileView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class StyleProjectsView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+    filterset_fields = ['cohort',]
+
+    def get_style(self, pk):
+        try:
+            return DevStyle.objects.get(pk=pk)
+
+        except DevStyle.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        style = self.get_style(pk)
+        projects = style.projects
+        serializers = ProjectSerializer(projects, many=True)
+        return Response(serializers.data)
+
+
 class NewProjectView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     queryset = Project.objects.all()

@@ -11,7 +11,7 @@ import { Inject } from '@angular/core';
   styleUrls: ['./cohort-profile.component.css']
 })
 export class CohortProfileComponent {
-  cohort: any;
+  // cohort: any;
 
   private id$: Observable<number> = this.route.params.pipe(
     map((params: Params) => parseInt(params['id']))

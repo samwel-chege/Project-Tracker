@@ -4,35 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrackerApp-DevModes</title>
+    <title>Cohort</title>
 </head>
 
 <body>
   <br>
-
-  <h1 style="text-align:center"><b> Dev Modes </b></h1>
   <br>
-  <br>
-  <div *ngFor= "let style of styles">
-    <div class="container">
-        <div class="card border-secondary" style="margin-bottom: 5rem;">
-            <div class="card-header d-flex">
-                <h3><b>{{style.name}}</b></h3>
-                <br>
-            </div>
+  <div class="container" *ngFor="let project of projects">
+    <div class="card" style="margin-bottom: 5rem;">
+        <div class="card-header d-flex">
+             <h3><b>{{project}}</b></h3>
             <br>
-
-            <div class="container">
-              <div *ngIf="style.description"><b>Description:</b> {{ style.description }}</div>  
-              <br>
-              <div *ngIf="style.projects"><b>Projects:</b>
-                <ul>
-                  <li *ngFor= "let project of style.projects">{{ project }}</li>
-                  <br>
-                </ul>
-              </div> 
-            </div>
         </div>
+        <br>
     </div>
   </div>
   <br>

@@ -16,6 +16,9 @@ import { StylesComponent } from './styles/styles.component';
 import { SingleProjectComponent } from './single-project/single-project.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CohortProfileComponent } from './cohort-profile/cohort-profile.component';
+import { AndroidComponent } from './android/android.component';
+import { FullstackComponent } from './fullstack/fullstack.component';
+import { CohortProjectsComponent } from './cohort/cohort.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -44,6 +47,9 @@ const routes: Routes = [
     ]
   },
   { path: 'styles', component:StylesComponent },
+  { path: 'android', component: AndroidComponent },
+  { path: 'fullstack', component: FullstackComponent },
+  { path: 'cohort', component: CohortProjectsComponent },
 ];
 
 

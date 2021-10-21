@@ -22,6 +22,9 @@ import { StylesComponent } from './styles/styles.component';
 import { SingleProjectComponent } from './single-project/single-project.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CohortProfileComponent } from './cohort-profile/cohort-profile.component';
+import { AndroidComponent } from './android/android.component';
+import { FullstackComponent } from './fullstack/fullstack.component';
+import { CohortProjectsComponent } from './cohort/cohort.component';
 
 
 @NgModule({
@@ -40,6 +43,9 @@ import { CohortProfileComponent } from './cohort-profile/cohort-profile.componen
     SingleProjectComponent,
     UserProfileComponent,
     CohortProfileComponent,
+    AndroidComponent,
+    FullstackComponent,
+    CohortProjectsComponent,
   ],
   imports: [
     BrowserModule,

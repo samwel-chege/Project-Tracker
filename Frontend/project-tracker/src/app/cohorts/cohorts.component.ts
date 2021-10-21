@@ -24,7 +24,18 @@ export class CohortsComponent implements OnInit {
   }
 
   navigateToCohort(id) {
+    console.clear();
     this.router.navigate(['./' + id], {relativeTo: this.activatedRoute});
+  }
+
+  navigateToAndroid() {
+    console.clear();
+    this.router.navigate(['./android'], {relativeTo: this.activatedRoute});
+  }
+
+  navigateToFullstack() {
+    console.clear();
+    this.router.navigate(['./fullstack'], {relativeTo: this.activatedRoute});
   }
 
 }
