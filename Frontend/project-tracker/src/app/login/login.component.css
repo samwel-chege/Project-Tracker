@@ -8,7 +8,7 @@
    font-size: 26px;
  }
  
-
+ 
  
  button {
      border-radius: 15px;
@@ -18,12 +18,12 @@
  
    h1,a {
      text-align:center;
-     color: #fff;
+     
    }
     .contact{
      margin-top: auto;
      margin-right: auto;
-   margin-left: auto;
+     margin-left: auto;
    } 
   
   
@@ -116,9 +116,7 @@
     font-size:13px;
     margin-bottom:0;
   }
-
-  .footer-dark li {
-
+  li{
     font-size:20px;
   }
   
@@ -154,9 +152,4 @@
    
   .sideline:after {
     margin: 0 0 0 20px;
-
-
   }
-   
-
-

@@ -93,25 +93,15 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-<<<<<<< HEAD
-        'NAME': 'theapp',
 
-        'USER': 'moringa',
+        'NAME': 'track',
+
+        'USER': 'sammie',
 
 
-        'PASSWORD': '12345',
-=======
-<<<<<<< HEAD
-        'NAME': 'cindy',
-        'HOST':'127.0.0.1',
-        'USER': 'postgres',
-        'PASSWORD': 'Access'
-=======
-        'NAME': 'project_tracking',
-        'USER': 'oscar',
-        'PASSWORD': '123456789',
->>>>>>> 3b0edfbf5ec681840e93ebabf23dc77b0ec2a633
->>>>>>> e5f12c9ff04d266f61d2b1a66ca38545a6fcd042
+        'PASSWORD': 'samm',
+
+
     }
 }
 
@@ -183,7 +173,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ]),
 
     'NON_FIELD_ERRORS': (['error',]),

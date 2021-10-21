@@ -1,4 +1,3 @@
-
 #top{
   margin-top:2%;
   margin-left:5%;
@@ -19,7 +18,7 @@
  
    h1,a {
      text-align:center;
-     color: #fff;
+     color: rgb(92, 31, 31);
    }
     .contact{
      margin-top: auto;
@@ -117,7 +116,7 @@
     font-size:13px;
     margin-bottom:0;
   }
-  .footer-dark li {
+  li{
     font-size:20px;
   }
   
@@ -154,4 +153,3 @@
   .sideline:after {
     margin: 0 0 0 20px;
   }
-
