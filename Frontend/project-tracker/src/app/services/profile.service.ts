@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 })
 
 export class ProfileService{
-    api_link: string = "http://localhost:8000/";
+    api_link: string = "https://taliban-trackerapp.herokuapp.com/";
     constructor( private http: HttpClient) { }
 
     getProfiles(){

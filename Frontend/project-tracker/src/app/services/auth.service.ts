@@ -26,7 +26,7 @@ const httpOptions = {
 
 export class AuthService {
 
-  endpoint: string = 'http://127.0.0.1:8000/auth/';
+  endpoint: string = 'https://taliban-trackerapp.herokuapp.com/auth/';
   headers = new HttpHeaders().set('Content-Type','application/json');
   currentUser = {};
   // getUserProfile:any;

@@ -29,13 +29,17 @@
               
 
               
-            
+              <div>
               <li class="nav-item" id="auth" *ngIf="!this.authService.isLoggedIn">
                 <a class="nav-link active" aria-current="page" routerLink="/login">Login</a>
                 </li>
+                </div>
+                <div>
                 <li class="nav-item mr-auto" *ngIf="!this.authService.isLoggedIn">
                 <a class="nav-link active" aria-current="page" routerLink="/signup">Sign up</a>
                 </li> 
+                </div>
+                
            
                 <div  *ngIf="this.authService.isLoggedIn" class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Features</a>

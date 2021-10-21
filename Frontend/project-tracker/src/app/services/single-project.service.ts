@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/internal/operators';
 })
 
 export class SingleProjectService {
-    api_link: string = "http://localhost:8000/";
+    api_link: string = "https://taliban-trackerapp.herokuapp.com/";
     constructor( private http: HttpClient) { }
 
     getProject(id: string): Observable<any> {

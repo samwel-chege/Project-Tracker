@@ -8,7 +8,7 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CohortProfileService {
-  api_link: string = "http://localhost:8000/";
+  api_link: string = "https://taliban-trackerapp.herokuapp.com/";
   constructor(private http: HttpClient) { }
 
   findOne(id: number): Observable<any> {
