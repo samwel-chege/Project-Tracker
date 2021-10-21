@@ -1,12 +1,18 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
 import { Observable } from "rxjs";
 
-@Injectable()
-export class ProjectService{
-    constructor(private httpclient: HttpClient){ }
+@Injectable({
+    providedIn: 'root'
+})
 
-    // getprojects(): Observable<any>{
-    //     return this.httpclient.get()
-    // }
+export class ProjectService{
+    api_link: string = "http://localhost:8000/";
+    constructor( private http: HttpClient) { }
+
+    getprojects(){
+        return this.http.get(this.api_link + 'auth/api/projects/');
+    }
+
 }

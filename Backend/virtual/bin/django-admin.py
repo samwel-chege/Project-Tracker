@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/home/sammie/Project Tracker/Backend/virtual/bin/python3
+=======
+#!/home/moringaschool/Documents/Project-Tracker/Backend/virtual/bin/python
+>>>>>>> 8d473778c21e38cfcc78b4179635ae862557a600
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 

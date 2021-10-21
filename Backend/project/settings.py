@@ -1,5 +1,3 @@
-
-
 from pathlib import Path
 import os
 import datetime
@@ -126,9 +124,15 @@ WSGI_APPLICATION = 'project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tracker',
+
+        'NAME': 'track',
+
         'USER': 'sammie',
+
+
         'PASSWORD': 'samm',
+
+
     }
 }
 
@@ -178,22 +182,43 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # rest_framework
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES':(
+        'rest_framework.permissions.AllowAny',
+    ),
 
     'DEFAULT_FILTER_BACKENDS': (['django_filters.rest_framework.DjangoFilterBackend']),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        #'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        #'rest_framework.permissions.IsAdminUser',
+    ),
+
+    'DEFAULT_PARSER_CLASSES': [
+      'rest_framework.parsers.JSONParser',
+      'rest_framework.parsers.FormParser',
+      'rest_framework.parsers.MultiPartParser',
+    ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': ([
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ]),
 
-    'NON_FIELD_ERRORS': (['error',])
+    'NON_FIELD_ERRORS': (['error',]),
+    
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=1),
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+}
+
+JWT_AUTH = {
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
 }
 
 # Default primary key field type

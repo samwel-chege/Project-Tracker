@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 #!/bin/sh
 '''exec' "/home/sammie/Project Tracker/Backend/virtual/bin/python3" "$0" "$@"
 ' '''
+=======
+#!/home/moringaschool/Documents/Project-Tracker/Backend/virtual/bin/python
+>>>>>>> 8d473778c21e38cfcc78b4179635ae862557a600
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student-Profile</title>
+</head>
+
+<body>
+  <br>
+  <hr>
+  <br>
+
+  <h1 style="text-align:center"><b> Student Profile </b></h1>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="card border-secondary" style="margin-bottom: 5rem;">
+        <div class="card-header d-flex">
+            <h3><b>{{student.user}}</b></h3>
+            <br>
+        </div>
+        <br>
+        <div *ngIf="student.profile_pic" class="container">
+        <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="img-responsive">
+        <br>
+        </div>
+        <br>
+
+        <div class="container">
+          <div *ngIf="student.first_name && student.surname"><b>Full Name:</b> {{ student.first_name }} {{ student.surname }}</div>
+          <br>
+          <div *ngIf="student.cohort"><b>Cohort:</b> {{ student.cohort }}</div>  
+          <div *ngIf="student.email"><b>Email:</b> {{ student.email }}</div> 
+          <br> 
+          <div *ngIf="student.bio"><b>Bio:</b> {{ student.bio }}</div> 
+          <br>
+          <div *ngIf="student.projects_owned"><b>Projects Owned:</b>
+            <br>
+            <ul>
+              <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
+            </ul>
+          </div> 
+          <br>
+          <br>
+          <div *ngIf="student.is_dev"><b>Project Membership:</b>
+            <br>
+            <ul>
+              <li *ngFor= "let project of student.is_dev">{{ project }}</li>
+            </ul>
+          </div> 
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="footer-dark">
+  <footer>
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-6 col-md-4 item">
+                  <ul>
+                      <li routerLink="/projects">Projects</li>
+                      <li routerLink="/profiles">Students</li>
+                  </ul>
+              </div>
+              <div class="col-sm-6 col-md-4 item">
+                  <p>© 2021 Tracking</p>
+                  <br>
+              </div>
+              <div class="col-sm-6 col-md-4 item">
+                  <ul>
+                      <li>Email: info@tracker.com</li>
+                      <li>Goodhouse 4th flr</li>
+                      <li>020-123456</li>
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </footer>
+</div>
+</body>
+</html>

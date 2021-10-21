@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { StudentProfileService } from '../services/student.service';
+import { AuthService } from '../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-student-profile',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentProfileComponent implements OnInit {
 
-  constructor() { }
+
+  student: any;
+  constructor( private studentProfileService: StudentProfileService) { }
 
   ngOnInit(): void {
+    this.MyProfile();
   }
 
+  MyProfile(){
+    this.studentProfileService.getProfile().subscribe(student =>{
+      this.student = student;
+      console.log(this.student)
+    })
+  }
 }
