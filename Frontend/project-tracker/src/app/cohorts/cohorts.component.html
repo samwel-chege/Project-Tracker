@@ -4,50 +4,76 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TrackerApp-Cohorts</title>
 </head>
 
 <body>
   <br>
-  <hr>
-  <br>
-
-  <h1 style="text-align:center"><b> All Cohorts </b></h1>
-  <br>
-  <br>
-  <div *ngFor= "let cohort of cohorts">
-    <div class="container">
-        <div (click)="navigateToCohort(cohort.id)" class="card" style="margin-bottom: 5rem;">
-            <div class="card-header d-flex">
-                <h3><b>{{cohort.name}}</b></h3>
+    <div class="row" >
+      <br>
+      <h1><b> All Cohorts </b></h1>
+      <br>
+      <br>
+      <div *ngFor= "let cohort of cohorts">
+        <div class="container">
+          <br>
+          <br>
+            <div (click)="navigateToCohort(cohort.id)" class="card">
+                <div class="card-header d-flex">
+                    <h3><b>{{cohort.name}}</b></h3>
+                </div>
                 <br>
-            </div>
-            <br>
-
-            <div class="container">
-              <div *ngIf="cohort.details"><b>Details:</b> {{ cohort.details }}</div>  
-              <br>
-              <div *ngIf="cohort.students"><b>Students:</b>
-                <br>
-                <ul>
-                  <li *ngFor= "let student of cohort.students">{{ student.user }}</li>
+                <div class="container">
+                  <div *ngIf="cohort.details"><b>Details:</b> {{ cohort.details }}</div>  
                   <br>
-                </ul>
-              </div> 
-              <br>
-              <div *ngIf="cohort.projects"><b>Projects:</b>
-                <br>
-                <ul>
-                  <li *ngFor= "let project of cohort.projects">{{ project }}</li>
+                  <div *ngIf="cohort.students"><b>Students:</b>
+                    <br>
+                    <ul>
+                      <li *ngFor= "let student of cohort.students">{{ student.user }}</li>
+                      <br>
+                    </ul>
+                  </div> 
                   <br>
-                </ul>
-              </div> 
+                  <div *ngIf="cohort.projects"><b>Projects:</b>
+                    <br>
+                    <ul>
+                      <li *ngFor= "let project of cohort.projects">{{ project }}</li>
+                      <br>
+                    </ul>
+                  </div> 
+                </div>
             </div>
         </div>
+      </div>
     </div>
+  <br>
+  <br>
+
+  <div class="footer-dark">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 item">
+                    <ul>
+                        <li>API</li>
+                        <li>Projects</li>
+                        <li>Students</li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+                    <p>© 2021 Tracking</p>
+                    <br>
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+                    <ul>
+                        <li>Email: info@tracker.com</li>
+                        <li>Goodhouse 4th flr</li>
+                        <li>020-123456</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
   </div>
-  <br>
-  <hr>
-  <br>
 </body>
 </html>

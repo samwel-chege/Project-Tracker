@@ -33,4 +33,11 @@ export class CohortProfileComponent {
   //     console.log(this.cohort)
   //   })
   // }
+
+  // filter(){
+  //   console.clear();
+  //   var filter_id = document.getElementById("filter").value;
+  //   var filter_array = this.cohort.filter(x => x.id == filter_id);
+  //   console.log(filter_array);
+  // }
 }

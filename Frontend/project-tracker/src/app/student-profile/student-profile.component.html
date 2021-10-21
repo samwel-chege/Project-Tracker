@@ -6,15 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
 </head>
-<body>
+<body>    
     <div>
-        <br>
         <br>
         <h1 style="text-align:center"><b>My Profile</b></h1>
         <br>
         <br>
         <div class="container">
-            <div class="card" style="margin-bottom: 5rem;">
+            <div class="card">
                 <div class="card-header d-flex">
                     <h3><b>{{student.user}}</b></h3>
                 </div>
@@ -23,7 +22,7 @@
                 <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="img-responsive">
                 </div>
                 <br>
-    
+  
                 <div class="card-body">
                   <div *ngIf="student.first_name && student.surname"><b>Full Name:</b> {{ student.first_name }} {{ student.surname }}</div>
                   <br>
@@ -52,10 +51,35 @@
               </div>
           </div>
       </div>
+    </div>
+    <br>
+    <br>
 
-      <br>
-      <hr>
-      <br>
+    <div class="footer-dark">
+      <footer>
+          <div class="container">
+              <div class="row">
+                  <div class="col-sm-6 col-md-4 item">
+                      <ul>
+                          <li>API</li>
+                          <li>Projects</li>
+                          <li>Students</li>
+                      </ul>
+                  </div>
+                  <div class="col-sm-6 col-md-4 item">
+                      <p>© 2021 Tracking</p>
+                      <br>
+                  </div>
+                  <div class="col-sm-6 col-md-4 item">
+                      <ul>
+                          <li>Email: info@tracker.com</li>
+                          <li>Goodhouse 4th flr</li>
+                          <li>020-123456</li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </footer>
     </div>
 
 </body>
