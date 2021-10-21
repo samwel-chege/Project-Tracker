@@ -13,18 +13,51 @@ import { UploadprojectComponent } from './uploadproject/uploadproject.component'
 import { ProfileComponent } from './profile/profile.component';
 import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
+import { SingleProjectComponent } from './single-project/single-project.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CohortProfileComponent } from './cohort-profile/cohort-profile.component';
+import { AndroidComponent } from './android/android.component';
+import { FullstackComponent } from './fullstack/fullstack.component';
+import { CohortProjectsComponent } from './cohort/cohort.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'projects', component: ProjectPageComponent },
+
+ 
   { path: 'add-projects', component:UploadprojectComponent },
-  { path: 'profile', component:StudentProfileComponent,canActivate:[AuthGuard] },
-  { path: 'profiles', component:ProfileComponent },
+ 
+ 
   { path: 'cohorts', component:CohortsComponent },
+
+
+  { path: 'projects',
+    children: [
+      { path: '', component: ProjectPageComponent },
+      { path: ':id', component: SingleProjectComponent },
+    ]
+  },
+  { path: 'profile', component:StudentProfileComponent,canActivate:[AuthGuard] },
+ 
+  { path: 'profiles',
+    children: [
+      { path: '', component: ProfileComponent },
+      { path: ':id', component: UserProfileComponent },
+    ]
+  },
+  { path: 'cohorts',
+    children: [
+      { path: '', component: CohortsComponent },
+      { path: ':id', component: CohortProfileComponent },
+    ]
+  },
+
   { path: 'styles', component:StylesComponent },
+  { path: 'android', component: AndroidComponent },
+  { path: 'fullstack', component: FullstackComponent },
+  { path: 'cohort', component: CohortProjectsComponent },
 ];
 
 

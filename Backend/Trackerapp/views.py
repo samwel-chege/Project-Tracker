@@ -337,9 +337,15 @@ class CohortProfileView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CohortProjectsView(APIView):
+class CohortProjectsView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-    filterset_fields = ['style',]
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+    filterset_fields = ['style', 'cohort',]
+    # filter_fields = (
+    #     'style',
+    #     'cohort',
+    # )
 
     def get_cohort(self, pk):
         try:
@@ -378,6 +384,26 @@ class StyleProfileView(APIView):
         return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+class StyleProjectsView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
+    filterset_fields = ['cohort',]
+
+    def get_style(self, pk):
+        try:
+            return DevStyle.objects.get(pk=pk)
+
+        except DevStyle.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        style = self.get_style(pk)
+        projects = style.projects
+        serializers = ProjectSerializer(projects, many=True)
+        return Response(serializers.data)
+
+
 class NewProjectView(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = NewProjectSerializer
@@ -406,7 +432,7 @@ class ProjectSearch(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'owner__user__username', 'owner__first_name', 'owner__surname', 'scrum__user__username', 'members__user__username']
+    search_fields = ['title', 'owner__user__username', 'owner__first_name', 'owner__surname', 'members__user__username']
 
 
 class UpdateCustomUserView(generics.UpdateAPIView): 

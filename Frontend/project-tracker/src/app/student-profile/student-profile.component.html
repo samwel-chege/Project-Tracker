@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,38 +6,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
 </head>
-<body>
+<body>    
     <div>
+        <br>
+        <h1 style="text-align:center"><b>My Profile</b></h1>
+        <br>
+        <br>
         <div class="container">
-            <br>
-            <br>
-            <br>
-            <h1 style="text-align:center">My Profile</h1>
-            <br>
-            <br>
-            <div class="card" style="margin-bottom: 5rem;">
-                <div>{{student.user}}</div>
-                <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}" alt="" class="img-responsive">
-                <div>{{student.first_name}}</div>
-                <div>{{student.surname}}</div>
-                <div>{{student.email}}</div>
-                <div>{{student.bio}}</div>
-                <ul *ngFor= "let project of student.projects_owned">
-                    <li>{{student.projects_owned}}</li>
-                </ul>
-            </div>        
-        </div>
+            <div class="card border-secondary">
+                <div class="card-header d-flex">
+                    <h3><b>{{student.user}}</b></h3>
+                </div>
+                <br>
+                <div *ngIf="student.profile_pic" class="container">
+                <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="img-responsive">
+                </div>
+                <br>
+  
+                <div class="card-body">
+                  <div *ngIf="student.first_name && student.surname"><b>Full Name:</b> {{ student.first_name }} {{ student.surname }}</div>
+                  <br>
+                  <div *ngIf="student.cohort"><b>Cohort:</b> {{ student.cohort }}</div>  
+                  <br>
+                  <div *ngIf="student.email"><b>Email:</b> {{ student.email }}</div> 
+                  <br>
+                  <div *ngIf="student.github_profile"><b>Github Profile:</b> <a href="{{student.github_profile}}"> {{ student.github_profile }}</a></div> 
+                  <br>
+                  <div *ngIf="student.bio"><b>Bio:</b> {{ student.bio }}</div> 
+                  <br>
+                  <br>
+                  <div *ngIf="student.projects_owned"><b>Projects Owned:</b>
+                    <br>
+                    <ul>
+                      <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
+                    </ul>
+                  </div> 
+                  <br>
+                  <div *ngIf="student.is_dev"><b>Project Membership:</b>
+                    <br>
+                    <ul>
+                      <li *ngFor= "let project of student.is_dev">{{ project }}</li>
+                    </ul>
+                  </div> 
+              </div>
+          </div>
+      </div>
     </div>
-   
-</body>
-</html> -->
+    <br>
+    <br>
 
-<!-- <div class="container">
-    <div class="row">
-        <div class="inner-main">
-            <h2 class="mb-4">User Profile</h2>
-            <p><strong>Name:</strong> {{this.currentUser.name}}</p>
-            <p><strong>Email:</strong> {{this.currentUser.email}}</p>
-        </div>
+    <div class="footer-dark">
+      <footer>
+          <div class="container">
+              <div class="row">
+                  <div class="col-sm-6 col-md-4 item">
+                      <ul>
+                          <li routerLink="/projects">Projects</li>
+                          <li routerLink="/profiles">Students</li>
+                      </ul>
+                  </div>
+                  <div class="col-sm-6 col-md-4 item">
+                      <p>© 2021 Tracking</p>
+                      <br>
+                  </div>
+                  <div class="col-sm-6 col-md-4 item">
+                      <ul>
+                          <li>Email: info@tracker.com</li>
+                          <li>Goodhouse 4th flr</li>
+                          <li>020-123456</li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </footer>
     </div>
-</div> -->
+
+</body>
+</html>

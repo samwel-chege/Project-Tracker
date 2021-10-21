@@ -4,30 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>TrackerApp-Students</title>
 </head>
 
 <body>
   <br>
-  <hr>
-  <br>
-
-  <h1 style="text-align:center"><b> All Students </b></h1>
+  <h1 style="text-align:center"><b> Students </b></h1>
   <br>
   <br>
-  <div *ngFor= "let student of students">
+  <div class="row">
+    <div *ngFor= "let student of students" class="col-sm-4 mx-auto">
     <div class="container">
-        <div class="card" style="margin-bottom: 5rem;">
+      <br>
+      <br>
+        <div class="card border-secondary">
             <div class="card-header d-flex">
-                <h3><b>{{student.user}}</b></h3>
+                <h3 style="text-align:center"><b>{{student.user}}</b></h3>
             </div>
             <br>
-            <div *ngIf="student.profile_pic" class="container">
+            <div *ngIf="student.profile_pic" class="container card-img-top">
             <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="img-responsive">
             </div>
             <br>
 
-            <div class="container">
+            <div class="container card-body">
               <div *ngIf="student.first_name && student.surname"><b>Full Name:</b> {{ student.first_name }} {{ student.surname }}</div>
               <br>
               <div *ngIf="student.cohort"><b>Cohort:</b> {{ student.cohort }}</div>  
@@ -39,28 +39,63 @@
                 <br>
                 <ul>
                   <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
+                  <br>
                 </ul>
               </div> 
               <br>
-              <div *ngIf="student.is_scrum"><b>Scrum-Master for:</b>
-                <br>
-                <ul>
-                  <li *ngFor= "let project of student.is_scrum">{{ project }}</li>
-                </ul>
-              </div> 
               <br>
               <div *ngIf="student.is_dev"><b>Member of:</b>
                 <br>
                 <ul>
                   <li *ngFor= "let project of student.is_dev">{{ project }}</li>
+                  <br>
                 </ul>
-              </div> 
+              </div>
             </div>
+            <br>
+            <br>
+            <div class="container card-footer">
+              <div class="container">
+                  <div class="container">
+                    <br>
+                      <a class="btn btn-lg btn-outline-success btn-block" href="{{student.github_profile}}" role="button">Github Profile</a>
+                      <br>
+                      <br>
+                      <br>
+                  </div>
+              </div>
+          </div>
         </div>
     </div>
   </div>
+  </div>
   <br>
-  <hr>
   <br>
+
+  <div class="footer-dark">
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 item">
+                    <ul>
+                        <li routerLink="/projects">Projects</li>
+                        <li routerLink="/profiles">Students</li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+                    <p>© 2021 Tracking</p>
+                    <br>
+                </div>
+                <div class="col-sm-6 col-md-4 item">
+                    <ul>
+                        <li>Email: info@tracker.com</li>
+                        <li>Goodhouse 4th flr</li>
+                        <li>020-123456</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+  </div>
 </body>
 </html>

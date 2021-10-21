@@ -18,6 +18,12 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { UploadprojectComponent } from './uploadproject/uploadproject.component';
 import { CohortsComponent } from './cohorts/cohorts.component';
 import { StylesComponent } from './styles/styles.component';
+import { SingleProjectComponent } from './single-project/single-project.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { CohortProfileComponent } from './cohort-profile/cohort-profile.component';
+import { AndroidComponent } from './android/android.component';
+import { FullstackComponent } from './fullstack/fullstack.component';
+import { CohortProjectsComponent } from './cohort/cohort.component';
 
 
 @NgModule({
@@ -33,6 +39,12 @@ import { StylesComponent } from './styles/styles.component';
     ProfileComponent,
     CohortsComponent,
     StylesComponent,
+    SingleProjectComponent,
+    UserProfileComponent,
+    CohortProfileComponent,
+    AndroidComponent,
+    FullstackComponent,
+    CohortProjectsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CohortsService } from '../services/cohorts.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cohorts',
@@ -9,7 +10,7 @@ import { CohortsService } from '../services/cohorts.service';
 export class CohortsComponent implements OnInit {
 
   cohorts: any;
-  constructor(private CService: CohortsService) { }
+  constructor(private CService: CohortsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.AllCohorts();
@@ -20,6 +21,21 @@ export class CohortsComponent implements OnInit {
       this.cohorts = cohorts;
       console.log(this.cohorts);
     })
+  }
+
+  navigateToCohort(id) {
+    console.clear();
+    this.router.navigate(['./' + id], {relativeTo: this.activatedRoute});
+  }
+
+  navigateToAndroid() {
+    console.clear();
+    this.router.navigate(['./android'], {relativeTo: this.activatedRoute});
+  }
+
+  navigateToFullstack() {
+    console.clear();
+    this.router.navigate(['./fullstack'], {relativeTo: this.activatedRoute});
   }
 
 }

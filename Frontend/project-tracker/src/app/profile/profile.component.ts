@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../services/profile.service';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -9,7 +10,8 @@ import { ProfileService } from '../services/profile.service';
 
 export class ProfileComponent implements OnInit {
   students: any;
-  constructor(private PfService: ProfileService) { }
+
+  constructor(private PfService: ProfileService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.AllProfiles();
@@ -22,4 +24,7 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  navigateToProfile(id) {
+    this.router.navigate(['./' + id], {relativeTo: this.activatedRoute});
+  }
 }
