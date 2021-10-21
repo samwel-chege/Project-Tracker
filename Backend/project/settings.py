@@ -6,7 +6,7 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-#import django_filters
+import django_filters
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
