@@ -37,10 +37,11 @@ urlpatterns = [
 
     url(r'^api/cohorts/$', CohortsList.as_view(), name='api_cohorts'),    # Get all Cohorts + Create
     url(r'api/cohorts/(?P<pk>[0-9]+)/$', CohortProfileView.as_view(), name='api_cohort'),    # Cohort by id + Delete + All Projects in a Cohort
-    url(r'api/cohorts/(?P<pk>[0-9]+)/projects/$', CohortProjectsView.as_view(), name='api_cohort_projects'),    # Filter Cohort Projects by Style
+    url(r'api/cohorts/(?P<pk>[0-9]+)/projects/$', CohortProjectsView.as_view(), name='api_cohort_projects'),    # Cohort Projects
 
     url(r'^api/styles/$', StylesList.as_view(), name='api_styles'),    # Get all Styles + Create
     url(r'api/styles/(?P<pk>[0-9]+)/$', StyleProfileView.as_view(), name='api_style'),    # DevStyle by id + Delete
+    url(r'api/styles/(?P<pk>[0-9]+)/projects/$', StyleProjectsView.as_view(), name='api_style_projects'),    # Projects by DevStyle
 
     url(r'^api/projects/$', ProjectsList.as_view(), name='api_projects'),    # Get all Projects
     url(r'^api/projects/new/$', NewProjectView.as_view(), name='api_projects_new'),    # Create new project
@@ -57,4 +58,9 @@ urlpatterns = [
     url(r'api/search/projects/$', ProjectSearch.as_view(), name='api_project_search'),    # Project search
     url(r'api/search/students/$', StudentSearch.as_view(), name='api_student_search'),    # Student search
 
+    url(r'api/user/$', CurrentUserView.as_view(), name='api_user'),    # Current User
+    url(r'api/user/profile/$', CurrentUserProfileView.as_view(), name='api_user_profile'),    # Current User Profile
+
+    #url(r'api/projects/(?P<pk>[0-9]+)/image/update/$', UploadProjectImageView.as_view(), name='api_project_image_upload'),    # Update Project Image
+    #url(r'api/students/(?P<pk>[0-9]+)/image/update/$', UploadProfilePicView.as_view(), name='api_profile_pic_upload'),    # Update Profile Pic
 ]

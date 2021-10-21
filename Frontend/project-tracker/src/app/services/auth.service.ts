@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { HttpClient,HttpHeaders,HttpErrorResponse, HttpInterceptor,HttpRequest,HttpHandler,HttpEvent } from '@angular/common/http';
 import { CanActivate, Router } from '@angular/router';
 
@@ -13,11 +14,16 @@ import { User } from '../user';
 import { catchError,map } from 'rxjs/operators';
 
 
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
   endpoint: string = 'http://127.0.0.1:8000/auth/';

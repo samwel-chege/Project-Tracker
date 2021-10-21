@@ -10,6 +10,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import smart_str, smart_bytes, force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from rest_framework.parsers import JSONParser, MultiPartParser
 
 
 
@@ -25,8 +26,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         username = attrs.get('username', '')
         password  = attrs.get('password', '')
 
-        if not username.isalnum():
-            raise serializers.ValidationError('The username should only contain alphanumeric characters')
+        # if not username.isalnum():
+        #     raise serializers.ValidationError('The username should only contain alphanumeric characters')
 
         return attrs
     
@@ -78,9 +79,6 @@ class LoginSerializer(serializers.ModelSerializer):
 
         if not user.is_active:
             raise AuthenticationFailed('Account disabled for inactivity')
-
-        # if not user.is_verified:
-        #     raise AuthenticationFailed('Account not verified')
 
 
 
@@ -154,12 +152,6 @@ class StudentSerializer(serializers.ModelSerializer):
         slug_field='title'
     )
 
-    is_scrum = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='title'
-    )
-
     is_dev = serializers.SlugRelatedField(
         many=True,
         read_only=True,
@@ -178,29 +170,30 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('id', 'user', 'first_name', 'surname', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_scrum', 'is_dev')
+        fields = ('id', 'user', 'first_name', 'surname', 'bio', 'profile_pic', 'email', 'cohort', 'projects_owned', 'is_dev', 'github_profile')
+
+    def create(self, validated_data):
+        return Student(**validated_data)
+
+
+class StudentInfoSerializer(serializers.ModelSerializer):
+    
+    user = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='username'
+    )
+
+    class Meta:
+        model = Student
+        fields = ('user',)
 
     def create(self, validated_data):
         return Student(**validated_data)
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-
-    owner = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='surname'
-    )
-
-    scrum = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field='surname'
-    )
-
-    members = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='surname'
-    )
+    owner = StudentInfoSerializer()
+    members = StudentInfoSerializer(many=True,)
 
     cohort = serializers.SlugRelatedField(
         read_only=True,
@@ -214,41 +207,121 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id', 'title', 'project_image', 'description', 'owner', 'scrum', 'members', 'cohort', 'style', 'github_link', 'date')
+        fields = ('id', 'title', 'project_image', 'description', 'owner', 'members', 'cohort', 'style', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project(**validated_data)
 
 
 class ProjectMembersSerializer(serializers.ModelSerializer):
+    owner = StudentInfoSerializer()
+    members = StudentInfoSerializer(many=True,)
 
     class Meta:
         model = Project
-        fields = ('title', 'owner', 'scrum', 'members')
+        fields = ('title', 'owner', 'members')
 
     def create(self, validated_data):
         return Project(**validated_data)
 
 
+class ProjectMemberGithubSerializer(serializers.ModelSerializer):
+    
+    members = serializers.SlugRelatedField(
+        read_only=True,
+        many=True,
+        slug_field='github_profile'
+    )
+
+    class Meta:
+        model = Project
+        fields = ('members',)
+
+    def create(self, validated_data):
+        return Project(**validated_data)
+
+
+class StudentProjectGithubSerializer(serializers.ModelSerializer):
+    
+    projects_owned = serializers.SlugRelatedField(
+        read_only=True,
+        many=True,
+        slug_field='github_link'
+    )
+
+    is_dev = serializers.SlugRelatedField(
+        read_only=True,
+        many=True,
+        slug_field='github_link'
+    )
+
+    class Meta:
+        model = Student
+        fields = ('projects_owned', 'is_dev')
+
+    def create(self, validated_data):
+        return Student(**validated_data)
+
+
+class CohortMemberGithubSerializer(serializers.ModelSerializer):
+    
+    students = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='github_profile'
+    )
+
+    class Meta:
+        model = Cohort
+        fields = ('students',)
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)
+
+
+class CohortProjectsGithubSerializer(serializers.ModelSerializer):
+    
+    projects = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='github_link'
+    )
+
+    class Meta:
+        model = Cohort
+        fields = ('projects',)
+
+    def create(self, validated_data):
+        return Cohort(**validated_data)
+
+
 class CohortSerializer(serializers.ModelSerializer):
+    students = StudentInfoSerializer(many=True,)
     projects = serializers.SlugRelatedField(
         many=True,
         read_only=True,
         slug_field='title'
     )
-
-    students = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field='surname'
-    )
-
+  
     class Meta:
         model = Cohort
         fields = ('id', 'name', 'details', 'projects', 'students')
 
     def create(self, validated_data):
         return Cohort(**validated_data)
+
+
+class StyleProjectsGithubSerializer(serializers.ModelSerializer):
+    
+    projects = serializers.SlugRelatedField(
+        read_only=True,
+        slug_field='github_link'
+    )
+
+    class Meta:
+        model = DevStyle
+        fields = ('projects',)
+
+    def create(self, validated_data):
+        return DevStyle(**validated_data)
 
 
 class StyleSerializer(serializers.ModelSerializer):
@@ -269,7 +342,7 @@ class StyleSerializer(serializers.ModelSerializer):
 class NewProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link', 'date')
+        fields = ('title', 'description', 'owner', 'style', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project.objects.create(**validated_data)
@@ -310,29 +383,31 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ('first_name', 'surname', 'profile_pic', 'cohort', 'email', 'bio')
+        fields = ('first_name', 'surname', 'cohort', 'email', 'bio', 'github_profile')
         extra_kwargs = {
             'first_name': {'required': True},
             'surname': {'required': True},
             'cohort': {'required': True},
             'email': {'required': True},
+            'github_profile': {'required': True},
         }
 
-    def validate_email(self, value):
-        user = self.context['request'].user
+    # def validate_email(self, value):
+    #     user = self.context['request'].user
 
-        if Student.objects.exclude(pk=user.pk).filter(email=value).exists():
-            raise serializers.ValidationError({"email": "This email is already in use."})
+    #     if Student.objects.exclude(pk=user.pk).filter(email=value).exists():
+    #         raise serializers.ValidationError({"email": "This email is already in use."})
 
-        return value
+    #     return value
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data['first_name']
         instance.surname = validated_data['surname']
-        instance.profile_pic = validated_data['profile_pic']
+        #instance.profile_pic = validated_data['profile_pic']
         instance.cohort = validated_data['cohort']
         instance.email = validated_data['email']
         instance.bio = validated_data['bio']
+        instance.github_profile = validated_data['github_profile']
 
         instance.save()
 
@@ -340,9 +415,10 @@ class UpdateStudentSerializer(serializers.ModelSerializer):
 
 
 class UpdateProjectSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Project
-        fields = ('title', 'project_image', 'description', 'owner', 'scrum', 'cohort', 'style', 'github_link')
+        fields = ('title', 'description', 'owner', 'cohort', 'style', 'github_link')
         extra_kwargs = {
             'owner': {'required': True},
             'title': {'required': True},
@@ -351,10 +427,9 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.title = validated_data['title']
-        instance.project_image = validated_data['project_image']
+        #instance.project_image = validated_data['project_image']
         instance.description = validated_data['description']
         instance.owner = validated_data['owner']
-        instance.scrum = validated_data['scrum']
         instance.cohort = validated_data['cohort']
         instance.style = validated_data['style']
         instance.github_link = validated_data['github_link']
@@ -365,15 +440,21 @@ class UpdateProjectSerializer(serializers.ModelSerializer):
 
 
 class UpdateProjectMembersSerializer(serializers.ModelSerializer):
-    #members = StudentSerializer(many=True)
+    #members = StudentSerializer(many=True,)
     class Meta:
         model = Project
         fields = ('members',)
+        #filter_horizontal = ('members',)
+        extra_kwargs = {
+            'members': {'required': True},
+        }
+
+    def create(self, validated_data):
+        return Project.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.members = validated_data['members']
-
-        instance.add()
+        instance.members = validated_data('members', instance.members)
+        instance.set()
         return instance
 
 
@@ -413,3 +494,37 @@ class SetNewPasswordSerializer(serializers.Serializer):
             raise AuthenticationFailed('The password reset link is invalid', 401)
 
         return super().validate(attrs)
+
+
+# class UpdateProjectImageSerializer(serializers.ModelSerializer):
+    
+#     class Meta:
+#         model = Project
+#         fields = ('project_image',)
+#         extra_kwargs = {
+#             'project_image': {'required': True},
+#         }
+
+#     def update(self, instance, validated_data):
+#         instance.project_image = validated_data['project_image']
+
+#         instance.save()
+
+#         return instance
+
+
+# class UpdateProfilePicSerializer(serializers.ModelSerializer):
+    
+#     class Meta:
+#         model = Student
+#         fields = ('profile_pic',)
+#         extra_kwargs = {
+#             'profile_pic': {'required': True},
+#         }
+
+#     def update(self, instance, validated_data):
+#         instance.profile_pic = validated_data['profile_pic']
+
+#         instance.save()
+
+#         return instance

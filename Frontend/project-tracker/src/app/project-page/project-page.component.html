@@ -4,30 +4,98 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects page</title>
+    <title>TrackerApp-Projects</title>
 </head>
 <body>
-    
-    <div *ngFor="let project of projects">
-    <div class="container">
-        <div class="card" style="margin-bottom: 5rem;">
-            <div class="card-header d-flex">
-                <h3>{{project.title}} </h3>
+    <br>
+    <br>
+    <br>  
+    <h1 style="text-align:center"><b> Projects </b></h1>
+    <br>
+    <br>
+    <div class="row">
+      <div *ngFor="let project of projects" class="col-lg-4 d-flex align-items-stretch mx-auto">
+        <div class="container">
+            <br>
+            <div class="card border-secondary">
+                <div class="card-header d-flex">
+                    <h3 style="text-align:center"><b>{{project.title}}</b></h3>
+                </div>
+                <div>
+
+                    <div class="card-body">
+                        <br>
+                        <div *ngIf="project.project_image" class="container card-img-top">
+                        <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
+                        </div>
+                        <br>
+                        <div class="container">
+                            <div *ngIf="project.owner"><b>Owner:</b> {{project.owner.user}}</div>
+                            <br>
+                            <div *ngIf="project.cohort"><b>Cohort:</b> {{project.cohort}}</div>
+                            <div *ngIf="project.style"><b>Development Mode:</b> {{project.style}}</div>
+                            <br>
+                            <div *ngIf="project.description"><b>Description:</b> {{project.description}}</div>
+                            <br>
+                            <div class="text-muted"><b>Date:</b> {{project.date}}</div>
+                            <!-- <br>
+                            <a href="{{project.github_link}}"><b>Github Link</b></a>
+                            <br> -->
+                            <br>
+                            <div *ngIf="project.members"><b>Project Members:</b>
+                                <br>
+                                <ul>
+                                  <li *ngFor= "let member of project.members">{{ member.user }}</li>
+                                </ul>
+                            </div> 
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="container card-footer">
+                        <div class="container">
+                            <div class="container">
+                                <br>
+                                <a class="btn btn-lg btn-outline-success btn-block" href="{{project.github_link}}" role="button">View Project</a>
+                                <br>
+                                <br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div *ngIf="project.project_image">
-            <img src="https://res.cloudinary.com/daxszmc6m/{{project.project_image}}"  class="img-responsive">
-            </div>
-            <div>{{project.description}}</div>
-            <div>{{project.owner}}</div>
-            <div>{{project.cohort}}</div>
-            <div>{{project.style}}</div>
-            <div>{{project.scrum}}</div>
-            <div>{{project.members}}</div>
-            <!-- Backend/media/images/projects/Screenshot_from_2021-09-18_09-14-45.png -->
-            <div class="text-muted">{{project.date}}</div>
         </div>
+      </div>
     </div>
-    </div>
+    <br>
+    <br>
+
+    <div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4 item">
+                        <ul>
+                            <li routerLink="/projects">Projects</li>
+                            <li routerLink="/profiles">Students</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-4 item">
+                        <p> &copy; 2021 Tracking</p>
+                        <br>
+                    </div>
+                    <div class="col-sm-6 col-md-4 item">
+                        <ul>
+                            <li>Email: info@tracker.com</li>
+                            <li>Goodhouse 4th flr</li>
+                            <li>020-123456</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+      </div>
 
 </body>
 </html> 
