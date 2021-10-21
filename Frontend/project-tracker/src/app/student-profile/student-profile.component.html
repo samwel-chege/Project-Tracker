@@ -4,23 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profiles</title>
+    <title>My Profile</title>
 </head>
 <body>
-    <div *ngFor="let student of students">
+    <div>
         <div class="container">
+            <br>
+            <br>
+            <br>
+            <h1 style="text-align:center">My Profile</h1>
+            <br>
+            <br>
             <div class="card" style="margin-bottom: 5rem;">
+                <div>{{student.user}}</div>
                 <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}" alt="" class="img-responsive">
-            <div>{{student.first_name}}</div>
-            <div>{{student.email}}</div>
-            <div>{{student.bio}}</div>
-            <ul>
-                <li>{{student.projects_owned}}</li>
-            </ul>
+                <div>{{student.first_name}}</div>
+                <div>{{student.surname}}</div>
+                <div>{{student.email}}</div>
+                <div>{{student.bio}}</div>
+                <ul *ngFor= "let project of student.projects_owned">
+                    <li>{{student.projects_owned}}</li>
+                </ul>
+            </div>        
         </div>
-        
-        
-    </div>
     </div>
    
 </body>

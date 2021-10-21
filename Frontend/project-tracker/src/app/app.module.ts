@@ -6,16 +6,19 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module'; 
 import { HomeComponent } from './home/home.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { ProjectPageComponent } from './project-page/project-page.component';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './Auth/interceptor';
-import { ReactiveFormsModule,FormsModule } from '@angular/forms';
+import { CohortsComponent } from './cohorts/cohorts.component';
+import { StylesComponent } from './styles/styles.component';
 
 
 @NgModule({
@@ -27,16 +30,18 @@ import { ReactiveFormsModule,FormsModule } from '@angular/forms';
     ProjectFormComponent,
     SignupComponent,
     LoginComponent,
-    StudentProfileComponent
+    StudentProfileComponent,
+    ProfileComponent,
+    CohortsComponent,
+    StylesComponent,
   ],
   imports: [
     BrowserModule,
-    
+    ReactiveFormsModule,  
     HttpClientModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule
-
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

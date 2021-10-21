@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProjectService } from './services/project.service';
+import { AuthService } from './_services/auth.service';
 import { UserService } from './services/user.service';
 import { throwError } from 'rxjs';
 import { AuthService } from './services/auth.service';
