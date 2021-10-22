@@ -5,6 +5,9 @@
     text-align: center;
 
 }
+#container{
+  margin-bottom: 10%;
+}
 .homeimg{
     background-repeat: no-repeat;
     background-size: cover;
@@ -41,7 +44,7 @@ h1{
     left: 0;
     bottom: 0;
     width: 100%;
-    padding:50px 0;
+    padding:5px 0;
     color:#f0f9ff;
     background-color:#282d32;
   }

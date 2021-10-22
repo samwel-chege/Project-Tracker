@@ -51,9 +51,10 @@ button {
   font-size: 24px;
   transition-duration: 0.4s;
   cursor: pointer;
-  margin-left: 80%;
+  margin-left: 45%;
   border-radius:10px;
   margin-top: 40%;
+  margin-bottom: 20%;
   position: absolute;
 }
 

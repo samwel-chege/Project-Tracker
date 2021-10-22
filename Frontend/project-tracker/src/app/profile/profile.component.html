@@ -8,73 +8,48 @@
 </head>
 
 <body>
-  <br>
-  <br>
-  <br>
+  <div class="container" id="container" style="margin-top: 5%;">
+
   <h1 style="text-align:center"><b> Students </b></h1>
-  <br>
-  <br>
+  <hr>
+  
   <div class="row">
-    <div *ngFor= "let student of students" class="col-sm-4 mx-auto">
+    <div *ngFor= "let student of students" class="col-md-4">
     <div class="container">
       <br>
       <br>
-        <div class="card border-secondary">
+        <div class="card" style="width: 18rem;">
             <div class="card-header d-flex">
                 <h3 style="text-align:center"><b>{{student.user}}</b></h3>
             </div>
-            <br>
-            <div *ngIf="student.profile_pic" class="container card-img-top">
-            <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="img-responsive">
-            </div>
-            <br>
-
-            <div class="container card-body">
-              <div *ngIf="student.first_name && student.surname"><b>Full Name:</b> {{ student.first_name }} {{ student.surname }}</div>
-              <br>
-              <div *ngIf="student.cohort"><b>Cohort:</b> {{ student.cohort }}</div>  
-              <div *ngIf="student.email"><b>Email:</b> {{ student.email }}</div> 
-              <br> 
-              <div *ngIf="student.bio"><b>Bio:</b> {{ student.bio }}</div> 
-              <br>
+            <img src="https://res.cloudinary.com/daxszmc6m/{{student.profile_pic}}"  class="card-img-top">
+            <div class="card-body">
+              <p class="card-text" *ngIf="student.first_name && student.surname"><b>Full Name:</b> {{ student.first_name }} {{ student.surname }}</p>
+              
+              <p class="card-text" *ngIf="student.cohort"><b>Cohort:</b> {{ student.cohort }}</p>  
+              <p class="card-text" *ngIf="student.email"><b>Email:</b> {{ student.email }}</p> 
+              
+              <p class="card-text" *ngIf="student.bio"><b>Bio:</b> {{ student.bio }}</p> 
               <div *ngIf="student.projects_owned"><b>Projects Owned:</b>
-                <br>
                 <ul>
                   <li *ngFor= "let project of student.projects_owned">{{ project }}</li>
-                  <br>
                 </ul>
               </div> 
-              <br>
-              <br>
               <div *ngIf="student.is_dev"><b>Member of:</b>
-                <br>
                 <ul>
                   <li *ngFor= "let project of student.is_dev">{{ project }}</li>
-                  <br>
                 </ul>
               </div>
             </div>
-            <br>
-            <br>
-            <div class="container card-footer">
-              <div class="container">
-                  <div class="container">
-                    <br>
-                      <a class="btn btn-lg btn-outline-success btn-block" href="{{student.github_profile}}" role="button">Github Profile</a>
-                      <br>
-                      <br>
-                      <br>
-                  </div>
-              </div>
+            <div class="card-footer">    
+             <a class="btn btn-lg btn-outline-success btn-block" href="{{student.github_profile}}" role="button">Github Profile</a>  
           </div>
         </div>
     </div>
   </div>
   </div>
-  <br>
-  <br>
-
-  <div class="footer-dark">
+  </div>
+  <!-- <div class="footer-dark">
     <footer>
         <div class="container">
             <div class="row">
@@ -98,6 +73,6 @@
             </div>
         </div>
     </footer>
-  </div>
+  </div> -->
 </body>
 </html>

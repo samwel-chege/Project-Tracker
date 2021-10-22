@@ -27,15 +27,12 @@
       <hr>
       <br>
       <h1><b> Cohorts </b></h1>
-      <br>
+      <hr>
       <div class="row">
           <div *ngFor= "let cohort of cohorts" class="col-sm-6">
             <br>
             <br>
-            <!-- <div class="container text-center">
-              <button class="btn btn-lg btn-success" routerLink="/cohort"><b>{{cohort.name}}</b></button>     
-              <br> -->
-                <!-- <div (click)="navigateToCohort(cohort.id)" class="card"> -->
+            
                   <div class="card border-secondary">
                     <div class="card-header d-flex">
                         <h3><b>{{cohort.name}}</b></h3>
@@ -60,7 +57,7 @@
                         </ul>
                       </div> 
                     </div>
-                <!-- </div> -->
+              
             </div>       
           </div>
         </div>
@@ -68,30 +65,6 @@
   <br>
   <br>
 
-  <div class="footer-dark">
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6 col-md-4 item">
-                    <ul>
-                        <li routerLink="/projects">Projects</li>
-                        <li routerLink="/profiles">Students</li>
-                    </ul>
-                </div>
-                <div class="col-sm-6 col-md-4 item">
-                    <p>© 2021 Tracking</p>
-                    <br>
-                </div>
-                <div class="col-sm-6 col-md-4 item">
-                    <ul>
-                        <li>Email: info@tracker.com</li>
-                        <li>Goodhouse 4th flr</li>
-                        <li>020-123456</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-  </div>
+  
 </body>
 </html>
