@@ -94,12 +94,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
 
-        'NAME': 'track',
+        'NAME': 'project_tracking',
 
-        'USER': 'sammie',
+        'USER': 'oscar',
 
 
-        'PASSWORD': 'samm',
+        'PASSWORD': '123456789',
 
 
     }
@@ -206,7 +206,7 @@ cloudinary.config(
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST='smtp.gmail.com'
-EMAIL_PORT=587
+EMAIL_PORT='587'
 EMAIL_HOST_USER=os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
