@@ -23,10 +23,14 @@
     margin: auto;
     padding-top: 15%;
 }
+.card-body{
+  background-color: #AFEEEE;
+  
+}
 
 .card:hover {
     background-color: white;
-    color: orange;
+    color: rgb(199, 132, 8);
   }
 
 

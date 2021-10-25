@@ -18,7 +18,7 @@
       <div *ngFor="let project of projects" class="col-lg-4 d-flex align-items-stretch mx-auto">
         <div class="container">
             <br>
-            <div class="card" style="width: 18rem;">
+            <div class="card" style="width: 18rem; height: 30rem; overflow: auto;">
                 <div class="card-header d-flex">
                     <h3 style="text-align:center"><b>{{project.title}}</b></h3>
                 </div>
@@ -33,7 +33,7 @@
                             <p class="card-text" *ngIf="project.cohort"><b>Cohort:</b> {{project.cohort}}</p>
                             <p class="card-text" *ngIf="project.style"><b>Development Mode:</b> {{project.style}}</p>
                          
-                            <p class="card-text" *ngIf="project.description"><b>Description:</b> {{project.description}}</p>
+                            <p class="card-text" *ngIf="project.description" style="overflow: hidden;"><b>Description:</b> {{project.description}}</p>
                           
                             <p  class="text-muted"><b>Date:</b> {{project.date}}</p>
                             
