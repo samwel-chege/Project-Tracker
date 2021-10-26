@@ -342,7 +342,7 @@ class StyleSerializer(serializers.ModelSerializer):
 class NewProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ('title', 'description', 'owner', 'style', 'github_link', 'date')
+        fields = ('title', 'description', 'owner', 'style','project_image', 'github_link', 'date')
 
     def create(self, validated_data):
         return Project.objects.create(**validated_data)
